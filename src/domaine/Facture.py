@@ -41,3 +41,6 @@ class Facture :
 
     def set_enum_facture_etat(self, enum_facture_etat):
         self.__enum_facture_etat = enum_facture_etat
+    
+    def __str__(self):
+        return f"Facture(id_facture={self.__id_facture}, num_facture={self.__num_facture}, date_emission={self.__date_emission}, montant_total={self.__montant_total}, etat={self.__enum_facture_etat})"

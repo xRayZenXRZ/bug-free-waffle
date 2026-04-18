@@ -43,3 +43,6 @@ class Activite :
 
     def set_enum_activite_statut(self, enum_activite_statut):
         self.__enum_activite_statut = enum_activite_statut
+
+    def __str__(self):
+        return f"Activite(id_activite={self.__id_activite}, activite={self.__enum_activite}, date_prevues={self.__date_prevues}, duree_estimee={self.__duree_estimee}, statut={self.__enum_activite_statut})"

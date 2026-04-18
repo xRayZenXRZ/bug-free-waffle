@@ -116,4 +116,4 @@ class Client :
     #Les Setters sont incomplet, il faudra faire des vérificaitons plus perf et approfondie.
 
     def __str__(self):
-        return f"Client(id={self.__id_client}, nom={self.__nom}, prenom={self.__prenom}, raison_sociale={self.__raison_sociale}, adresse={self.__adresse}, telephone={self.__telephone}, courriel={self.__courriel}, type={self.__enum_type_client}, status={self.__enum_status_client})"
+        return f"Client(id_client={self.__id_client}, nom={self.__nom}, prenom={self.__prenom}, raison_sociale={self.__raison_sociale}, adresse={self.__adresse}, telephone={self.__telephone}, courriel={self.__courriel}, type_client={self.__enum_type_client}, statut={self.__enum_status_client})"

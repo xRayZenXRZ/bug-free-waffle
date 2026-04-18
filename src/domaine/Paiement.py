@@ -27,3 +27,6 @@ class Paiement :
 
     def set_enum_paiements_conditions(self, enum_paiements_conditions):
         self.__enum_paiements_conditions = enum_paiements_conditions
+
+    def __str__(self):
+        return f"Paiement(id_paiement={self.__id_paiement}, montant={self.__montant}, conditions_paiements={self.__enum_paiements_conditions})"

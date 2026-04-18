@@ -82,3 +82,5 @@ class Devis :
         self.__id_client = id_client
 
     
+    def __str__(self):
+        return f"Devis(id_devis={self.__id_devis}, description_prestation={self.__description_prestation}, quantite_photos_prevues={self.__quantite_photos_prevues}, quantite_videos_prevues={self.__quantite_videos_prevues}, details_couts={self.__details_couts}, montant_total={self.__montant_total}, date_emission={self.__date_emission}, date_validite={self.__date_validite}, statut={self.__enum_devis_statut}, id_client={self.__id_client})"
