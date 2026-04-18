@@ -3,17 +3,17 @@ class Devis :
 
     def __init__(self, id_devis, description_prestation, quantite_photos_prevues, quantite_videos_prevues, details_couts, montant_total, date_emission, date_validite, enum_devis_statut, id_client = None):
         
-        self.__id_devis : int = id_devis
-        self.__description_prestation : str = description_prestation
-        self.__quantite_photos_prevues : int = quantite_photos_prevues
-        self.__quantite_videos_prevues : int = quantite_videos_prevues
-        self.__details_couts : str = details_couts
-        self.__montant_total : float = montant_total
-        self.__date_emission = date_emission # revoir
-        self.__date_validite = date_validite # revoir
-        self.__enum_devis_statut : str = enum_devis_statut
+        self.__id_devis = id_devis
+        self.__description_prestation = description_prestation
+        self.__quantite_photos_prevues = quantite_photos_prevues
+        self.__quantite_videos_prevues = quantite_videos_prevues
+        self.__details_couts = details_couts
+        self.__montant_total = montant_total
+        self.__date_emission = date_emission
+        self.__date_validite = date_validite
+        self.__enum_devis_statut = enum_devis_statut
 
-        #foreign key 
+        #Foreign Key :
         self.__id_client : int = id_client
 
     # Getters

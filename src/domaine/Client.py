@@ -5,15 +5,15 @@ class Client :
 
     def __init__(self, id_client, nom, prenom, raison_sociale, adresse, telephone, courriel, enum_type_client, enum_status_client) :
         
-        self.__id_client : int = id_client
-        self.__nom : str = nom
-        self.__prenom : str = prenom
-        self.__raison_sociale : str = raison_sociale
-        self.__adresse : str = adresse
-        self.__telephone : str = telephone
-        self.__courriel : str = courriel
-        self.__enum_type_client : str = enum_type_client
-        self.__enum_status_client : str = enum_status_client
+        self.__id_client = id_client
+        self.__nom = nom
+        self.__prenom = prenom
+        self.__raison_sociale = raison_sociale
+        self.__adresse = adresse
+        self.__telephone = telephone
+        self.__courriel = courriel
+        self.__enum_type_client = enum_type_client
+        self.__enum_status_client = enum_status_client
 
     # Getters :
 
