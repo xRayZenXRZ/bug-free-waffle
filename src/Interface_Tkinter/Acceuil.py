@@ -54,7 +54,7 @@ class ConnexionUI() :
         if len(valid) <= 0 :
             self.entry_email.delete(0, tk.END)
             self.entry_mdp.delete(0, tk.END)
-            mb.showwarning("identifiant erroner", "Veuillez réessayer.")
+            mb.showwarning("identifiant FAUX ! ", "Veuillez réessayer.")
             return
 
         reponse = mb.showinfo("Accès Granted", " Yayyyyyyyyyy ! ")
