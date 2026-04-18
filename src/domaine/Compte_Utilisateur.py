@@ -40,3 +40,6 @@ class Compte_Utilisateur :
 
     def set_id_client(self, id_client):
         self.__id_client = id_client
+
+    def __str__(self):
+        return f"Compte_Utilisateur(id_compte_utilisateur={self.__id_compte_utilisateur}, login={self.__login}, type_utilisateur={self.__type_utilisateur}, id_client={self.__id_client})"

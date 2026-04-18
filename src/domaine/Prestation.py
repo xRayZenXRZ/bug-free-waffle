@@ -62,3 +62,6 @@ class Prestation :
 
     def set_enum_prestation_mission(self, enum_prestation_mission):
         self.__enum_prestation_mission = enum_prestation_mission
+    
+    def __str__(self):
+        return f"Prestation(date_prevues={self.__date_prevues}, date_effective={self.__date_effective}, lieu={self.__lieu}, quantite_photos_prevues={self.__quantite_photos_prevues}, quantite_videos_prevues={self.__quantite_videos_prevues}, type_prestation={self.__enum_prestation_type}, mission={self.__enum_prestation_mission})"
