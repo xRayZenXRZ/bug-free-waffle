@@ -31,3 +31,19 @@ class DAOActivite :
         finally:
             if cursor:
                 cursor.close()    
+
+    def delete_activite(self, activite):
+        sql = ""
+        pass
+
+    def find_activite(self, activite):
+        pass
+
+    def update_activite(self, activite):
+        pass
+
+    def select_activite(self, activite):
+        pass
+
+    def sett_all_values(self, rs ):
+        pass

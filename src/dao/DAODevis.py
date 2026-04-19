@@ -32,5 +32,21 @@ class DAODevis :
         finally:
             if cursor:
                 cursor.close()
+
+    def delete_devis(self, devis):
+        sql = ""
+        pass
+
+    def find_devis(self, devis):
+        pass
+
+    def update_devis(self, devis):
+        pass
+
+    def select_devis(self, devis):
+        pass
+
+    def sett_all_values(self, rs ):
+        pass
         
     

@@ -31,3 +31,19 @@ class DAOPrestation :
         finally:
             if cursor:
                 cursor.close()  
+
+    def delete_prestation(self, prestation):
+        sql = ""
+        pass
+
+    def find_prestation(self, prestation):
+        pass
+
+    def update_prestation(self, prestation):
+        pass
+
+    def select_prestation(self, prestation):
+        pass
+
+    def sett_all_values(self, rs ):
+        pass
