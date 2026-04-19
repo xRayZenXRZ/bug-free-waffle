@@ -1,4 +1,4 @@
-import mysql.connector
+"""import mysql.connector
 from mysql.connector import Error, errorcode, IntegrityError, InterfaceError
 
 #print(mysql.connector.__version__) # Version
@@ -55,4 +55,4 @@ finally:
         config.close()
     if 'config' in locals() and config is not None and config.is_connected():
         config.close()
-        print("La connexion est fermée")
+        print("La connexion est fermée")"""
