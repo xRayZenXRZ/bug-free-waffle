@@ -32,3 +32,19 @@ class DAOPAiement :
         finally:
             if cursor:
                 cursor.close()            
+
+    def delete_paiement(self, paiement):
+        sql = ""
+        pass
+
+    def find_paiement(self, paiement):
+        pass
+
+    def update_paiement(self, paiement):
+        pass
+
+    def select_paiement(self, paiement):
+        pass
+
+    def sett_all_values(self, rs ):
+        pass

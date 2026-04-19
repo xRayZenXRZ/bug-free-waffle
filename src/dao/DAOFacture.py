@@ -33,3 +33,19 @@ class DAOFacture :
         finally : 
             if cursor : 
                 cursor.close()
+
+    def delete_facture(self, facture):
+        sql = ""
+        pass
+
+    def find_facture(self, facture):
+        pass
+
+    def update_facture(self, facture):
+        pass
+
+    def select_facture(self, facture):
+        pass
+
+    def sett_all_values(self, rs ):
+        pass

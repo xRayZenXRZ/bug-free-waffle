@@ -32,5 +32,19 @@ class DAOContrat:
             if cursor:
                 cursor.close()
 
+    def delete_contrat(self, contrat):
+        pass
+
+    def find_contrat(self, contrat):
+        pass
+
+    def update_contrat(self, contrat):
+        pass
+
+    def select_contrat(self, contrat):
+        pass
+
+    def sett_all_values(self, rs ):
+        pass
 
 
