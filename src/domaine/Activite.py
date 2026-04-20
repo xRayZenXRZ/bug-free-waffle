@@ -8,22 +8,22 @@ class Activite :
     def __init__(self, id_activite : int = None, libelle_operationnel : str  = None, date_prevues : str = None, date_effective : str = None, duree_estimee : int = None, responsable : str = None , statut : str = None, id_prestation : int = None):
 
         #verification type : 
-        if not isinstance(id_prestation, int) : 
-            raise TypeError("id prestation doit être un entier")
+        if not isinstance(id_activite, int) : 
+            raise TypeError("l'attribut {id_activite} doit être un entier")
         if not isinstance(libelle_operationnel, str) : 
-            raise TypeError("libelle operationnel doit être une chaine de caractère")
+            raise TypeError("l'attribut {libelle_operationnel} doit être une chaine de caractère")
         if not isinstance(date_prevues, str): # à verifier pour qu'il comporte "yyyy-mm-dd"
-            raise TypeError("date prevues doit être une chaine de caractère")
+            raise TypeError("l'attribut {date_prevues} doit être une chaine de caractère")
         if not isinstance(date_effective, str): # à verifier pour qu'il comporte "yyyy-mm-dd"
-            raise TypeError("date prevues doit être une chaine de caractère")
+            raise TypeError("l'attribut {date_effective} doit être une chaine de caractère")
         if not isinstance(duree_estimee, int):  
-            raise TypeError("duree estimee doit être un entier")
+            raise TypeError("l'attribut {duree_estimee} doit être un entier")
         if not isinstance(responsable, str):
-            raise TypeError("responsable doit être une chaine de caractère")
+            raise TypeError("l'attribut {responsable} doit être une chaine de caractère")
         if not isinstance(statut, str): #verifier bien in enum
-            raise TypeError("statut doit être une chaine de caractère") 
+            raise TypeError("l'attribut {statut} doit être une chaine de caractère") 
         if not isinstance(id_prestation, int) : 
-            raise TypeError("id prestation doit être un entier")
+            raise TypeError("l'attribut {id_prestation} doit être un entier")
         
         self.__libelle_operationnel = libelle_operationnel
         self.__date_prevues = date_prevues
@@ -74,50 +74,50 @@ class Activite :
     #commentaire : "*" = {nouveaux attributs du setter}
     def set_id_activite(self, id_activite):
         if not isinstance(id_activite, int) : 
-            raise TypeError("l'attribut * doit être un entier")
+            raise TypeError("l'attribut {id_activite} doit être un entier")
         self.__id_activite = id_activite
         Activite.leDAOActivite.update_activite(self)
 
     def set_libelle_operationnel(self, libelle_operationnel):
         if not isinstance(libelle_operationnel, str) : 
-            raise TypeError("l'attribut * doit être une chaîne de caractère")
+            raise TypeError("l'attribut {libelle_operationnel} doit être une chaine de caractère")
         self.__libelle_operationnel = libelle_operationnel
         Activite.leDAOActivite.update_activite(self)
         
 
     def set_date_prevues(self, date_prevues):
         if not isinstance(date_prevues, str) : # à verifier pour qu'il comporte "yyyy-mm-dd"
-            raise TypeError("l'attribut * doit être une chaîne de caractère")
+            raise TypeError("l'attribut {date_prevues} doit être une chaine de caractère")
         self.__date_prevues = date_prevues
         Activite.leDAOActivite.update_activite(self)
 
     def set_date_effective(self, date_effective):
         if not isinstance(date_effective, str) : # à verifier pour qu'il comporte "yyyy-mm-dd"
-            raise TypeError("l'attribut * doit être une chaîne de caractère")
+            raise TypeError("l'attribut {date_effective} doit être une chaine de caractère")
         self.__date_effective = date_effective
         Activite.leDAOActivite.update_activite(self)
 
     def set_duree_estimee(self, duree_estimee):
         if not isinstance(duree_estimee, int) : 
-            raise TypeError("l'attribut * doit être un entier")
+            raise TypeError("l'attribut {duree_estimee} doit être un entier")
         self.__duree_estimee = duree_estimee
         Activite.leDAOActivite.update_activite(self)
 
     def set_responsable(self, responsable):
         if not isinstance(responsable, str) : 
-            raise TypeError("l'attribut * doit être une chaîne de caractère")
+            raise TypeError("l'attribut {responsable} doit être une chaine de caractère")
         self.__responsable = responsable
         Activite.leDAOActivite.update_activite(self)
 
     def set_statut(self, statut):
         if not isinstance(statut, str) : # à verifier if in enum
-            raise TypeError("l'attribut * doit être une chaîne de caractère")
+            raise TypeError("l'attribut {statut} doit être une chaine de caractère") 
         self.__statut = statut
         Activite.leDAOActivite.update_activite(self)
 
     def set_id_prestation(self, id_prestation):
         if not isinstance(id_prestation, int) : 
-            raise TypeError("l'attribut * doit être un entier")
+            raise TypeError("l'attribut {id_prestation} doit être un entier")
         self.__id_prestation = id_prestation
         Activite.leDAOActivite.update_activite(self)
 
