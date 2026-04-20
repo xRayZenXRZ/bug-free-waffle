@@ -7,7 +7,8 @@ class Client:
     leDAOClient = DAOClient.get_instance()
 
     def __init__(self, id_client: int = None, nom: str = None, prenom: str = None, raison_sociale: str = None, adresse: str = None, telephone: str = None, courriel: str = None, enum_status_client: str = None):
-
+        
+        #verification type : 
         if not isinstance(nom, str):
             raise TypeError("nom doit être une chaine de caractère")
         if not isinstance(prenom, str):
@@ -63,6 +64,7 @@ class Client:
     def set_id_client(self, id_client):
         if isinstance(id_client, int):
             self.__id_client = id_client
+            Client.leDAOClient.update_client(self)
         else:
             raise ValueError(invalid_type)
 
