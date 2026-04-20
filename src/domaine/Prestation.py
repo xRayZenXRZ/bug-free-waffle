@@ -2,9 +2,10 @@ from DAO.DAOPrestation import DAOPrestation
 
 class Prestation:
 
-    leDAOPrestation = DAOPrestation()
+    leDAOPrestation = DAOPrestation.get_instance()
 
-    def __init__(self, id_prestation = None ,date_prevue=None, date_effective=None, lieu=None, type_prestation=None, nb_photos_prevues=None, nb_videos_prevues=None, numero_contrat=None):
+    def __init__(self, id_prestation=None, date_prevue=None, date_effective=None, lieu=None, type_prestation=None, nb_photos_prevues=None, nb_videos_prevues=None, numero_contrat=None):
+
         self.__date_prevue = date_prevue
         self.__date_effective = date_effective
         self.__lieu = lieu
@@ -13,14 +14,14 @@ class Prestation:
         self.__nb_videos_prevues = nb_videos_prevues
         self.__numero_contrat = numero_contrat
 
-        if id_prestation is not None : 
+        if id_prestation is not None:
             self.__id_prestation = id_prestation
-        else : 
+        else:
             self.__id_prestation = Prestation.leDAOPrestation.insert_Prestation(self)
 
     # Getters
 
-    def get_id_prestation(self) :
+    def get_id_prestation(self):
         return self.__id_prestation
 
     def get_date_prevue(self):
@@ -45,29 +46,37 @@ class Prestation:
         return self.__numero_contrat
 
     # Setters
+
     def set_id_prestation(self, id_prestation):
         self.__id_prestation = id_prestation
 
     def set_date_prevue(self, date_prevue):
         self.__date_prevue = date_prevue
+        Prestation.leDAOPrestation.update_prestation(self)
 
     def set_date_effective(self, date_effective):
         self.__date_effective = date_effective
+        Prestation.leDAOPrestation.update_prestation(self)
 
     def set_lieu(self, lieu):
         self.__lieu = lieu
+        Prestation.leDAOPrestation.update_prestation(self)
 
     def set_type(self, type_prestation):
         self.__type = type_prestation
+        Prestation.leDAOPrestation.update_prestation(self)
 
     def set_nb_photos_prevues(self, nb_photos_prevues):
         self.__nb_photos_prevues = nb_photos_prevues
+        Prestation.leDAOPrestation.update_prestation(self)
 
     def set_nb_videos_prevues(self, nb_videos_prevues):
         self.__nb_videos_prevues = nb_videos_prevues
+        Prestation.leDAOPrestation.update_prestation(self)
 
     def set_numero_contrat(self, numero_contrat):
         self.__numero_contrat = numero_contrat
+        Prestation.leDAOPrestation.update_prestation(self)
 
     def __str__(self):
         return f"Prestation(id_prestation={self.__id_prestation}, date_prevue={self.__date_prevue}, date_effective={self.__date_effective}, lieu={self.__lieu}, type={self.__type}, nb_photos_prevues={self.__nb_photos_prevues}, nb_videos_prevues={self.__nb_videos_prevues}, numero_contrat={self.__numero_contrat})"

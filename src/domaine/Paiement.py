@@ -1,51 +1,54 @@
 from DAO.DAOPaiement import DAOPAiement
 
-class Paiement :
+class Paiement:
 
     leDAOPaiement = DAOPAiement.get_instance()
 
-    def __int__(self, id_paiement = None, date = None, montant = None, numero_Facture = None):
+    def __init__(self, id_paiement=None, date=None, montant=None, numero_Facture=None):
 
         self.__date = date
         self.__montant = montant
         self.__numero_Facture = numero_Facture
 
-        if id_paiement is not None : 
+        if id_paiement is not None:
             self.__id_paiement = id_paiement
-        else : 
+        else:
             self.__id_paiement = Paiement.leDAOPaiement.insert_paiement(self)
 
-
     # Getters
+
     def get_id_paiement(self):
         return self.__id_paiement
 
     def get_montant(self):
         return self.__montant
-    
+
     def get_date(self):
         return self.__date
-    
-    def get_numero_Facture(self) :
+
+    def get_numero_Facture(self):
         return self.__numero_Facture
 
+    # Setters
 
-    # Setters 
-    
     def set_id_paiement(self, id_paiement):
         self.__id_paiement = id_paiement
 
-    def set_date(self, date) : 
+    def set_date(self, date):
         self.__date = date
+        Paiement.leDAOPaiement.update_paiement(self)
 
     def set_montant(self, montant):
         self.__montant = montant
-    
-    def set_numeroFacture(self, numero_Facture) :
+        Paiement.leDAOPaiement.update_paiement(self)
+
+    def set_numero_Facture(self, numero_Facture):
         self.__numero_Facture = numero_Facture
+        Paiement.leDAOPaiement.update_paiement(self)
 
     def __str__(self):
-        return f"Paiement(id_paiement={self.__id_paiement},date={self.__date}, montant={self.__montant}, numeroFacture={self.__numeroFacture})"
+        return f"Paiement(id_paiement={self.__id_paiement}, date={self.__date}, montant={self.__montant}, numeroFacture={self.__numero_Facture})"
+
 
 
 """class Paiement :

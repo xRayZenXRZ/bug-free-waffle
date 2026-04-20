@@ -1,11 +1,14 @@
 from DAO.DAOContrat import DAOContrat
+from DAO.DAOClient import DAOClient
+from domaine.Client import Client
 
 class Contrat:
 
-    leDAOContrat = DAOContrat()
+    leDAOContrat = DAOContrat.get_instance()
 
-    def __init__(self, numero_contrat=None, date_debut=None, duree=None, nb_productions_totales=None, periodicite=None, montant_global=None, condition_paiements=None, id_client=None):
+    def __init__(self, numero_contrat : str =None, date_debut : str =None, duree : int =None, nb_productions_totales : int =None, periodicite : str = None, montant_global : float =None, condition_paiements : str=None, id_client : int =None):
 
+        self.__numero_contrat = numero_contrat
         self.__date_debut = date_debut
         self.__duree = duree
         self.__nb_productions_totales = nb_productions_totales
@@ -14,12 +17,10 @@ class Contrat:
         self.__condition_paiements = condition_paiements
         self.__id_client = id_client
 
-        if numero_contrat is not None : 
-            self.__numero_contrat = numero_contrat
-        else : 
-            self.__numero_contrat = Contrat.leDAOContrat.insert_contrat(self)
+        self.__numero_contrat = Contrat.leDAOContrat.insert_contrat(self)
 
     # Getters
+
     def get_numero_contrat(self):
         return self.__numero_contrat
 
@@ -45,38 +46,40 @@ class Contrat:
         return self.__id_client
 
     # Setters
+
     def set_numero_contrat(self, numero_contrat):
         self.__numero_contrat = numero_contrat
 
     def set_date_debut(self, date_debut):
         self.__date_debut = date_debut
+        Contrat.leDAOContrat.update_contrat(self)
 
     def set_duree(self, duree):
         self.__duree = duree
+        Contrat.leDAOContrat.update_contrat(self)
 
     def set_nb_productions_totales(self, nb_productions_totales):
         self.__nb_productions_totales = nb_productions_totales
+        Contrat.leDAOContrat.update_contrat(self)
 
     def set_periodicite(self, periodicite):
         self.__periodicite = periodicite
+        Contrat.leDAOContrat.update_contrat(self)
 
     def set_montant_global(self, montant_global):
         self.__montant_global = montant_global
+        Contrat.leDAOContrat.update_contrat(self)
 
     def set_condition_paiements(self, condition_paiements):
         self.__condition_paiements = condition_paiements
+        Contrat.leDAOContrat.update_contrat(self)
 
     def set_id_client(self, id_client):
         self.__id_client = id_client
+        Contrat.leDAOContrat.update_contrat(self)
 
-    # Méthode pour afficher le contrat
     def __str__(self):
-        return (
-            f"Contrat(numero_contrat={self.__numero_contrat}, date_debut={self.__date_debut}, "
-            f"duree={self.__duree}, nb_productions_totales={self.__nb_productions_totales}, "
-            f"periodicite={self.__periodicite}, montant_global={self.__montant_global}, "
-            f"condition_paiements={self.__condition_paiements}, id_client={self.__id_client})"
-        )
+        return (f"Contrat(numero_contrat={self.__numero_contrat}, date_debut={self.__date_debut}, duree={self.__duree}, nb_productions_totales={self.__nb_productions_totales}, periodicite={self.__periodicite}, montant_global={self.__montant_global}, condition_paiements={self.__condition_paiements}, id_client={self.__id_client})")
 
 """class Contrat :
 
