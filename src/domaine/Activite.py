@@ -8,13 +8,12 @@ class Activite :
     def __init__(self, id_activite : int = None, libelle_operationnel : str  = None, date_prevues : str = None, date_effective : str = None, duree_estimee : int = None, responsable : str = None , statut : str = None, id_prestation : int = None):
 
         #verification type : 
-        if not isinstance(id_activite, int) : 
-            raise TypeError("l'attribut {id_activite} doit être un entier")
+
         if not isinstance(libelle_operationnel, str) : 
             raise TypeError("l'attribut {libelle_operationnel} doit être une chaine de caractère")
         if not isinstance(date_prevues, str): # à verifier pour qu'il comporte "yyyy-mm-dd"
             raise TypeError("l'attribut {date_prevues} doit être une chaine de caractère")
-        if not isinstance(date_effective, str): # à verifier pour qu'il comporte "yyyy-mm-dd"
+        if date_effective is not None and not isinstance(date_effective, str): # à verifier pour qu'il comporte "yyyy-mm-dd"
             raise TypeError("l'attribut {date_effective} doit être une chaine de caractère")
         if not isinstance(duree_estimee, int):  
             raise TypeError("l'attribut {duree_estimee} doit être un entier")

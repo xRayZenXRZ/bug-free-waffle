@@ -9,8 +9,6 @@ class Client:
     def __init__(self, id_client: int = None, nom: str = None, prenom: str = None, raison_sociale: str = None, adresse: str = None, telephone: str = None, courriel: str = None, enum_status_client: str = None):
         
         #verification type : 
-        if not isinstance(id_client, int):
-            raise TypeError("l'attribut {nom} doit être un entier")
         if not isinstance(nom, str):
             raise TypeError("l'attribut {nom} doit être une chaine de caractère")
         if not isinstance(prenom, str):

@@ -4,7 +4,7 @@ class Prestation:
 
     leDAOPrestation = DAOPrestation.get_instance()
 
-    def __init__(self, id_prestation : int = None, date_prevue : str =None, date_effective : str = None, lieu : str =None, type_prestation : str =None, nb_photos_prevues : int =None, nb_videos_prevues : int =None, numero_contrat : str =None):
+    def __init__(self, id_prestation : int = None, date_prevue : str = None, date_effective : str = None, lieu : str =None, type_prestation : str =None, nb_photos_prevues : int =None, nb_videos_prevues : int =None, numero_contrat : str =None):
         
         #verification type : 
         if id_prestation is not None and not isinstance(id_prestation, int):
