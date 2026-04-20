@@ -4,8 +4,17 @@ class Paiement:
 
     leDAOPaiement = DAOPAiement.get_instance()
 
-    def __init__(self, id_paiement=None, date=None, montant=None, numero_Facture=None):
+    def __init__(self, id_paiement : int = None, date : str = None, montant : float = None, numero_Facture : str = None):
 
+        #verification type : 
+        if not isinstance(id_paiement, int):
+            raise TypeError("l'attribut {id_paiement} doit être un entier")
+        if not isinstance(date, str):
+            raise TypeError("l'attribut {date} doit être une chaîne de caractères")
+        if not isinstance(montant, float) :
+            raise TypeError("l'attribut {montant} doit être un nombre float")
+        if not isinstance(numero_Facture, str):
+            raise TypeError("l'attribut {numero_Facture} doit être une chaîne de caractères")
         self.__date = date
         self.__montant = montant
         self.__numero_Facture = numero_Facture
@@ -32,17 +41,26 @@ class Paiement:
     # Setters
 
     def set_id_paiement(self, id_paiement):
+        if not isinstance(id_paiement, int):
+            raise TypeError("l'attribut {id_paiement} doit être un entier")
         self.__id_paiement = id_paiement
+        Paiement.leDAOPaiement.update_paiement(self)
 
     def set_date(self, date):
+        if not isinstance(date, str):
+            raise TypeError("l'attribut {date} doit être une chaîne de caractères")
         self.__date = date
         Paiement.leDAOPaiement.update_paiement(self)
 
     def set_montant(self, montant):
+        if not isinstance(montant, float) :
+            raise TypeError("l'attribut {montant} doit être un nombre float")
         self.__montant = montant
         Paiement.leDAOPaiement.update_paiement(self)
 
     def set_numero_Facture(self, numero_Facture):
+        if not isinstance(numero_Facture, str):
+            raise TypeError("l'attribut {numero_Facture} doit être une chaîne de caractères")
         self.__numero_Facture = numero_Facture
         Paiement.leDAOPaiement.update_paiement(self)
 
