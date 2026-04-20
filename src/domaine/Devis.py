@@ -4,7 +4,7 @@ class Devis:
 
     leDAODevis = DAODevis.get_instance()
 
-    def __init__(self, numero_devis : str =None, date_emission : str =None, date_validite : str = None, description_prestation : str =None, quantite_prevue : int = None, details_couts : str = None, montant_total_estime : float = None, statut : str = None, date_acceptation : str = None, id_client : int = None, numero_contrat : str = None):
+    def __init__(self, numero_devis : str = None, date_emission : str =None, date_validite : str = None, description_prestation : str =None, quantite_prevue : int = None, details_couts : str = None, montant_total_estime : float = None, statut : str = None, date_acceptation : str = None, id_client : int = None, numero_contrat : str = None):
         
         #verification Type : 
         if not isinstance(numero_devis, str):
@@ -23,11 +23,11 @@ class Devis:
             raise TypeError("l'attribut {montant_total_estime} doit être un float")
         if not isinstance(statut, str):
             raise TypeError("l'attribut {statut} doit être une chaîne de caractères")
-        if not isinstance(date_acceptation,str):
+        if date_acceptation is not None and not isinstance(date_acceptation, str):
             raise TypeError("l'attribut {date_acceptation} doit être une chaîne de caractères")
         if not isinstance(id_client, int):
             raise TypeError("l'attribut {id_client} doit être un entier")
-        if not isinstance(numero_contrat, str):
+        if numero_contrat is not None and not isinstance(numero_contrat, str):
             raise TypeError("l'attribut {numero_contrat} doit être une chaîne de caractères")
         
         self.__numero_devis = numero_devis

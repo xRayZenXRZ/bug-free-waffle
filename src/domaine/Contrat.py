@@ -6,15 +6,15 @@ class Contrat:
 
     leDAOContrat = DAOContrat.get_instance()
 
-    def __init__(self, numero_contrat : str = None, date_debut : str = None, duree : int = None, nb_productions_totales : int = None, periodicite : str = None, montant_global : float = None, condition_paiements : str = None, id_client : int = None):
+    def __init__(self, numero_contrat : str = None, date_debut : str = None, duree : str = None, nb_productions_totales : int = None, periodicite : str = None, montant_global : float = None, condition_paiements : str = None, id_client : int = None):
 
         #verification de type : 
         if not isinstance(numero_contrat, str):
             raise TypeError("l'attribut {numero_contrat} doit être une chaine de caractère") 
         if not isinstance(date_debut, str):
             raise TypeError("l'attribut {date_debut} doit être une chaine de caractère") 
-        if not isinstance(duree, int):
-            raise TypeError("l'attribut {duree} doit être un entier") 
+        if not isinstance(duree, str):
+            raise TypeError("l'attribut {duree} doit être une chaine de caractère") 
         if not isinstance(nb_productions_totales, int):
             raise TypeError("l'attribut {nb_productions_totales} doit être un entier") 
         if not isinstance(periodicite, str):
@@ -78,8 +78,8 @@ class Contrat:
         Contrat.leDAOContrat.update_contrat(self)
 
     def set_duree(self, duree):
-        if not isinstance(duree, int):
-            raise TypeError("l'attribut {duree} doit être un entier") 
+        if not isinstance(duree, str):
+            raise TypeError("l'attribut {duree} doit être une chaine de caractère") 
         self.__duree = duree
         Contrat.leDAOContrat.update_contrat(self)
 
