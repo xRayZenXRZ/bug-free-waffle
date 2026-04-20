@@ -1,13 +1,14 @@
 from DAO.DAOActivite import DAOActivite
+import datetime
 
 class Activite : 
 
     leDAOActivite = DAOActivite()
 
-    def __init__(self, id_activite = None, libelle_operationnel = None, date_prevues = None, date_effective = None, duree_estimee = None, responsable =None , statut = None, id_prestation = None):
+    def __init__(self, id_activite = None, libelle_operationnel  = None, date_prevues = None, date_effective = None, duree_estimee  = None, responsable  =None , statut = None, id_prestation = None):
 
-        self.__libelle_operationnel = libelle_operationnel
-        self.__date_prevues = date_prevues
+        #verification type
+
         self.__date_effective = date_effective
         self.__duree_estimee = duree_estimee
         self.__responsable = responsable
@@ -18,8 +19,15 @@ class Activite :
             self.__id_activite = id_activite
         else : 
             self.__id_activite = Activite.leDAOActivite.insert_activite(self)
+    
+    def charger(id_activite):
+        pass
 
-    # Getters
+    def supprimer(activite) : 
+        pass
+
+    # Getters :
+    
     def get_id_activite(self):
         return self.__id_activite
 
@@ -47,27 +55,36 @@ class Activite :
     # Setters
     def set_id_activite(self, id_activite):
         self.__id_activite = id_activite
+        Activite.leDAOActivite.update_activite(self)
 
     def set_libelle_operationnel(self, libelle_operationnel):
         self.__libelle_operationnel = libelle_operationnel
+        Activite.leDAOActivite.update_activite(self)
+        
 
     def set_date_prevues(self, date_prevues):
         self.__date_prevues = date_prevues
+        Activite.leDAOActivite.update_activite(self)
 
     def set_date_effective(self, date_effective):
         self.__date_effective = date_effective
+        Activite.leDAOActivite.update_activite(self)
 
     def set_duree_estimee(self, duree_estimee):
         self.__duree_estimee = duree_estimee
+        Activite.leDAOActivite.update_activite(self)
 
     def set_responsable(self, responsable):
         self.__responsable = responsable
+        Activite.leDAOActivite.update_activite(self)
 
     def set_statut(self, statut):
         self.__statut = statut
+        Activite.leDAOActivite.update_activite(self)
 
     def set_id_prestation(self, id_prestation):
         self.__id_prestation = id_prestation
+        Activite.leDAOActivite.update_activite(self)
 
     def __str__(self):
         return f"Activite(id_activite={self.__id_activite}, libelle_operationnel={self.__libelle_operationnel}, date_prevues={self.__date_prevues}, date_effective={self.__date_effective}, duree_estimee={self.__duree_estimee}, responsable={self.__responsable}, statut={self.__statut}, id_prestation={self.__id_prestation})"

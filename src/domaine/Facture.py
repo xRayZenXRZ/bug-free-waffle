@@ -1,21 +1,18 @@
 from DAO.DAOFacture import DAOFacture
 
-class Facture : 
+class Facture:
 
-    leDAOFacture = DAOFacture()
+    leDAOFacture = DAOFacture.get_instance()
 
-    def __init__(self, numero_facture = None, date_emission = None, montant_total = None, etat = None, numero_contrat = None):
+    def __init__(self, numero_facture=None, date_emission=None, montant_total=None, etat=None, numero_contrat=None):
 
+        self.__numero_facture = numero_facture
         self.__date_emission = date_emission
         self.__montant_total = montant_total
         self.__etat = etat
         self.__numero_contrat = numero_contrat
 
-        if numero_facture is not None : 
-            self.__numero_facture = numero_facture
-        else : 
-            self.__numero_facture = Facture.leDAOFacture.insert_facture(self)
-
+        self.__numero_facture = Facture.leDAOFacture.insert_facture(self)
 
     # Getters
 
@@ -30,28 +27,30 @@ class Facture :
 
     def get_etat(self):
         return self.__etat
-    
+
     def get_numero_contrat(self):
         return self.__numero_contrat
-    
-    # Setters
 
-    #Commentaire : yeahhh same things todo...
+    # Setters
 
     def set_numero_facture(self, numero_facture):
         self.__numero_facture = numero_facture
 
     def set_date_emission(self, date_emission):
         self.__date_emission = date_emission
+        Facture.leDAOFacture.update_facture(self)
 
     def set_montant_total(self, montant_total):
         self.__montant_total = montant_total
+        Facture.leDAOFacture.update_facture(self)
 
     def set_etat(self, etat):
         self.__etat = etat
-    
-    def set_numero_contrat(self, numero_contrat) :
+        Facture.leDAOFacture.update_facture(self)
+
+    def set_numero_contrat(self, numero_contrat):
         self.__numero_contrat = numero_contrat
+        Facture.leDAOFacture.update_facture(self)
 
     def __str__(self):
         return f"Facture(numero_facture={self.__numero_facture}, date_emission={self.__date_emission}, montant_total={self.__montant_total}, etat={self.__etat}, numero_contrat={self.__numero_contrat})"
