@@ -72,33 +72,54 @@ class Prestation:
     # Setters
 
     def set_id_prestation(self, id_prestation):
+        if not isinstance(id_prestation, int):
+            raise TypeError("l'attribut {id_prestation} doit être un entier")
         self.__id_prestation = id_prestation
+        Prestation.leDAOPrestation.update_prestation(self)
 
     def set_date_prevue(self, date_prevue):
+        if date_prevue is not None and not isinstance(date_prevue, str):
+            raise TypeError("l'attribut {date_prevue} doit être une chaîne de caractères ou None")
         self.__date_prevue = date_prevue
         Prestation.leDAOPrestation.update_prestation(self)
 
     def set_date_effective(self, date_effective):
+        if date_effective is not None and not isinstance(date_effective, str):
+            raise TypeError("l'attribut {date_effective} doit être une chaîne de caractères ou None")
         self.__date_effective = date_effective
         Prestation.leDAOPrestation.update_prestation(self)
 
     def set_lieu(self, lieu):
+        if lieu is not None and not isinstance(lieu, str):
+            raise TypeError("l'attribut {lieu} doit être une chaîne de caractères ou None")
         self.__lieu = lieu
         Prestation.leDAOPrestation.update_prestation(self)
 
     def set_type(self, type_prestation):
+        if type_prestation is not None and not isinstance(type_prestation, str):
+            raise TypeError("l'attribut {type_prestation} doit être une chaîne de caractères ou None")
         self.__type = type_prestation
         Prestation.leDAOPrestation.update_prestation(self)
 
     def set_nb_photos_prevues(self, nb_photos_prevues):
+        if not isinstance(nb_photos_prevues, int):
+            raise TypeError("l'attribut {nb_photos_prevues} doit être un entier")
+        if nb_photos_prevues < 0:
+            raise ValueError("le nombre de photos prévues ne peut pas être négatif")
         self.__nb_photos_prevues = nb_photos_prevues
         Prestation.leDAOPrestation.update_prestation(self)
 
     def set_nb_videos_prevues(self, nb_videos_prevues):
+        if not isinstance(nb_videos_prevues, int):
+            raise TypeError("l'attribut {nb_videos_prevues} doit être un entier")
+        if nb_videos_prevues < 0:
+            raise ValueError("le nombre de vidéos prévues ne peut pas être négatif")
         self.__nb_videos_prevues = nb_videos_prevues
         Prestation.leDAOPrestation.update_prestation(self)
 
     def set_numero_contrat(self, numero_contrat):
+        if numero_contrat is not None and not isinstance(numero_contrat, str):
+            raise TypeError("l'attribut {numero_contrat} doit être une chaîne de caractères ou None")
         self.__numero_contrat = numero_contrat
         Prestation.leDAOPrestation.update_prestation(self)
 
