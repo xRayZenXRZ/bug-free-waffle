@@ -72,7 +72,7 @@ CREATE TABLE Facture (
     montantTotal DECIMAL(10,2),
     etat ENUM('EN_ATTENTE', 'PAYEE', 'PARTIELLEMENT_PAYEE'),
     numeroContrat VARCHAR(50), 
-     FOREIGN KEY(numeroContrat) REFERENCES Contrat(numeroContrat)
+    FOREIGN KEY(numeroContrat) REFERENCES Contrat(numeroContrat)
 );
 
 --          PAIEMENT
