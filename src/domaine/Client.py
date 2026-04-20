@@ -60,62 +60,55 @@ class Client:
         return self.__enum_status_client
 
     # Setters
-
+    #commentaire : modifier * = attributs du setters :
     def set_id_client(self, id_client):
-        if isinstance(id_client, int):
-            self.__id_client = id_client
-            Client.leDAOClient.update_client(self)
-        else:
-            raise ValueError(invalid_type)
+        if not isinstance(id_client, int):
+            raise TypeError("l'attribut {id_client} doit être un entier")            
+        self.__id_client = id_client
+        Client.leDAOClient.update_client(self)
 
     def set_nom(self, nom):
-        if isinstance(nom, str):
-            self.__nom = nom
-            Client.leDAOClient.update_client(self)
-        else:
-            raise ValueError(invalid_type)
+        if not isinstance(nom, str):
+            raise TypeError("l'attribut {nom} doit être une chaine de caractère")               
+        self.__nom = nom
+        Client.leDAOClient.update_client(self)
 
     def set_prenom(self, prenom):
-        if isinstance(prenom, str):
-            self.__prenom = prenom
-            Client.leDAOClient.update_client(self)
-        else:
-            raise ValueError(invalid_type)
+        if not isinstance(prenom, str):
+            raise TypeError("l'attribut {prenom} doit être une chaine de caractère") 
+        self.__prenom = prenom
+        Client.leDAOClient.update_client(self)
 
     def set_raison_sociale(self, raison_sociale):
-        if isinstance(raison_sociale, str):
-            self.__raison_sociale = raison_sociale
-            Client.leDAOClient.update_client(self)
-        else:
-            raise ValueError(invalid_type)
+        if not isinstance(raison_sociale, str):
+            raise TypeError("l'attribut {raison_sociale} doit être une chaine de caractère") 
+        self.__raison_sociale = raison_sociale
+        Client.leDAOClient.update_client(self)
 
     def set_adresse(self, adresse):
-        if isinstance(adresse, str):
-            self.__adresse = adresse
-            Client.leDAOClient.update_client(self)
-        else:
-            raise ValueError(invalid_type)
+        if not isinstance(adresse, str):
+            raise TypeError("l'attribut {adresse} doit être une chaine de caractère") 
+        self.__adresse = adresse
+        Client.leDAOClient.update_client(self)
 
     def set_telephone(self, telephone):
-        if isinstance(telephone, str):
-            self.__telephone = telephone
-            Client.leDAOClient.update_client(self)
-        else:
-            raise ValueError(invalid_type)
+        if not isinstance(telephone, str):
+            raise TypeError("l'attribut {telephone} doit être une chaine de caractère") 
+        self.__telephone = telephone
+        Client.leDAOClient.update_client(self)
+
 
     def set_courriel(self, courriel):
-        if isinstance(courriel, str):
-            self.__courriel = courriel
-            Client.leDAOClient.update_client(self)
-        else:
-            raise ValueError(invalid_type)
+        if not isinstance(courriel, str):
+            raise TypeError("l'attribut {courriel} doit être une chaine de caractère") 
+        self.__courriel = courriel
+        Client.leDAOClient.update_client(self)
 
     def set_enum_status_client(self, enum_status_client):
-        if isinstance(enum_status_client, str):
-            self.__enum_status_client = enum_status_client
-            Client.leDAOClient.update_client(self)
-        else:
-            raise ValueError(invalid_type)
+        if not isinstance(enum_status_client, str):
+            raise TypeError("l'attribut {enum_statut_client} doit être une chaine de caractère") 
+        self.__enum_status_client = enum_status_client
+        Client.leDAOClient.update_client(self)
 
     def __str__(self):
         return f"Client(id_client={self.__id_client}, nom={self.__nom}, prenom={self.__prenom}, raison_sociale={self.__raison_sociale}, adresse={self.__adresse}, telephone={self.__telephone}, courriel={self.__courriel}, statut={self.__enum_status_client})"
