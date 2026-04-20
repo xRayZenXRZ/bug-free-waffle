@@ -9,16 +9,20 @@ class Client:
     def __init__(self, id_client: int = None, nom: str = None, prenom: str = None, raison_sociale: str = None, adresse: str = None, telephone: str = None, courriel: str = None, enum_status_client: str = None):
         
         #verification type : 
+        if not isinstance(id_client, int):
+            raise TypeError("l'attribut {nom} doit être un entier")
         if not isinstance(nom, str):
-            raise TypeError("nom doit être une chaine de caractère")
+            raise TypeError("l'attribut {nom} doit être une chaine de caractère")
         if not isinstance(prenom, str):
-            raise TypeError("prenom doit être une chaine de caractère")
+            raise TypeError("l'attributs {prenom} doit être une chaine de caractère")
         if not isinstance(adresse, str):
-            raise TypeError("adresse doit être une chaine de caractère")
+            raise TypeError("l'attributs {adresse} doit être une chaine de caractère")
         if not isinstance(telephone, str):
-            raise TypeError("telephone doit être une chaine de caractère")
+            raise TypeError("l'attributs {telephone} doit être une chaine de caractère")
         if not isinstance(courriel, str):
-            raise TypeError("courriel doit être une chaine de caractère")
+            raise TypeError("l'attributs {courriel} doit être une chaine de caractère")
+        if not isinstance(enum_status_client, str):
+            raise TypeError("l'attributs {enum_status_client} doit être une chaine de caractère")
 
         self.__nom = nom
         self.__prenom = prenom
