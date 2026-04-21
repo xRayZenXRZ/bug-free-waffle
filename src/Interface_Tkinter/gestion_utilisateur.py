@@ -2,15 +2,12 @@ import tkinter as tk
 from tkinter import ttk
 
 
-class main_windows(tk.Frame):
-    def __init__(self, parent, utilisateur, on_gestion_users_callback):
-
+class GestionUtilisateur(tk.Frame):
+    def __init__(self, parent, utilisateur):
         super().__init__(parent)
-
         self.pack(fill="both", expand=True)
 
         self.utilisateur = utilisateur
-        self.on_gestion_users = on_gestion_users_callback
 
         # Header avec infos utilisateur
         header = ttk.Frame(self)
@@ -33,7 +30,6 @@ class main_windows(tk.Frame):
         content = ttk.Frame(self)
         content.pack(fill='both', expand=True, padx=50, pady=20)
 
-        # Sous-titre
         ttk.Label(
             content,
             text="Que souhaitez-vous faire ?",
@@ -41,22 +37,20 @@ class main_windows(tk.Frame):
         ).pack(pady=30)
 
         # Boutons selon le rôle
-        if utilisateur['role'] == 'ADMIN':
-            ttk.Button(
-                content,
-                text="👥 Gérer les utilisateurs",
-                command=lambda: self.on_gestion_users()
-            ).pack(pady=10, ipadx=20, ipady=5)
-
-        # Exemple de boutons
         ttk.Button(
             content,
-            text="👤 Voir les clients",
+            text="Ajouter utilisateurs",
+            command=lambda: print("Ajouter utilisateurs")
+        ).pack(pady=10, ipadx=20, ipady=5)
+
+        ttk.Button(
+            content,
+            text="👤 Voir les utilisateurs",
             command=lambda: print("Voir clients")
         ).pack(pady=10, ipadx=20, ipady=5)
 
         ttk.Button(
             content,
-            text="📄 Créer un devis",
-            command=lambda: print("Créer devis")
+            text="supprimer un utilisateur",
+            command=lambda: print("supprimer un utilisateur")
         ).pack(pady=10, ipadx=20, ipady=5)

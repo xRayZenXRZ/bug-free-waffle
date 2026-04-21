@@ -1,7 +1,7 @@
 import tkinter as tk
 from Acceuil import ConnexionUI
 from main_windows import main_windows
-
+from gestion_utilisateur import GestionUtilisateur
 
 class App:
     def __init__(self, root):
@@ -13,16 +13,30 @@ class App:
         self.container = tk.Frame(self.root)
         self.container.pack(fill="both", expand=True)
 
-        # Démarrer avec la page de connexion
-        ConnexionUI(self.container, self.afficher_acceuil_connecte)
+        # Utilisateur connecté
+        self.utilisateur_connecte = None
 
-    def afficher_acceuil_connecte(self, nom_utilisateur, email):
-        # Nettoyer la page actuelle
+        # Démarrer avec connexion
+        ConnexionUI(self.container, self.afficher_main_window)
+
+    def afficher_main_window(self, utilisateur):
+        self.utilisateur_connecte = utilisateur
+
+        # Nettoyer
         for widget in self.container.winfo_children():
             widget.destroy()
 
-        # Afficher la page d'accueil connecté
-        main_windows(self.container, nom_utilisateur)
+        self.root.geometry("1000x600")
+        
+        main_windows(self.container, utilisateur, self.afficher_gestion_utilisateurs)
+
+    def afficher_gestion_utilisateurs(self):
+        # Nettoyer le container
+        for widget in self.container.winfo_children():
+            widget.destroy()
+
+        # Afficher la page de gestion
+        GestionUtilisateur(self.container, self.utilisateur_connecte)
 
 
 if __name__ == "__main__":
