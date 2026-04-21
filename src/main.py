@@ -1,7 +1,7 @@
-from main_windows import MainWindow
-from Acceuil import ConnexionUI
+from Interface_Tkinter.main_windows import MainWindow
+from Interface_Tkinter.Acceuil import ConnexionUI
 import tkinter as tk
-from gestion_utilisateur import GestionUtilisateur
+from Interface_Tkinter.gestion_utilisateur import GestionUtilisateur
 
 
 class App:

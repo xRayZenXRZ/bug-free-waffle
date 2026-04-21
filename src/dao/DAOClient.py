@@ -1,5 +1,6 @@
-from DAO.DAOSession import DAOSession
+from dao.DAOSession import DAOSession
 from mysql.connector import Error
+
 
 class DAOClient:
 
@@ -13,7 +14,8 @@ class DAOClient:
 
     def insert_client(self, client):
         sql = "INSERT INTO Client (nom, prenom, raisonSociale, adressePostale, telephone, email, statut) VALUES (%s, %s, %s, %s, %s, %s, %s)"
-        values = (client.get_nom(), client.get_prenom(), client.get_raison_sociale(), client.get_adresse(), client.get_telephone(), client.get_courriel(), client.get_status_client())
+        values = (client.get_nom(), client.get_prenom(), client.get_raison_sociale(), client.get_adresse(
+        ), client.get_telephone(), client.get_courriel(), client.get_status_client())
         try:
             connection = DAOSession.get_connexion()
             cursor = connection.cursor()
@@ -77,7 +79,8 @@ class DAOClient:
 
     def update_client(self, client):
         sql = "UPDATE Client SET nom = %s, prenom = %s, raisonSociale = %s, adressePostale = %s, telephone = %s, email = %s, statut = %s WHERE idClient = %s"
-        values = (client.get_nom(), client.get_prenom(), client.get_raison_sociale(), client.get_adresse(), client.get_telephone(), client.get_courriel(), client.get_status_client(), client.get_id_client())
+        values = (client.get_nom(), client.get_prenom(), client.get_raison_sociale(), client.get_adresse(
+        ), client.get_telephone(), client.get_courriel(), client.get_status_client(), client.get_id_client())
         try:
             connection = DAOSession.get_connexion()
             cursor = connection.cursor()
@@ -163,5 +166,6 @@ class DAOClient:
 
     def set_all_values(self, rs):
         from domaine.Client import Client
-        client = Client(rs["idClient"], rs["nom"], rs["prenom"], rs["raisonSociale"], rs["adressePostale"], rs["telephone"], rs["email"], rs["statut"])
+        client = Client(rs["idClient"], rs["nom"], rs["prenom"], rs["raisonSociale"],
+                        rs["adressePostale"], rs["telephone"], rs["email"], rs["statut"])
         return client

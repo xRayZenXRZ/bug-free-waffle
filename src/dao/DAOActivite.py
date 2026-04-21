@@ -1,70 +1,71 @@
-from DAO.DAOSession import DAOSession
+from dao.DAOSession import DAOSession
 from mysql.connector import Error
 
-class DAOActivite : 
+
+class DAOActivite:
 
     unique_instance = None
 
     @staticmethod
-    def get_instance() :
-        if DAOActivite.unique_instance is None : 
+    def get_instance():
+        if DAOActivite.unique_instance is None:
             DAOActivite.unique_instance = DAOActivite()
         return DAOActivite.unique_instance
-    
-    def insert_activite(self, activite) :
+
+    def insert_activite(self, activite):
         sql = "INSERT INTO Activite (libelleOperationnel, datePrevue, dateEffective, dureeEstimeeHeures, responsable, statut, idPrestation) VALUES (%s,%s,%s,%s,%s,%s,%s)"
-        values = (activite.get_libelle_operationnel(), activite.get_date_prevues(), activite.get_date_effective(), activite.get_duree_estimee(), activite.get_responsable(), activite.get_statut(), activite.get_id_prestation())
-        try :
+        values = (activite.get_libelle_operationnel(), activite.get_date_prevues(), activite.get_date_effective(
+        ), activite.get_duree_estimee(), activite.get_responsable(), activite.get_statut(), activite.get_id_prestation())
+        try:
             connection = DAOSession.get_connexion()
             cursor = connection.cursor()
             cursor.execute(sql, values)
             cle = cursor.lastrowid
             return cle
-        except Error as e : 
+        except Error as e:
             print("\n<--------------------------------------->")
             print(f"Erreur lors de la création du Activite : {e}")
             print(sql)
             print(values)
             print("rollback")
-            connection.rollback() 
+            connection.rollback()
             return -1
         finally:
             if cursor:
-                cursor.close()    
+                cursor.close()
 
     def delete_activite(self, activite):
         sql = "DELETE FROM Activite WHERE idActivite = %s"
         values = (activite.get_id_activite(),)
-        try :
+        try:
             connection = DAOSession.get_connexion()
             cursor = connection.cursor()
             cursor.execute(sql, values)
             return True
-        except Error as e : 
+        except Error as e:
             print("\n<--------------------------------------->")
             print(f"Erreur lors de la suppression de activite : {e}")
             print(sql)
             print("rollback")
-            connection.rollback() 
+            connection.rollback()
             return False
         finally:
             if cursor:
                 cursor.close()
 
-
     def find_activite(self, activite):
         sql = "SELECT * FROM Activite WHERE idActivite = %s"
         values = (activite.get_id_activite())
-        try : 
+        try:
             connection = DAOSession.get_connexion()
             cursor = connection.cursor(dictionary=True)
-            cursor.execute(sql,values)
+            cursor.execute(sql, values)
             rs = cursor.fetchone()
-            if rs :
+            if rs:
                 return self.sett_all_values(rs)
-            else : 
+            else:
                 return None
-        except Error as e : 
+        except Error as e:
             print("\n<--------------------------------------->")
             print(f"Erreur lors de la recherche d'un activite : {e}")
             print(sql)
@@ -76,7 +77,8 @@ class DAOActivite :
 
     def update_activite(self, activite):
         sql = "UPDATE Activite SET libelleOperationnel = %s, datePrevue = %s, dateEffective = %s , dureeEstimeeHeures= %s, responsable = %s, statut = %s, idPrestation = %s WHERE idActivite = %s"
-        valeurs = (activite.get_libelle_operationnel(), activite.get_date_prevues(), activite.get_date_effective(), activite.get_duree_estimee(), activite.get_responsable(), activite.get_statut(), activite.get_id_prestation(), activite.get_id_activite())
+        valeurs = (activite.get_libelle_operationnel(), activite.get_date_prevues(), activite.get_date_effective(), activite.get_duree_estimee(
+        ), activite.get_responsable(), activite.get_statut(), activite.get_id_prestation(), activite.get_id_activite())
         try:
             connection = DAOSession.get_connexion()
             cursor = connection.cursor()
@@ -88,12 +90,11 @@ class DAOActivite :
             print(sql)
             print(valeurs)
             print("rollback")
-            connection.rollback() 
+            connection.rollback()
             return False
         finally:
             if cursor:
-                cursor.close()        
-
+                cursor.close()
 
     def select_activite(self, activite):
 
@@ -111,10 +112,10 @@ class DAOActivite :
 
         values = []
 
-        if (critere_id_activite is not None) and (critere_id_activite!=-1):
+        if (critere_id_activite is not None) and (critere_id_activite != -1):
             sql += "idActivite = %s"
             values.append(critere_id_activite)
-        elif (critere_libelle_operationnel and critere_date_prevues and critere_date_effective and critere_duree_estimee and critere_responsable and critere_statut and critere_id_prestation) is None :
+        elif (critere_libelle_operationnel and critere_date_prevues and critere_date_effective and critere_duree_estimee and critere_responsable and critere_statut and critere_id_prestation) is None:
             sql = "SELECT * FROM Activite"
         else:
             conditions = []
@@ -138,11 +139,11 @@ class DAOActivite :
                 conditions.append("responsable = %s")
                 values.append(critere_responsable)
 
-            if critere_statut is not None : 
+            if critere_statut is not None:
                 conditions.append("statut = %s")
                 values.append(critere_statut)
 
-            if critere_id_prestation is not None :
+            if critere_id_prestation is not None:
                 conditions.append("idPrestation = %s")
                 values.append(critere_id_prestation)
 
@@ -167,5 +168,6 @@ class DAOActivite :
 
     def set_all_values(self, rs):
         from domaine.Activite import Activite
-        activite = Activite(rs["idActivite"], rs["libelleOperationnel"], rs["datePrevue"], rs["dateEffective"], rs["dureeEstimeeHeures"], rs["responsable"], rs["statut"], rs["idPrestation"])
+        activite = Activite(rs["idActivite"], rs["libelleOperationnel"], rs["datePrevue"], rs["dateEffective"],
+                            rs["dureeEstimeeHeures"], rs["responsable"], rs["statut"], rs["idPrestation"])
         return activite
