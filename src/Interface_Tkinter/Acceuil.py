@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 import tkinter.messagebox as mb
+from dao.DAOUtilisateur import DAOUtilisateur
 import mysql.connector
 
 class ConnexionUI(tk.Frame):  # Hérite de Frame au lieu de rien
@@ -24,14 +25,6 @@ class ConnexionUI(tk.Frame):  # Hérite de Frame au lieu de rien
         self.entry_mdp.pack(side='top', anchor='center', pady=(0, 50))
         self.bouton.pack(side='top', anchor='center', pady=(0, 75))
 
-    def connecter_bdd(self):
-        """Connexion à la base de données"""
-        return mysql.connector.connect(
-            host="localhost",
-            user="root",  # Ton user MySQL
-            password="",  # Ton mot de passe MySQL
-            database="test_comart"
-        )
 
     def verification(self):
         email = self.entry_email.get()
@@ -51,21 +44,8 @@ class ConnexionUI(tk.Frame):  # Hérite de Frame au lieu de rien
             return
 
         try:
-            # Connexion à la BDD
-            conn = self.connecter_bdd()
-            cursor = conn.cursor(dictionary=True)
 
-            # Requête pour vérifier l'utilisateur
-            query = """
-                SELECT idUtilisateur, nom, prenom, email, role, statut 
-                FROM Utilisateur 
-                WHERE email = %s AND motDePasse = %s AND statut = 'ACTIF'
-            """
-            cursor.execute(query, (email, mdp))
-            utilisateur = cursor.fetchone()
-
-            cursor.close()
-            conn.close()
+            utilisateur = DAOUtilisateur.authentifier(email, mdp)
 
             if not utilisateur:
                 self.entry_email.delete(0, tk.END)
