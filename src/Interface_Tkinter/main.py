@@ -1,6 +1,7 @@
-import tkinter as tk
+from main_windows import MainWindow
 from Acceuil import ConnexionUI
-from main_windows import MainWindow  # Import modifié ici
+import tkinter as tk
+from gestion_utilisateur import GestionUtilisateur
 
 
 class App:
@@ -30,7 +31,16 @@ class App:
         self.root.geometry("1000x600")
 
         # Afficher main window
-        MainWindow(self.container, utilisateur)
+        MainWindow(self.container, utilisateur,
+                   self.afficher_gestion_utilisateurs)
+
+    def afficher_gestion_utilisateurs(self):
+        # Nettoyer le container
+        for widget in self.container.winfo_children():
+            widget.destroy()
+
+        # Afficher la page de gestion
+        GestionUtilisateur(self.container, self.utilisateur_connecte)
 
 
 if __name__ == "__main__":

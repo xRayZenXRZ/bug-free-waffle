@@ -1,26 +1,33 @@
-from DAO.DAOClient import DAOClient
+from ..dao.DAOClient import DAOClient
 
 invalid_type = "Invalid type !"
+
 
 class Client:
 
     leDAOClient = DAOClient.get_instance()
 
     def __init__(self, id_client: int = None, nom: str = None, prenom: str = None, raison_sociale: str = None, adresse: str = None, telephone: str = None, courriel: str = None, enum_status_client: str = None):
-        
-        #verification type : 
+
+        # verification type :
         if not isinstance(nom, str):
-            raise TypeError("l'attribut {nom} doit être une chaine de caractère")
+            raise TypeError(
+                "l'attribut {nom} doit être une chaine de caractère")
         if not isinstance(prenom, str):
-            raise TypeError("l'attributs {prenom} doit être une chaine de caractère")
+            raise TypeError(
+                "l'attributs {prenom} doit être une chaine de caractère")
         if not isinstance(adresse, str):
-            raise TypeError("l'attributs {adresse} doit être une chaine de caractère")
+            raise TypeError(
+                "l'attributs {adresse} doit être une chaine de caractère")
         if not isinstance(telephone, str):
-            raise TypeError("l'attributs {telephone} doit être une chaine de caractère")
+            raise TypeError(
+                "l'attributs {telephone} doit être une chaine de caractère")
         if not isinstance(courriel, str):
-            raise TypeError("l'attributs {courriel} doit être une chaine de caractère")
+            raise TypeError(
+                "l'attributs {courriel} doit être une chaine de caractère")
         if not isinstance(enum_status_client, str):
-            raise TypeError("l'attributs {enum_status_client} doit être une chaine de caractère")
+            raise TypeError(
+                "l'attributs {enum_status_client} doit être une chaine de caractère")
 
         self.__nom = nom
         self.__prenom = prenom
@@ -62,59 +69,66 @@ class Client:
         return self.__enum_status_client
 
     # Setters
-    #commentaire : modifier * = attributs du setters :
+    # commentaire : modifier * = attributs du setters :
     def set_id_client(self, id_client):
         if not isinstance(id_client, int):
-            raise TypeError("l'attribut {id_client} doit être un entier")            
+            raise TypeError("l'attribut {id_client} doit être un entier")
         self.__id_client = id_client
         Client.leDAOClient.update_client(self)
 
     def set_nom(self, nom):
         if not isinstance(nom, str):
-            raise TypeError("l'attribut {nom} doit être une chaine de caractère")               
+            raise TypeError(
+                "l'attribut {nom} doit être une chaine de caractère")
         self.__nom = nom
         Client.leDAOClient.update_client(self)
 
     def set_prenom(self, prenom):
         if not isinstance(prenom, str):
-            raise TypeError("l'attribut {prenom} doit être une chaine de caractère") 
+            raise TypeError(
+                "l'attribut {prenom} doit être une chaine de caractère")
         self.__prenom = prenom
         Client.leDAOClient.update_client(self)
 
     def set_raison_sociale(self, raison_sociale):
         if not isinstance(raison_sociale, str):
-            raise TypeError("l'attribut {raison_sociale} doit être une chaine de caractère") 
+            raise TypeError(
+                "l'attribut {raison_sociale} doit être une chaine de caractère")
         self.__raison_sociale = raison_sociale
         Client.leDAOClient.update_client(self)
 
     def set_adresse(self, adresse):
         if not isinstance(adresse, str):
-            raise TypeError("l'attribut {adresse} doit être une chaine de caractère") 
+            raise TypeError(
+                "l'attribut {adresse} doit être une chaine de caractère")
         self.__adresse = adresse
         Client.leDAOClient.update_client(self)
 
     def set_telephone(self, telephone):
         if not isinstance(telephone, str):
-            raise TypeError("l'attribut {telephone} doit être une chaine de caractère") 
+            raise TypeError(
+                "l'attribut {telephone} doit être une chaine de caractère")
         self.__telephone = telephone
         Client.leDAOClient.update_client(self)
 
-
     def set_courriel(self, courriel):
         if not isinstance(courriel, str):
-            raise TypeError("l'attribut {courriel} doit être une chaine de caractère") 
+            raise TypeError(
+                "l'attribut {courriel} doit être une chaine de caractère")
         self.__courriel = courriel
         Client.leDAOClient.update_client(self)
 
     def set_enum_status_client(self, enum_status_client):
         if not isinstance(enum_status_client, str):
-            raise TypeError("l'attribut {enum_statut_client} doit être une chaine de caractère") 
+            raise TypeError(
+                "l'attribut {enum_statut_client} doit être une chaine de caractère")
         self.__enum_status_client = enum_status_client
         Client.leDAOClient.update_client(self)
 
     def __str__(self):
         return f"Client(id_client={self.__id_client}, nom={self.__nom}, prenom={self.__prenom}, raison_sociale={self.__raison_sociale}, adresse={self.__adresse}, telephone={self.__telephone}, courriel={self.__courriel}, statut={self.__enum_status_client})"
-    
+
+
 """class Client :
     
     def __init__(self, id_client, nom, prenom, raison_sociale, adresse, telephone, courriel, enum_type_client, enum_status_client) :

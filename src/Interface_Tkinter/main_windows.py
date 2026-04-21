@@ -3,11 +3,12 @@ from tkinter import ttk
 
 
 class MainWindow(tk.Frame):
-    def __init__(self, parent, utilisateur):
+    def __init__(self, parent, utilisateur, on_gestion_users_callback):
         super().__init__(parent)
         self.pack(fill="both", expand=True)
 
         self.utilisateur = utilisateur
+        self.on_gestion_users = on_gestion_users_callback
 
         # Header avec infos utilisateur
         header = ttk.Frame(self)
@@ -41,7 +42,7 @@ class MainWindow(tk.Frame):
             ttk.Button(
                 content,
                 text="👥 Gérer les utilisateurs",
-                command=lambda: print("Gestion utilisateurs")
+                command=lambda: self.on_gestion_users()
             ).pack(pady=10, ipadx=20, ipady=5)
 
         ttk.Button(

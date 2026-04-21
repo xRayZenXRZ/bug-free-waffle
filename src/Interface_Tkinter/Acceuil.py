@@ -1,14 +1,13 @@
-import tkinter as tk
-from tkinter import ttk
+from src.dao.DAOUtilisateur import DAOUtilisateur
 import tkinter.messagebox as mb
-import mysql.connector
+from tkinter import ttk
+import tkinter as tk
 
 
 class ConnexionUI(tk.Frame):
     def __init__(self, parent, on_success_callback):
         super().__init__(parent)
         self.pack(fill="both", expand=True)
-
         self.on_success = on_success_callback
 
         # Widgets
@@ -25,15 +24,6 @@ class ConnexionUI(tk.Frame):
         self.label_mdp.pack(side='top', anchor='center', pady=(25, 5))
         self.entry_mdp.pack(side='top', anchor='center', pady=(0, 50))
         self.bouton.pack(side='top', anchor='center', pady=(0, 75))
-
-    def connecter_bdd(self):
-        """Connexion à la base de données"""
-        return mysql.connector.connect(
-            host="localhost",
-            user="root",  # Ton user MySQL
-            password="",  # Ton mot de passe MySQL
-            database="test_comart"
-        )
 
     def verification(self):
         email = self.entry_email.get()
@@ -52,38 +42,20 @@ class ConnexionUI(tk.Frame):
             mb.showwarning("Erreur", "Email non valide")
             return
 
-        try:
-            # Connexion à la BDD
-            conn = self.connecter_bdd()
-            cursor = conn.cursor(dictionary=True)
+        # Utilisation du DAO au lieu de requête SQL directe
+        utilisateur = DAOUtilisateur.authentifier(email, mdp)
 
-            # Requête pour vérifier l'utilisateur
-            query = """
-                SELECT idUtilisateur, nom, prenom, email, role, statut 
-                FROM Utilisateur 
-                WHERE email = %s AND motDePasse = %s AND statut = 'ACTIF'
-            """
-            cursor.execute(query, (email, mdp))
-            utilisateur = cursor.fetchone()
+        if not utilisateur:
+            self.entry_email.delete(0, tk.END)
+            self.entry_mdp.delete(0, tk.END)
+            mb.showwarning("Identifiant FAUX !",
+                           "Email ou mot de passe incorrect.")
+            return
 
-            cursor.close()
-            conn.close()
+        mb.showinfo("Accès Granted", f"Bienvenue {utilisateur['prenom']} !")
 
-            if not utilisateur:
-                self.entry_email.delete(0, tk.END)
-                self.entry_mdp.delete(0, tk.END)
-                mb.showwarning("Identifiant FAUX !",
-                               "Email ou mot de passe incorrect.")
-                return
-
-            mb.showinfo("Accès Granted",
-                        f"Bienvenue {utilisateur['prenom']} !")
-
-            # Passer toutes les infos utilisateur
-            self.on_success(utilisateur)
-
-        except mysql.connector.Error as err:
-            mb.showerror("Erreur BDD", f"Erreur de connexion : {err}")
+        # Passer toutes les infos utilisateur
+        self.on_success(utilisateur)
 
 
 if __name__ == "__main__":
