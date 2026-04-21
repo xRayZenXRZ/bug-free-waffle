@@ -1,4 +1,4 @@
-from ..dao.DAOUtilisateur import DAOUtilisateur
+from dao.DAOUtilisateur import DAOUtilisateur
 import tkinter.messagebox as mb
 from tkinter import ttk
 import tkinter as tk
