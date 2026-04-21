@@ -1,5 +1,5 @@
 from main_windows import MainWindow
-from Interface_Tkinter.Acceuil import ConnexionUI
+from Acceuil import ConnexionUI
 import tkinter as tk
 from gestion_utilisateur import GestionUtilisateur
 
