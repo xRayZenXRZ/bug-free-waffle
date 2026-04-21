@@ -1,7 +1,7 @@
 import tkinter as tk
-from Acceuil import ConnexionUI
-from main_windows import main_windows
-from gestion_utilisateur import GestionUtilisateur
+from Interface_Tkinter.Acceuil import ConnexionUI
+from Interface_Tkinter.main_windows import main_windows
+from Interface_Tkinter.gestion_utilisateur import GestionUtilisateur
 
 class App:
     def __init__(self, root):
