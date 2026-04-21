@@ -1,4 +1,4 @@
-from DAO.DAOActivite import DAOActivite
+from dao.DAOActivite import DAOActivite
 import datetime
 
 class Activite : 

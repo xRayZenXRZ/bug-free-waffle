@@ -1,4 +1,4 @@
-from DAO.DAOPaiement import DAOPAiement
+from dao.DAOPaiement import DAOPAiement
 
 class Paiement:
 

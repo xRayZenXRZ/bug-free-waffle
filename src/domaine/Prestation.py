@@ -1,4 +1,4 @@
-from DAO.DAOPrestation import DAOPrestation
+from dao.DAOPrestation import DAOPrestation
 
 class Prestation:
 
