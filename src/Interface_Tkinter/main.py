@@ -1,6 +1,6 @@
 import tkinter as tk
 from Acceuil import ConnexionUI
-from main_windows import main_windows
+from main_windows import MainWindow  # Import modifié ici
 
 
 class App:
@@ -9,20 +9,28 @@ class App:
         self.root.title("Com'Art")
         self.root.geometry("800x400")
 
-        # Container pour changer de page
+        # Container
         self.container = tk.Frame(self.root)
         self.container.pack(fill="both", expand=True)
 
-        # Démarrer avec la page de connexion
-        ConnexionUI(self.container, self.afficher_acceuil_connecte)
+        # Utilisateur connecté
+        self.utilisateur_connecte = None
 
-    def afficher_acceuil_connecte(self, nom_utilisateur, email):
-        # Nettoyer la page actuelle
+        # Démarrer avec connexion
+        ConnexionUI(self.container, self.afficher_main_window)
+
+    def afficher_main_window(self, utilisateur):
+        self.utilisateur_connecte = utilisateur
+
+        # Nettoyer
         for widget in self.container.winfo_children():
             widget.destroy()
 
-        # Afficher la page d'accueil connecté
-        main_windows(self.container, nom_utilisateur)
+        # Agrandir la fenêtre
+        self.root.geometry("1000x600")
+
+        # Afficher main window
+        MainWindow(self.container, utilisateur)
 
 
 if __name__ == "__main__":
