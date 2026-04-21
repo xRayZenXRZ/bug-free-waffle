@@ -1,5 +1,5 @@
 # A completer
-from DAOSession import DAOSession
+from DAO.DAOSession import DAOSession
 from mysql.connector import Error
 
 

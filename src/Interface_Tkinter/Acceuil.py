@@ -1,10 +1,13 @@
-from src.dao.DAOUtilisateur import DAOUtilisateur
+from DAO.DAOUtilisateur import DAOUtilisateur
 import tkinter.messagebox as mb
 from tkinter import ttk
 import tkinter as tk
 
 
 class ConnexionUI(tk.Frame):
+
+    leDAOUtilisateur = DAOUtilisateur.get_instance()
+
     def __init__(self, parent, on_success_callback):
         super().__init__(parent)
         self.pack(fill="both", expand=True)
@@ -58,9 +61,10 @@ class ConnexionUI(tk.Frame):
         self.on_success(utilisateur)
 
 
-if __name__ == "__main__":
+"""if __name__ == "__main__":
     root = tk.Tk()
     root.title("Com'Art")
     root.geometry("800x400")
     app = ConnexionUI(root, lambda user: print(f"Connecté: {user}"))
     root.mainloop()
+"""

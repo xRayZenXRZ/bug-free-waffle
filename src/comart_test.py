@@ -8,7 +8,7 @@ def main():
     from domaine.Facture import Facture
     from domaine.Paiement import Paiement
     from domaine.Prestation import Prestation
-    from dao.DAOSession import DAOSession
+    from DAO.DAOSession import DAOSession
 
     # Ouvrir la session DAO
 
