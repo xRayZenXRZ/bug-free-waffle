@@ -6,7 +6,6 @@ compte_utilisateur = {
     "Aled": {"email": "root@gmail.com", "mdp": "root"}
 }
 
-
 class ConnexionUI(tk.Frame):  # Hérite de Frame au lieu de rien
     def __init__(self, parent, on_success_callback):  # Prend parent et callback
         super().__init__(parent)
