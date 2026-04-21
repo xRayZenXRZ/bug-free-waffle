@@ -1,4 +1,4 @@
-from DAO.DAODevis import DAODevis
+from dao.DAODevis import DAODevis
 
 class Devis:
 

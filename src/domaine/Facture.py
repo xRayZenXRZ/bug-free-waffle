@@ -1,4 +1,4 @@
-from DAO.DAOFacture import DAOFacture
+from dao.DAOFacture import DAOFacture
 
 class Facture:
 

@@ -1,5 +1,5 @@
-from DAO.DAOContrat import DAOContrat
-from DAO.DAOClient import DAOClient
+from dao.DAOContrat import DAOContrat
+from dao.DAOClient import DAOClient
 from domaine.Client import Client
 
 class Contrat:
