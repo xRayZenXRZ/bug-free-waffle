@@ -1,21 +1,17 @@
 import tkinter as tk
 from tkinter import ttk
 import tkinter.messagebox as mb
-
-compte_utilisateur = {
-    "Aled": {"email": "root@gmail.com", "mdp": "root"}
-}
+import mysql.connector
 
 
-class ConnexionUI(tk.Frame):  # Hérite de Frame au lieu de rien
-    def __init__(self, parent, on_success_callback):  # Prend parent et callback
+class ConnexionUI(tk.Frame):
+    def __init__(self, parent, on_success_callback):
         super().__init__(parent)
         self.pack(fill="both", expand=True)
 
-        self.on_success = on_success_callback  # Stocke le callback
+        self.on_success = on_success_callback
 
-        # Création email, mdp, bouton connexion :
-        # self au lieu de self.root
+        # Widgets
         self.label_email = ttk.Label(self, text="Email : ")
         self.entry_email = ttk.Entry(self)
         self.label_mdp = ttk.Label(self, text="Mot de passe : ")
@@ -23,12 +19,21 @@ class ConnexionUI(tk.Frame):  # Hérite de Frame au lieu de rien
         self.bouton = ttk.Button(self, text="Valider",
                                  command=self.verification)
 
-        # Packs :
+        # Packs
         self.label_email.pack(side='top', anchor='center', pady=(50, 5))
         self.entry_email.pack(side='top', anchor='center', pady=(0, 25))
         self.label_mdp.pack(side='top', anchor='center', pady=(25, 5))
         self.entry_mdp.pack(side='top', anchor='center', pady=(0, 50))
         self.bouton.pack(side='top', anchor='center', pady=(0, 75))
+
+    def connecter_bdd(self):
+        """Connexion à la base de données"""
+        return mysql.connector.connect(
+            host="localhost",
+            user="root",  # Ton user MySQL
+            password="",  # Ton mot de passe MySQL
+            database="test_comart"
+        )
 
     def verification(self):
         email = self.entry_email.get()
@@ -43,32 +48,47 @@ class ConnexionUI(tk.Frame):  # Hérite de Frame au lieu de rien
                 "Champs Vide", "Veuillez renseigner votre mot de passe")
             return
 
-        if not ("@" in email and "." in email):
+        if "@" not in email or "." not in email:
             mb.showwarning("Erreur", "Email non valide")
             return
 
-        # Chercher l'utilisateur
-        valid = {client for client, identifiant in compte_utilisateur.items()
-                 if identifiant["email"] == email and identifiant["mdp"] == mdp}
+        try:
+            # Connexion à la BDD
+            conn = self.connecter_bdd()
+            cursor = conn.cursor(dictionary=True)
 
-        if len(valid) <= 0:
-            self.entry_email.delete(0, tk.END)
-            self.entry_mdp.delete(0, tk.END)
-            mb.showwarning("Identifiant FAUX !", "Veuillez réessayer.")
-            return
+            # Requête pour vérifier l'utilisateur
+            query = """
+                SELECT idUtilisateur, nom, prenom, email, role, statut 
+                FROM Utilisateur 
+                WHERE email = %s AND motDePasse = %s AND statut = 'ACTIF'
+            """
+            cursor.execute(query, (email, mdp))
+            utilisateur = cursor.fetchone()
 
-        # mb.showinfo("Accès Granted", "Yayyyyyyyyyy !")
+            cursor.close()
+            conn.close()
 
-        # Récupérer le nom de l'utilisateur
-        nom_utilisateur = list(valid)[0]
+            if not utilisateur:
+                self.entry_email.delete(0, tk.END)
+                self.entry_mdp.delete(0, tk.END)
+                mb.showwarning("Identifiant FAUX !",
+                               "Email ou mot de passe incorrect.")
+                return
 
-        # Appeler le callback pour passer à la page suivante
-        self.on_success(nom_utilisateur, email)
+            mb.showinfo("Accès Granted",
+                        f"Bienvenue {utilisateur['prenom']} !")
+
+            # Passer toutes les infos utilisateur
+            self.on_success(utilisateur)
+
+        except mysql.connector.Error as err:
+            mb.showerror("Erreur BDD", f"Erreur de connexion : {err}")
 
 
 if __name__ == "__main__":
     root = tk.Tk()
     root.title("Com'Art")
     root.geometry("800x400")
-    app = ConnexionUI(root, lambda nom, email: print(f"Connecté: {nom}"))
+    app = ConnexionUI(root, lambda user: print(f"Connecté: {user}"))
     root.mainloop()
