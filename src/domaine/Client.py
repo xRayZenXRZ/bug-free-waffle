@@ -1,4 +1,4 @@
-from DAO.DAOClient import DAOClient
+from ..dao.DAOClient import DAOClient
 
 invalid_type = "Invalid type !"
 
