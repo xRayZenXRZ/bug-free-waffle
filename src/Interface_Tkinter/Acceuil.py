@@ -2,14 +2,14 @@ import tkinter as tk
 from tkinter import ttk
 import tkinter.messagebox as mb
 from dao.DAOUtilisateur import DAOUtilisateur
-import mysql.connector
 
 class ConnexionUI(tk.Frame):  # Hérite de Frame au lieu de rien
+
     def __init__(self, parent, on_success_callback):  # Prend parent et callback
         super().__init__(parent)
         self.pack(fill="both", expand=True)
-
         self.on_success = on_success_callback  # Stocke le callback
+        self.leDAOUtilisateur = DAOUtilisateur.get_instance()
 
         #widgets : 
         self.label_email = ttk.Label(self, text="Email : ")
@@ -29,36 +29,29 @@ class ConnexionUI(tk.Frame):  # Hérite de Frame au lieu de rien
     def verification(self):
         email = self.entry_email.get()
         mdp = self.entry_mdp.get()
-
+        
         if not email:
             mb.showwarning("Champs Vide", "Veuillez renseigner votre email")
             return
 
         if not mdp:
-            mb.showwarning(
-                "Champs Vide", "Veuillez renseigner votre mot de passe")
+            mb.showwarning("Champs Vide", "Veuillez renseigner votre mot de passe")
             return
 
         if "@" not in email or "." not in email:
             mb.showwarning("Erreur", "Email non valide")
             return
 
-        try:
+        utilisateur = self.leDAOUtilisateur.authentifier(email, mdp)
 
-            utilisateur = DAOUtilisateur.authentifier(email, mdp)
+        if not utilisateur:
+            self.entry_email.delete(0, tk.END)
+            self.entry_mdp.delete(0, tk.END)
+            mb.showwarning("Identifiant FAUX !", "Email ou mot de passe incorrect.")
+            return
 
-            if not utilisateur:
-                self.entry_email.delete(0, tk.END)
-                self.entry_mdp.delete(0, tk.END)
-                mb.showwarning("Identifiant FAUX !", "Email ou mot de passe incorrect.")
-                return
-    
-            mb.showinfo("Accès Granted", f"Bienvenue {utilisateur['prenom']} !")
-            # Passer toutes les infos utilisateur
-            self.on_success(utilisateur)
-
-        except mysql.connector.Error as err:
-            mb.showerror("Erreur BDD", f"Erreur de connexion : {err}")
+        mb.showinfo("Accès Granted", f"Bienvenue {utilisateur['prenom']} !")
+        self.on_success(utilisateur)
 
 if __name__ == "__main__":
     root = tk.Tk()

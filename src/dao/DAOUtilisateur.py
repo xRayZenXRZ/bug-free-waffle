@@ -1,6 +1,7 @@
 
 from dao.DAOSession import DAOSession
-from mysql.connector import Error
+
+from mysql.connector import Error ,InterfaceError, errorcode
 
 
 class DAOUtilisateur:
@@ -13,7 +14,7 @@ class DAOUtilisateur:
             DAOUtilisateur.unique_instance = DAOUtilisateur()
         return DAOUtilisateur.unique_instance
 
-    def authentifier(email, mot_de_passe):
+    def authentifier(self, email, mot_de_passe):
         """
         Vérifie les identifiants d'un utilisateur
         Retourne les infos utilisateur si trouvé, None sinon
@@ -35,8 +36,20 @@ class DAOUtilisateur:
 
             return utilisateur  # None si pas trouvé
 
-        except Exception as e:
-            print(f"Erreur lors de l'authentification : {e}")
+        except InterfaceError as err:
+            print("Erreur de connexion : Impossible de se connecter au serveur MySQL.")
+            return None
+        except Error as err:
+            if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
+                print("Erreur d'authentification : Nom d'utilisateur ou mot de passe incorrect.")
+            elif err.errno == errorcode.ER_BAD_DB_ERROR:
+                print("Erreur de base de données : La base de données spécifiée n'existe pas.")
+            elif err.errno == errorcode.ER_PARSE_ERROR:
+                print("Erreur de syntaxe dans la requête SQL.")
+            elif err.errno == errorcode.ER_NO_SUCH_TABLE:
+                print("Erreur : La table spécifiée n'existe pas.")
+            else:
+                print(f"Erreur inattendue : {err}")
             return None
 
     @staticmethod
