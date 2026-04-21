@@ -1,38 +1,31 @@
 import tkinter as tk
-from tkinter import ttk
+from Acceuil import ConnexionUI
+from main_windows import main_windows
 
-#faudra rajouter les fenetres secondaires de merde la : 'tk.Toplevel'
 
-class AppComArt() :
-
+class App:
     def __init__(self, root):
-
         self.root = root
         self.root.title("Com'Art")
-        self.root.geometry("1200x800")
-        
-        # Création du gestionnaire d'onglets
-        self.onglets = ttk.Notebook(self.root)
-        self.onglets.pack(expand=True, fill="both")
+        self.root.geometry("800x400")
 
-        #Création des pages :
-        self.page_clients = ttk.Frame(self.onglets)
-        self.page_factures = ttk.Frame(self.onglets)
+        # Container pour changer de page
+        self.container = tk.Frame(self.root)
+        self.container.pack(fill="both", expand=True)
 
-        # Ajout des pages dans les onglets avec un titre
-        self.onglets.add(self.page_clients, text="Gestion des Clients")
-        self.onglets.add(self.page_factures, text="Facturation")
+        # Démarrer avec la page de connexion
+        ConnexionUI(self.container, self.afficher_acceuil_connecte)
 
-        # Insertion widgets dans page_clients et page_factures
-        ttk.Label(self.page_clients, text="Liste des clients...").pack()
-        ttk.Label(self.page_factures, text="Liste des factures...").pack()
-    
+    def afficher_acceuil_connecte(self, nom_utilisateur, email):
+        # Nettoyer la page actuelle
+        for widget in self.container.winfo_children():
+            widget.destroy()
+
+        # Afficher la page d'accueil connecté
+        main_windows(self.container, nom_utilisateur)
 
 
-if __name__ == "__main__" :
-
+if __name__ == "__main__":
     root = tk.Tk()
-
-    app = AppComArt(root)
-
+    app = App(root)
     root.mainloop()
