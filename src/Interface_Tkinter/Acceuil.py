@@ -20,8 +20,7 @@ class ConnexionUI(tk.Frame):  # Hérite de Frame au lieu de rien
         self.entry_email = ttk.Entry(self)
         self.label_mdp = ttk.Label(self, text="Mot de passe : ")
         self.entry_mdp = ttk.Entry(self, show="*")
-        self.bouton = ttk.Button(self, text="Valider",
-                                 command=self.verification)
+        self.bouton = ttk.Button(self, text="Valider", command=self.verification)
 
         # Packs :
         self.label_email.pack(side='top', anchor='center', pady=(50, 5))
@@ -49,7 +48,7 @@ class ConnexionUI(tk.Frame):  # Hérite de Frame au lieu de rien
 
         # Chercher l'utilisateur
         valid = {client for client, identifiant in compte_utilisateur.items()
-                 if identifiant["email"] == email and identifiant["mdp"] == mdp}
+            if identifiant["email"] == email and identifiant["mdp"] == mdp}
 
         if len(valid) <= 0:
             self.entry_email.delete(0, tk.END)
