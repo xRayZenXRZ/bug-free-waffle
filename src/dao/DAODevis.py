@@ -1,5 +1,6 @@
-from DAO.DAOSession import DAOSession
+from dao.DAOSession import DAOSession
 from mysql.connector import Error
+
 
 class DAODevis:
 
@@ -13,7 +14,8 @@ class DAODevis:
 
     def insert_devis(self, devis):
         sql = "INSERT INTO Devis (numeroDevis ,dateEmission, dateValidite, descriptionPrestation, quantitePrevue, detailsCouts, montantTotalEstime, statut, dateAcceptation, idClient, numeroContrat) VALUES (%s,%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
-        values = (devis.get_numero_devis() ,devis.get_date_emission(), devis.get_date_validite(), devis.get_description_prestation(), devis.get_quantite_prevue(), devis.get_details_couts(), devis.get_montant_total_estime(), devis.get_statut(), devis.get_date_acceptation(), devis.get_id_client(), devis.get_numero_contrat())
+        values = (devis.get_numero_devis(), devis.get_date_emission(), devis.get_date_validite(), devis.get_description_prestation(), devis.get_quantite_prevue(
+        ), devis.get_details_couts(), devis.get_montant_total_estime(), devis.get_statut(), devis.get_date_acceptation(), devis.get_id_client(), devis.get_numero_contrat())
         try:
             connection = DAOSession.get_connexion()
             cursor = connection.cursor()
@@ -77,7 +79,8 @@ class DAODevis:
 
     def update_devis(self, devis):
         sql = "UPDATE Devis SET dateEmission = %s, dateValidite = %s, descriptionPrestation = %s, quantitePrevue = %s, detailsCouts = %s, montantTotalEstime = %s, statut = %s, dateAcceptation = %s, idClient = %s, numeroContrat = %s WHERE numeroDevis = %s"
-        values = (devis.get_date_emission(), devis.get_date_validite(), devis.get_description_prestation(), devis.get_quantite_prevue(), devis.get_details_couts(), devis.get_montant_total_estime(), devis.get_statut(), devis.get_date_acceptation(), devis.get_id_client(), devis.get_numero_contrat(), devis.get_numero_devis())
+        values = (devis.get_date_emission(), devis.get_date_validite(), devis.get_description_prestation(), devis.get_quantite_prevue(), devis.get_details_couts(
+        ), devis.get_montant_total_estime(), devis.get_statut(), devis.get_date_acceptation(), devis.get_id_client(), devis.get_numero_contrat(), devis.get_numero_devis())
         try:
             connection = DAOSession.get_connexion()
             cursor = connection.cursor()
@@ -175,5 +178,6 @@ class DAODevis:
 
     def set_all_values(self, rs):
         from domaine.Devis import Devis
-        devis = Devis(rs["numeroDevis"], rs["dateEmission"], rs["dateValidite"], rs["descriptionPrestation"], rs["quantitePrevue"], rs["detailsCouts"], rs["montantTotalEstime"], rs["statut"], rs["dateAcceptation"], rs["idClient"], rs["numeroContrat"])
+        devis = Devis(rs["numeroDevis"], rs["dateEmission"], rs["dateValidite"], rs["descriptionPrestation"], rs["quantitePrevue"],
+                      rs["detailsCouts"], rs["montantTotalEstime"], rs["statut"], rs["dateAcceptation"], rs["idClient"], rs["numeroContrat"])
         return devis
