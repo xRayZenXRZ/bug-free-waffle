@@ -205,15 +205,14 @@ class GestionUtilisateur(tk.Frame):
                 nom, prenom, email, mdp, role,
                 self.utilisateur['idUtilisateur']  # ID de l'admin qui crée
             )
-
+            
             if succes:
                 tk.messagebox.showinfo(
                     "Succès", f"Utilisateur {prenom} {nom} créé avec succès !")
                 popup.destroy()
                 self.afficher_utilisateurs()  # Rafraîchir la liste
-            else:
-                tk.messagebox.showerror(
-                    "Erreur de création", f"Impossible de créer l'utilisateur.\n\nRaison : {erreur}")
+            else :
+                print(f"Erreur : {erreur}")
 
         def annuler():
             """Ferme la popup"""

@@ -63,7 +63,7 @@ class DAOUtilisateur:
                                    mot_de_passe, role, id_createur))
             conn.commit()
             cursor.close()
-            return True
+            return (True, None)
         except Exception as e:
             error_message = str(e)
             print(
@@ -71,11 +71,11 @@ class DAOUtilisateur:
 
             # Analyser l'erreur pour donner un message plus clair
             if "Duplicate entry" in error_message and "email" in error_message:
-                return False, "Cet email est déjà utilisé"
+                return (False, "Cet email est déjà utilisé")
             elif "Duplicate entry" in error_message:
-                return False, "Cette donnée existe déjà"
+                return (False, "Cette donnée existe déjà")
             else:
-                return False, f"Erreur BDD : {error_message}"
+                return (False, f"Erreur BDD : {error_message}")
 
     @staticmethod
     def supprimer_utilisateur(id_utilisateur):
