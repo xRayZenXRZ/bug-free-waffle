@@ -129,3 +129,5 @@ CREATE TABLE Utilisateur (
 -- Insérer un admin par défaut
 INSERT INTO Utilisateur (nom, prenom, email, motDePasse, role) 
 VALUES ('Admin', 'Principal', 'root@gmail.com', 'root', 'ADMIN');
+INSERT INTO Utilisateur (nom, prenom, email, motDePasse, statut , role) 
+VALUES ('Admin', 'Principal', 'root@gmail.com', 'root', 'INACTIF', 'ADMIN');
