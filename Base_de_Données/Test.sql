@@ -115,16 +115,9 @@ CREATE TABLE Activite (
 -- UTILISATEUR (Collaborateurs et Admins)
 CREATE TABLE Utilisateur (
     idUtilisateur INT AUTO_INCREMENT PRIMARY KEY,
-    nom VARCHAR(100) NOT NULL,
-    prenom VARCHAR(100) NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
     motDePasse VARCHAR(255) NOT NULL,  -- À hasher en production !
-    role ENUM('ADMIN', 'COLLABORATEUR') NOT NULL,
-    statut ENUM('ACTIF', 'INACTIF') DEFAULT 'ACTIF',
-    dateCreation DATETIME DEFAULT CURRENT_TIMESTAMP,
-    idCreateur INT,  -- Quel admin a créé ce compte
-    FOREIGN KEY(idCreateur) REFERENCES Utilisateur(idUtilisateur)
+    TypeUtilisateur ENUM('ADMIN', 'COLLABORATEUR', 'CLIENT') NOT NULL,
+    idClient INT, 
+    FOREIGN KEY(idClient) REFERENCES Client(idClient)
 );
-
-INSERT INTO Utilisateur (nom, prenom, email, motDePasse, role) 
-VALUES ('Admin', 'Principal', 'root@gmail.com', 'root', 'ADMIN');

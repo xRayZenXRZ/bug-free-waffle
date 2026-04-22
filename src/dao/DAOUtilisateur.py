@@ -1,7 +1,6 @@
 
 from dao.DAOSession import DAOSession
-
-from mysql.connector import Error ,InterfaceError, errorcode
+from mysql.connector import Error 
 
 
 class DAOUtilisateur:
@@ -14,81 +13,62 @@ class DAOUtilisateur:
             DAOUtilisateur.unique_instance = DAOUtilisateur()
         return DAOUtilisateur.unique_instance
 
-    def authentifier(self, email, mot_de_passe):
-        """
-        Vérifie les identifiants d'un utilisateur
-        Retourne les infos utilisateur si trouvé, None sinon
-        """
+    def insert_compte(self, compte):
+        if compte.get_client() is not None:
+            sql = "INSERT INTO Utilisateur (email, motDePasse, typeUtilisateur, idClient) VALUES (%s, %s, %s, %s)"
+            valeurs = (compte.get_email(), compte.get_motDePasse(), compte.get_typeUtilisateur(), compte.get_client().get_id_client())
+        else:
+            # print("compte administrateur")
+            sql = "INSERT INTO Utilisateur (email, motDePasse, typeUtilisateur, idClient) VALUES (%s, %s, %s, %s)"
+            valeurs = (compte.get_email(), compte.get_motDePasse(), compte.get_typeUtilisateur(), None)
+        # print(sql)
+        # print(valeurs)
         try:
-            conn = DAOSession.get_connexion()
-            cursor = conn.cursor(dictionary=True)
+            connection = DAOSession.get_connexion()
+            cursor = connection.cursor()
+            cursor.execute(sql, valeurs)
+            print("Utilisateur inséré avec succès")
+            cle = cursor.lastrowid
+            return cle
+        except Error as e:
+            print("\n<--------------------------------------->")
+            print(f"Erreur lors de la création de compte utilisateur : {e}")
+            print(sql)
+            print(valeurs)
+            print("rollback")
+            connection.rollback() 
+            return -1
+        finally:
+            if cursor:
+                cursor.close()    
 
-            query = """
-                SELECT idUtilisateur, nom, prenom, email, role, statut 
-                FROM Utilisateur 
-                WHERE email = %s AND motDePasse = %s AND statut = 'ACTIF'
-            """
 
-            cursor.execute(query, (email, mot_de_passe))
-            utilisateur = cursor.fetchone()
-
-            cursor.close()
-
-            return utilisateur  # None si pas trouvé
-
-        except InterfaceError as err:
-            print("Erreur de connexion : Impossible de se connecter au serveur MySQL.")
-            return None
-        except Error as err:
-            if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
-                print("Erreur d'authentification : Nom d'utilisateur ou mot de passe incorrect.")
-            elif err.errno == errorcode.ER_BAD_DB_ERROR:
-                print("Erreur de base de données : La base de données spécifiée n'existe pas.")
-            elif err.errno == errorcode.ER_PARSE_ERROR:
-                print("Erreur de syntaxe dans la requête SQL.")
-            elif err.errno == errorcode.ER_NO_SUCH_TABLE:
-                print("Erreur : La table spécifiée n'existe pas.")
+    def find_by_email_motDePasse(self, email, motDePasse):
+        sql = "SELECT * FROM compteUtilisateur WHERE email = %s AND motDePasse = %s"
+        valeurs = (email, motDePasse)
+        try:
+            connection = DAOSession.get_connexion()
+            cursor = connection.cursor(dictionary=True)
+            cursor.execute(sql, valeurs)
+            result = cursor.fetchone()
+            if result:
+                return self.set_all_values(result) 
             else:
-                print(f"Erreur inattendue : {err}")
+                return None
+        except Error as e:
+            print("\n<--------------------------------------->")
+            print(f"Erreur lors de la recherche de compte utilisateur : {e}")
+            print(sql)
+            print(valeurs)
             return None
+        finally:
+            if cursor:
+                cursor.close()
 
-    @staticmethod
-    def get_all_utilisateurs():
-        """Récupère tous les utilisateurs actifs"""
-        try:
-            conn = DAOSession.get_connexion()
-            cursor = conn.cursor(dictionary=True)
-
-            query = "SELECT * FROM Utilisateur WHERE statut = 'ACTIF'"
-            cursor.execute(query)
-            utilisateurs = cursor.fetchall()
-
-            cursor.close()
-            return utilisateurs
-
-        except Exception as e:
-            print(f"Erreur lors de la récupération des utilisateurs : {e}")
-            return []
-
-    @staticmethod
-    def creer_utilisateur(nom, prenom, email, mot_de_passe, role, id_createur):
-        """Crée un nouvel utilisateur (pour les admins)"""
-        try:
-            conn = DAOSession.get_connexion()
-            cursor = conn.cursor()
-
-            query = """
-                INSERT INTO Utilisateur (nom, prenom, email, motDePasse, role, idCreateur)
-                VALUES (%s, %s, %s, %s, %s, %s)
-            """
-
-            cursor.execute(query, (nom, prenom, email,
-                           mot_de_passe, role, id_createur))
-            conn.commit()
-
-            cursor.close()
-            return True
-
-        except Exception as e:
-            print(f"Erreur lors de la création de l'utilisateur : {e}")
-            return False
+"""    def set_all_values(self, rs):
+            from domaine.Utilisateur import Utilisateur
+            un_compte = Utilisateur(rs['iUtilisateur'], rs['email'], rs['motDePasse'], rs['typeUtilisateur'])
+            if rs['typeCompte'] == "abonné":
+                from domaine.Client import Client
+                un_compte.set_client(Client.charger(rs['idClient']))    
+            return un_compte"""

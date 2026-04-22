@@ -18,7 +18,6 @@ class DAODevis:
             connection = DAOSession.get_connexion()
             cursor = connection.cursor()
             cursor.execute(sql, values)
-            connection.commit()
             print("Devis inséré avec succès !")
             cle = devis.get_numero_contrat()
             return cle
