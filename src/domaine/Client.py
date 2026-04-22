@@ -35,6 +35,10 @@ class Client:
         else:
             self.__id_client = Client.leDAOClient.insert_client(self)
 
+    @staticmethod
+    def charger(id_client):
+        return Client.leDAOClient.find_client(id_client)
+
     # Getters
 
     def get_id_client(self):

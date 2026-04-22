@@ -26,7 +26,7 @@ def main():
 
     activite_1 = Activite(libelle_operationnel="Préparation du matériel",date_prevues="2026-02-14 10:00:00", date_effective=None, duree_estimee=2, responsable="Jean Dupont", statut="PREVUE", id_prestation=prestation_1.get_id_prestation())
 
-    Utilisateur_1 = Utilisateur(email="root@gmail.com", motDePasse="root", typeUtilisateur="ADMIN")
+    Utilisateur_1 = Utilisateur(email="root@gmail.com", motDePasse="root", typeUtilisateur="ADMIN", client=None)
 
     DAOSession.close()
 

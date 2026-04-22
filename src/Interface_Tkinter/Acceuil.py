@@ -27,6 +27,7 @@ class ConnexionUI(tk.Frame):  # Hérite de Frame au lieu de rien
 
 
     def verification(self):
+
         email = self.entry_email.get()
         mdp = self.entry_mdp.get()
         
@@ -42,16 +43,16 @@ class ConnexionUI(tk.Frame):  # Hérite de Frame au lieu de rien
             mb.showwarning("Erreur", "Email non valide")
             return
 
-        utilisateur = self.leDAOUtilisateur.authentifier(email, mdp)
+        utilisateur = self.leDAOUtilisateur.find_by_email_motDePasse(email, mdp)
 
         if not utilisateur:
             self.entry_email.delete(0, tk.END)
             self.entry_mdp.delete(0, tk.END)
             mb.showwarning("Identifiant FAUX !", "Email ou mot de passe incorrect.")
             return
-
-        mb.showinfo("Accès Granted", f"Bienvenue {utilisateur['prenom']} !")
-        self.on_success(utilisateur)
+        else : 
+            mb.showinfo("Accès Granted", f"Bienvenue {utilisateur['prenom']} !")
+            self.on_success(utilisateur)
 
 if __name__ == "__main__":
     root = tk.Tk()
