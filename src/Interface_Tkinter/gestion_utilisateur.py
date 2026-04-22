@@ -83,12 +83,12 @@ class GestionUtilisateur(tk.Frame):
         self.tree.heading('Statut', text='Statut')
 
         # Largeur des colonnes
-        self.tree.column('ID', width=50)
-        self.tree.column('Nom', width=100)
-        self.tree.column('Prénom', width=100)
-        self.tree.column('Email', width=200)
-        self.tree.column('Rôle', width=100)
-        self.tree.column('Statut', width=80)
+        self.tree.column('ID', width=50, anchor='center')
+        self.tree.column('Nom', width=100, anchor='center')
+        self.tree.column('Prénom', width=100, anchor='center')
+        self.tree.column('Email', width=200, anchor='center')
+        self.tree.column('Rôle', width=100, anchor='center')
+        self.tree.column('Statut', width=80, anchor='center')
 
         # Scrollbar
         scrollbar = ttk.Scrollbar(
