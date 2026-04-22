@@ -36,11 +36,11 @@ class DAOUtilisateur:
 
     @staticmethod
     def get_all_utilisateurs():
-        """Récupère tous les utilisateurs actifs"""
+        """Récupère tous les utilisateurs"""
         try:
             conn = DAOSession.get_connexion()
             cursor = conn.cursor(dictionary=True)
-            query = "SELECT * FROM Utilisateur WHERE statut = 'ACTIF'"
+            query = "SELECT * FROM Utilisateur"
             cursor.execute(query)
             utilisateurs = cursor.fetchall()
             cursor.close()
