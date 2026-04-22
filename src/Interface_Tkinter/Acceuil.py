@@ -3,34 +3,31 @@ from tkinter import ttk
 import tkinter.messagebox as mb
 from dao.DAOUtilisateur import DAOUtilisateur
 
-class ConnexionUI(tk.Frame):  # Hérite de Frame au lieu de rien
-
-    def __init__(self, parent, on_success_callback):  # Prend parent et callback
+class ConnexionUI(tk.Frame):
+    def __init__(self, parent, on_success_callback):
         super().__init__(parent)
         self.pack(fill="both", expand=True)
-        self.on_success = on_success_callback  # Stocke le callback
+        self.on_success = on_success_callback
         self.leDAOUtilisateur = DAOUtilisateur.get_instance()
 
-        #widgets : 
+        # Widgets
         self.label_email = ttk.Label(self, text="Email : ")
         self.entry_email = ttk.Entry(self)
         self.label_mdp = ttk.Label(self, text="Mot de passe : ")
         self.entry_mdp = ttk.Entry(self, show="*")
         self.bouton = ttk.Button(self, text="Valider", command=self.verification)
 
-        # Packs :
+        # Packs
         self.label_email.pack(side='top', anchor='center', pady=(50, 5))
         self.entry_email.pack(side='top', anchor='center', pady=(0, 25))
         self.label_mdp.pack(side='top', anchor='center', pady=(25, 5))
         self.entry_mdp.pack(side='top', anchor='center', pady=(0, 50))
         self.bouton.pack(side='top', anchor='center', pady=(0, 75))
 
-
     def verification(self):
-
         email = self.entry_email.get()
         mdp = self.entry_mdp.get()
-        
+
         if not email:
             mb.showwarning("Champs Vide", "Veuillez renseigner votre email")
             return
@@ -50,8 +47,8 @@ class ConnexionUI(tk.Frame):  # Hérite de Frame au lieu de rien
             self.entry_mdp.delete(0, tk.END)
             mb.showwarning("Identifiant FAUX !", "Email ou mot de passe incorrect.")
             return
-        else : 
-            mb.showinfo("Accès Granted", f"Bienvenue {utilisateur['prenom']} !")
+        else:
+            mb.showinfo("Accès Granted", f"Bienvenue {utilisateur.get_prenom()} !")
             self.on_success(utilisateur)
 
 if __name__ == "__main__":
