@@ -1,20 +1,23 @@
-from DAO.DAOPaiement import DAOPAiement
+from dao.DAOPaiement import DAOPAiement
+
 
 class Paiement:
 
     leDAOPaiement = DAOPAiement.get_instance()
 
-    def __init__(self, id_paiement : int = None, date : str = None, montant : float = None, numero_Facture : str = None):
+    def __init__(self, id_paiement: int = None, date: str = None, montant: float = None, numero_Facture: str = None):
 
-        #verification type : 
+        # verification type :
         if not isinstance(id_paiement, int):
             raise TypeError("l'attribut {id_paiement} doit être un entier")
         if not isinstance(date, str):
-            raise TypeError("l'attribut {date} doit être une chaîne de caractères")
-        if not isinstance(montant, float) :
+            raise TypeError(
+                "l'attribut {date} doit être une chaîne de caractères")
+        if not isinstance(montant, float):
             raise TypeError("l'attribut {montant} doit être un nombre float")
         if not isinstance(numero_Facture, str):
-            raise TypeError("l'attribut {numero_Facture} doit être une chaîne de caractères")
+            raise TypeError(
+                "l'attribut {numero_Facture} doit être une chaîne de caractères")
         self.__date = date
         self.__montant = montant
         self.__numero_Facture = numero_Facture
@@ -48,25 +51,26 @@ class Paiement:
 
     def set_date(self, date):
         if not isinstance(date, str):
-            raise TypeError("l'attribut {date} doit être une chaîne de caractères")
+            raise TypeError(
+                "l'attribut {date} doit être une chaîne de caractères")
         self.__date = date
         Paiement.leDAOPaiement.update_paiement(self)
 
     def set_montant(self, montant):
-        if not isinstance(montant, float) :
+        if not isinstance(montant, float):
             raise TypeError("l'attribut {montant} doit être un nombre float")
         self.__montant = montant
         Paiement.leDAOPaiement.update_paiement(self)
 
     def set_numero_Facture(self, numero_Facture):
         if not isinstance(numero_Facture, str):
-            raise TypeError("l'attribut {numero_Facture} doit être une chaîne de caractères")
+            raise TypeError(
+                "l'attribut {numero_Facture} doit être une chaîne de caractères")
         self.__numero_Facture = numero_Facture
         Paiement.leDAOPaiement.update_paiement(self)
 
     def __str__(self):
         return f"Paiement(id_paiement={self.__id_paiement}, date={self.__date}, montant={self.__montant}, numeroFacture={self.__numero_Facture})"
-
 
 
 """class Paiement :
