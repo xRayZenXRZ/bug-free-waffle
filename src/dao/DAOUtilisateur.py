@@ -18,17 +18,16 @@ class DAOUtilisateur:
             sql = "INSERT INTO Utilisateur (email, motDePasse, typeUtilisateur, idClient) VALUES (%s, %s, %s, %s)"
             valeurs = (compte.get_email(), compte.get_motDePasse(), compte.get_typeUtilisateur(), compte.get_client().get_id_client())
         else:
-            # print("compte administrateur")
             sql = "INSERT INTO Utilisateur (email, motDePasse, typeUtilisateur, idClient) VALUES (%s, %s, %s, %s)"
             valeurs = (compte.get_email(), compte.get_motDePasse(), compte.get_typeUtilisateur(), None)
-        # print(sql)
-        # print(valeurs)
+
         try:
             connection = DAOSession.get_connexion()
             cursor = connection.cursor()
             cursor.execute(sql, valeurs)
             print("Utilisateur inséré avec succès")
             cle = cursor.lastrowid
+            connection.commit()
             return cle
         except Error as e:
             print("\n<--------------------------------------->")
@@ -36,11 +35,11 @@ class DAOUtilisateur:
             print(sql)
             print(valeurs)
             print("rollback")
-            connection.rollback() 
+            connection.rollback()
             return -1
         finally:
             if cursor:
-                cursor.close()    
+                cursor.close()   
 
 
     def find_by_email_motDePasse(self, email, motDePasse):
@@ -49,7 +48,7 @@ class DAOUtilisateur:
         cursor = None
         try:
             connection = DAOSession.get_connexion()
-            
+
             if connection is None or not connection.is_connected():
                 raise RuntimeError("La connexion à la base de données n'est pas ouverte ou est invalide.")
 
@@ -68,7 +67,6 @@ class DAOUtilisateur:
             print(f"Valeurs : {valeurs}")
             return None
         finally:
-            # Fermez le curseur s'il a été créé
             if cursor is not None:
                 cursor.close()
 
@@ -76,6 +74,6 @@ class DAOUtilisateur:
         from domaine.Utilisateur import Utilisateur
         compte = Utilisateur(rs['idUtilisateur'], rs['email'], rs['motDePasse'], rs['typeUtilisateur'])
         if rs['typeUtilisateur'] == "CLIENT":
-            from domaine.Client import Client                
-            compte.set_client(Client.charger(rs['idClient']))    
+            from domaine.Client import Client
+            compte.set_client(Client.charger(rs['idClient']))
         return compte
