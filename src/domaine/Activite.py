@@ -1,36 +1,33 @@
 from dao.DAOActivite import DAOActivite
-import datetime
-
+from datetime import datetime
 
 class Activite:
 
     leDAOActivite = DAOActivite()
 
     def __init__(self, id_activite: int = None, libelle_operationnel: str = None, date_prevues: str = None, date_effective: str = None, duree_estimee: int = None, responsable: str = None, statut: str = None, id_prestation: int = None):
-
-        # verification type :
-
+        
         if not isinstance(libelle_operationnel, str):
-            raise TypeError(
-                "l'attribut {libelle_operationnel} doit être une chaine de caractère")
-        # à verifier pour qu'il comporte "yyyy-mm-dd"
-        if not isinstance(date_prevues, str):
-            raise TypeError(
-                "l'attribut {date_prevues} doit être une chaine de caractère")
-        # à verifier pour qu'il comporte "yyyy-mm-dd"
-        if date_effective is not None and not isinstance(date_effective, str):
-            raise TypeError(
-                "l'attribut {date_effective} doit être une chaine de caractère")
+            raise TypeError(f"l'attribut {libelle_operationnel} doit être une chaine de caractère")
+        
+        if not isinstance(date_prevues, str) and self.is_date(date_effective):
+            raise TypeError(f"l'attribut {date_prevues} doit être une chaine de caractère")
+
+        if date_effective is not None and not isinstance(date_effective, str) and self.is_date(date_effective):
+            raise TypeError(f"l'attribut {date_effective} doit être une chaine de caractère")
+    
         if not isinstance(duree_estimee, int):
-            raise TypeError("l'attribut {duree_estimee} doit être un entier")
+            raise TypeError(f"l'attribut {duree_estimee} doit être un entier")
+        
         if not isinstance(responsable, str):
-            raise TypeError(
-                "l'attribut {responsable} doit être une chaine de caractère")
+            raise TypeError(f"l'attribut {responsable} doit être une chaine de caractère")
+        
         if not isinstance(statut, str):  # verifier bien in enum
-            raise TypeError(
-                "l'attribut {statut} doit être une chaine de caractère")
+            raise TypeError(f"l'attribut {statut} doit être une chaine de caractère")
+        
         if not isinstance(id_prestation, int):
-            raise TypeError("l'attribut {id_prestation} doit être un entier")
+            raise TypeError(f"l'attribut {id_prestation} doit être un entier")
+        
 
         self.__libelle_operationnel = libelle_operationnel
         self.__date_prevues = date_prevues
@@ -78,61 +75,65 @@ class Activite:
         return self.__id_prestation
 
     # Setters
-    # commentaire : "*" = {nouveaux attributs du setter}
+
     def set_id_activite(self, id_activite):
         if not isinstance(id_activite, int):
-            raise TypeError("l'attribut {id_activite} doit être un entier")
+            raise TypeError(f"l'attribut {id_activite} doit être un entier")
+        
         self.__id_activite = id_activite
         Activite.leDAOActivite.update_activite(self)
 
     def set_libelle_operationnel(self, libelle_operationnel):
         if not isinstance(libelle_operationnel, str):
-            raise TypeError(
-                "l'attribut {libelle_operationnel} doit être une chaine de caractère")
+            raise TypeError(f"l'attribut {libelle_operationnel} doit être une chaine de caractère")
+        
         self.__libelle_operationnel = libelle_operationnel
         Activite.leDAOActivite.update_activite(self)
 
     def set_date_prevues(self, date_prevues):
-        # à verifier pour qu'il comporte "yyyy-mm-dd"
-        if not isinstance(date_prevues, str):
-            raise TypeError(
-                "l'attribut {date_prevues} doit être une chaine de caractère")
+        if not isinstance(date_prevues, str) and self.is_date(date_prevues):
+            raise TypeError(f"l'attribut {date_prevues} doit être une chaine de caractère")
+        
         self.__date_prevues = date_prevues
         Activite.leDAOActivite.update_activite(self)
 
     def set_date_effective(self, date_effective):
-        # à verifier pour qu'il comporte "yyyy-mm-dd"
-        if not isinstance(date_effective, str):
-            raise TypeError(
-                "l'attribut {date_effective} doit être une chaine de caractère")
+        if not isinstance(date_effective, str) and self.is_date(date_effective):
+            raise TypeError(f"l'attribut {date_effective} doit être une chaine de caractère")
+
         self.__date_effective = date_effective
         Activite.leDAOActivite.update_activite(self)
 
     def set_duree_estimee(self, duree_estimee):
         if not isinstance(duree_estimee, int):
-            raise TypeError("l'attribut {duree_estimee} doit être un entier")
+            raise TypeError(f"l'attribut {duree_estimee} doit être un entier")
         self.__duree_estimee = duree_estimee
         Activite.leDAOActivite.update_activite(self)
 
     def set_responsable(self, responsable):
         if not isinstance(responsable, str):
-            raise TypeError(
-                "l'attribut {responsable} doit être une chaine de caractère")
+            raise TypeError(f"l'attribut {responsable} doit être une chaine de caractère")
         self.__responsable = responsable
         Activite.leDAOActivite.update_activite(self)
 
     def set_statut(self, statut):
         if not isinstance(statut, str):  # à verifier if in enum
-            raise TypeError(
-                "l'attribut {statut} doit être une chaine de caractère")
+            raise TypeError(f"l'attribut {statut} doit être une chaine de caractère")
         self.__statut = statut
         Activite.leDAOActivite.update_activite(self)
 
     def set_id_prestation(self, id_prestation):
         if not isinstance(id_prestation, int):
-            raise TypeError("l'attribut {id_prestation} doit être un entier")
+            raise TypeError(f"l'attribut {id_prestation} doit être un entier")
         self.__id_prestation = id_prestation
         Activite.leDAOActivite.update_activite(self)
+
+    def is_date(self, str_date : str) -> bool :
+        format = "%Y-%m-%d"
+        res = bool(datetime.strptime(str_date, format))
+        if res is False : 
+            raise ValueError(f"l'attributs doit être sous le format 'yyyy-mm-dd'")
+        return res
 
     def __str__(self):
         return f"Activite(id_activite={self.__id_activite}, libelle_operationnel={self.__libelle_operationnel}, date_prevues={self.__date_prevues}, date_effective={self.__date_effective}, duree_estimee={self.__duree_estimee}, responsable={self.__responsable}, statut={self.__statut}, id_prestation={self.__id_prestation})"
