@@ -78,48 +78,56 @@ class Contrat:
     def set_numero_contrat(self, numero_contrat):
         if not isinstance(numero_contrat, str):
             raise TypeError(f"l'attribut {numero_contrat} doit être une chaine de caractère")
+        
         self.__numero_contrat = numero_contrat
         Contrat.leDAOContrat.update_contrat(self)
 
     def set_date_debut(self, date_debut):
         if not isinstance(date_debut, str) and self.is_date(date_debut):
             raise TypeError(f"l'attribut {date_debut} doit être une chaine de caractère")
+        
         self.__date_debut = date_debut
         Contrat.leDAOContrat.update_contrat(self)
 
     def set_duree(self, duree):
         if not isinstance(duree, str):
             raise TypeError(f"l'attribut {duree} doit être une chaine de caractère")
+        
         self.__duree = duree
         Contrat.leDAOContrat.update_contrat(self)
 
     def set_nb_productions_totales(self, nb_productions_totales):
         if not isinstance(nb_productions_totales, int):
             raise TypeError(f"l'attribut {nb_productions_totales} doit être un entier")
+        
         self.__nb_productions_totales = nb_productions_totales
         Contrat.leDAOContrat.update_contrat(self)
 
     def set_periodicite(self, periodicite):
         if not isinstance(periodicite, str):
             raise TypeError(f"l'attribut {periodicite} doit être une chaine de caractère")
+        
         self.__periodicite = periodicite
         Contrat.leDAOContrat.update_contrat(self)
 
     def set_montant_global(self, montant_global):
         if not isinstance(montant_global, float):
             raise TypeError(f"l'attribut {montant_global} doit être un float")
+        
         self.__montant_global = montant_global
         Contrat.leDAOContrat.update_contrat(self)
 
     def set_condition_paiements(self, condition_paiements):
         if not isinstance(condition_paiements, str):
             raise TypeError(f"l'attribut {condition_paiements} doit être une chaine de caractère")
+        
         self.__condition_paiements = condition_paiements
         Contrat.leDAOContrat.update_contrat(self)
 
     def set_id_client(self, id_client):
         if not isinstance(id_client, int):
             raise TypeError(f"l'attribut {id_client} doit être une chaine de caractère")
+        
         self.__id_client = id_client
         Contrat.leDAOContrat.update_contrat(self)
 
