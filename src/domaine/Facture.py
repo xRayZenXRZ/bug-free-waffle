@@ -1,5 +1,5 @@
 from dao.DAOFacture import DAOFacture
-
+from datetime import datetime
 
 class Facture:
 
@@ -11,7 +11,7 @@ class Facture:
         if not isinstance(numero_facture, str):
             raise TypeError(
                 "l'attribut {numero_facture} doit être une chaîne de caractères")
-        if not isinstance(date_emission, str):
+        if not isinstance(date_emission, str) and self.is_date(date_emission):
             raise TypeError(
                 "l'attribut {date_emission} doit être une chaîne de caractères")
         if not isinstance(montant_total, float):
@@ -58,8 +58,8 @@ class Facture:
         self.__numero_facture = numero_facture
         Facture.leDAOFacture.update_facture(self)
 
-    def set_date_emission(self, date_emission):
-        if not isinstance(date_emission, str):
+    def set_date_emission(self, date_emission) :
+        if not isinstance(date_emission, str) and self.is_date(date_emission):
             raise TypeError(
                 "l'attribut {date_emission} doit être une chaîne de caractères")
         self.__date_emission = date_emission
@@ -85,6 +85,13 @@ class Facture:
                 "l'attribut {numero_contrat} doit être une chaîne de caractères")
         self.__numero_contrat = numero_contrat
         Facture.leDAOFacture.update_facture(self)
+
+    def is_date(self, str_date : str) -> bool :
+        format = "%Y-%m-%d"
+        res = bool(datetime.strptime(str_date, format))
+        if res is False : 
+            raise ValueError(f"l'attributs doit être sous le format 'yyyy-mm-dd'")
+        return res
 
     def __str__(self):
         return f"Facture(numero_facture={self.__numero_facture}, date_emission={self.__date_emission}, montant_total={self.__montant_total}, etat={self.__etat}, numero_contrat={self.__numero_contrat})"

@@ -1,5 +1,5 @@
 from dao.DAODevis import DAODevis
-
+from datetime import datetime
 
 class Devis:
 
@@ -11,10 +11,10 @@ class Devis:
         if not isinstance(numero_devis, str):
             raise TypeError(
                 "l'attribut {numero_devis} doit être une chaîne de caractere")
-        if not isinstance(date_emission, str):
+        if not isinstance(date_emission, str) and self.is_date(date_emission):
             raise TypeError(
                 "l'attribut {date_emission} doit être une chaîne de caractere")
-        if not isinstance(date_validite, str):
+        if not isinstance(date_validite, str) and self.is_date(date_validite):
             raise TypeError(
                 "l'attribut {date_validite} doit être une chaîne de caractères")
         if not isinstance(description_prestation, str):
@@ -31,7 +31,7 @@ class Devis:
         if not isinstance(statut, str):
             raise TypeError(
                 "l'attribut {statut} doit être une chaîne de caractères")
-        if date_acceptation is not None and not isinstance(date_acceptation, str):
+        if date_acceptation is not None and not isinstance(date_acceptation, str) and self.is_date(date_acceptation):
             raise TypeError(
                 "l'attribut {date_acceptation} doit être une chaîne de caractères")
         if not isinstance(id_client, int):
@@ -99,14 +99,14 @@ class Devis:
         Devis.leDAODevis.update_devis(self)
 
     def set_date_emission(self, date_emission):
-        if not isinstance(date_emission, str):
+        if not isinstance(date_emission, str) and self.is_date(date_emission):
             raise TypeError(
                 "l'attribut {date_emission} doit être une chaîne de caractere")
         self.__date_emission = date_emission
         Devis.leDAODevis.update_devis(self)
 
     def set_date_validite(self, date_validite):
-        if not isinstance(date_validite, str):
+        if not isinstance(date_validite, str) and self.is_date(date_validite):
             raise TypeError(
                 "l'attribut {date_validite} doit être une chaîne de caractères")
         self.__date_validite = date_validite
@@ -147,7 +147,7 @@ class Devis:
         Devis.leDAODevis.update_devis(self)
 
     def set_date_acceptation(self, date_acceptation):
-        if not isinstance(date_acceptation, str):
+        if not isinstance(date_acceptation, str) and self.is_date(date_acceptation):
             raise TypeError(
                 "l'attribut {date_acceptation} doit être une chaîne de caractères")
         self.__date_acceptation = date_acceptation
@@ -165,6 +165,13 @@ class Devis:
                 "l'attribut {numero_contrat} doit être une chaîne de caractères")
         self.__numero_contrat = numero_contrat
         Devis.leDAODevis.update_devis(self)
+
+    def is_date(self, str_date : str) -> bool :
+        format = "%Y-%m-%d"
+        res = bool(datetime.strptime(str_date, format))
+        if res is False : 
+            raise ValueError(f"l'attributs doit être sous le format 'yyyy-mm-dd'")
+        return res
 
     def __str__(self):
         return (f"Devis(numero_devis={self.__numero_devis}, date_emission={self.__date_emission}, date_validite={self.__date_validite}, description_prestation={self.__description_prestation}, quantite_prevue={self.__quantite_prevue}, details_couts={self.__details_couts}, montant_total_estime={self.__montant_total_estime}, statut={self.__statut}, date_acceptation={self.__date_acceptation}, id_client={self.__id_client}, numero_contrat={self.__numero_contrat})")
