@@ -46,14 +46,14 @@ class Client:
 
     @staticmethod
     def charger(id_client):
-        self = Client.leDAOClient.find_client(id_client)
+        un_client = Client.leDAOClient.find_client(id_client)
         un_devis = Devis(-1)
         un_devis.set_id_client(id_client=id_client)
-        self.__les_devis = Client.leDAODevis.select_devis(un_devis)
-        pass
+        un_client.set_les_devis(Client.leDAODevis.select_devis(un_devis))
+        return un_client
 
     @staticmethod
-    def supprimer(un_client ):
+    def supprimer(un_client):
         if un_client.get_les_devis() :
             raise Exception("Erreur_suppression_client_avec_devis")
         else :
