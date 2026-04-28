@@ -107,24 +107,28 @@ class Activite:
     def set_duree_estimee(self, duree_estimee):
         if not isinstance(duree_estimee, int):
             raise TypeError(f"l'attribut {duree_estimee} doit être un entier")
+        
         self.__duree_estimee = duree_estimee
         Activite.leDAOActivite.update_activite(self)
 
     def set_responsable(self, responsable):
         if not isinstance(responsable, str):
             raise TypeError(f"l'attribut {responsable} doit être une chaine de caractère")
+        
         self.__responsable = responsable
         Activite.leDAOActivite.update_activite(self)
 
     def set_statut(self, statut):
         if not isinstance(statut, str):  # à verifier if in enum
             raise TypeError(f"l'attribut {statut} doit être une chaine de caractère")
+        
         self.__statut = statut
         Activite.leDAOActivite.update_activite(self)
 
     def set_id_prestation(self, id_prestation):
         if not isinstance(id_prestation, int):
             raise TypeError(f"l'attribut {id_prestation} doit être un entier")
+        
         self.__id_prestation = id_prestation
         Activite.leDAOActivite.update_activite(self)
 

@@ -9,20 +9,19 @@ class Facture:
 
         # verification type :
         if not isinstance(numero_facture, str):
-            raise TypeError(
-                "l'attribut {numero_facture} doit être une chaîne de caractères")
+            raise TypeError(f"l'attribut {numero_facture} doit être une chaîne de caractères")
+        
         if not isinstance(date_emission, str) and self.is_date(date_emission):
-            raise TypeError(
-                "l'attribut {date_emission} doit être une chaîne de caractères")
+            raise TypeError(f"l'attribut {date_emission} doit être une chaîne de caractères")
+        
         if not isinstance(montant_total, float):
-            raise TypeError(
-                "l'attribut {montant_total} doit être un nombre float")
+            raise TypeError(f"l'attribut {montant_total} doit être un nombre float")
+        
         if not isinstance(etat, str):
-            raise TypeError(
-                "l'attribut {etat} doit être une chaîne de caractères")
+            raise TypeError(f"l'attribut {etat} doit être une chaîne de caractères")
+        
         if not isinstance(numero_contrat, str):
-            raise TypeError(
-                "l'attribut {numero_contrat} doit être une chaîne de caractères")
+            raise TypeError(f"l'attribut {numero_contrat} doit être une chaîne de caractères")
 
         self.__numero_facture = numero_facture
         self.__date_emission = date_emission
