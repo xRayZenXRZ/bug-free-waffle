@@ -29,7 +29,21 @@ class Facture:
         self.__etat = etat
         self.__numero_contrat = numero_contrat
 
+        self.__les_paiements = {} # --> faire les getters et les setters 
+
         self.__numero_facture = Facture.leDAOFacture.insert_facture(self)
+
+    #methode statiques : 
+
+    @staticmethod
+    def charger(numero_facture):
+        pass
+
+    @staticmethod
+    def supprimer(un_facture):
+        pass
+    
+
 
     # Getters
 
