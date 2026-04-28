@@ -45,7 +45,7 @@ class Activite:
     def charger(id_activite):
         pass
 
-    def supprimer(activite):
+    def supprimer(un_activite):
         pass
 
     # Getters :

@@ -55,6 +55,16 @@ class Devis:
 
         self.__numero_devis = Devis.leDAODevis.insert_devis(self)
 
+    #method statiques : 
+
+    @staticmethod
+    def charger(numero_devis):
+        pass
+
+    @staticmethod
+    def supprimer(un_devis):
+        pass
+
     # Getters
 
     def get_numero_devis(self):

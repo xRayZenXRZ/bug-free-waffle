@@ -27,6 +27,17 @@ class Paiement:
         else:
             self.__id_paiement = Paiement.leDAOPaiement.insert_paiement(self)
 
+    # methode statiques : 
+
+    @staticmethod
+    def charger(id_paiement):
+        pass
+
+    @staticmethod
+    def supprimer(un_paiement):
+        pass
+    
+    
     # Getters
 
     def get_id_paiement(self):
