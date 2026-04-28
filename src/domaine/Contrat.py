@@ -45,8 +45,22 @@ class Contrat:
         self.__condition_paiements = condition_paiements
         self.__id_client = id_client
 
+        self.__les_devis = {} # --> faire les getters et setters 
+        self.__les_factures = {} # --> faire les getters et les setters
+        self.__les_prestation = {} # --> faire les getters et les setters
+
         self.__numero_contrat = Contrat.leDAOContrat.insert_contrat(self)
 
+    #Method statiques : 
+
+    @staticmethod
+    def charger(numero_contrat):
+        pass
+
+    @staticmethod
+    def supprimer(un_contrat):
+        pass
+    
     # Getters
 
     def get_numero_contrat(self):

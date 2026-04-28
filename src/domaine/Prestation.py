@@ -48,11 +48,12 @@ class Prestation:
         self.__nb_videos_prevues = nb_videos_prevues
         self.__numero_contrat = numero_contrat
 
+        self.__les_activites = {} # --> faire les getters et les setters 
+
         if id_prestation is not None:
             self.__id_prestation = id_prestation
         else:
-            self.__id_prestation = Prestation.leDAOPrestation.insert_Prestation(
-                self)
+            self.__id_prestation = Prestation.leDAOPrestation.insert_Prestation(self)
 
     # Getters
 

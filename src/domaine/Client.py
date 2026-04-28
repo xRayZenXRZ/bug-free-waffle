@@ -36,11 +36,23 @@ class Client:
         self.__courriel = courriel
         self.__enum_status_client = enum_status_client
 
+        self.__les_devis = [] 
+
         if id_client is not None:
             self.__id_client = id_client
         else:
             self.__id_client = Client.leDAOClient.insert_client(self)
 
+    #les methodes statiques : 
+
+    @staticmethod
+    def charger(id_client):
+        pass
+
+    @staticmethod
+    def supprimer(un_client):
+        pass
+    
     # Getters
 
     def get_id_client(self):
@@ -66,6 +78,9 @@ class Client:
 
     def get_status_client(self):
         return self.__enum_status_client
+    
+    def get_les_devis(self) : 
+        return self.__les_devis
 
     # Setters
     # commentaire : modifier * = attributs du setters :
@@ -124,6 +139,9 @@ class Client:
         
         self.__enum_status_client = enum_status_client
         Client.leDAOClient.update_client(self)
+
+    def set_les_devis(self, les_devis) :
+        self.__les_devis = les_devis
 
     def __str__(self):
         return f"Client(id_client={self.__id_client}, nom={self.__nom}, prenom={self.__prenom}, raison_sociale={self.__raison_sociale}, adresse={self.__adresse}, telephone={self.__telephone}, courriel={self.__courriel}, statut={self.__enum_status_client})"
