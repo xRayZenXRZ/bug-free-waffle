@@ -1,10 +1,9 @@
 from dao.DAOClient import DAOClient
-
-invalid_type = "Invalid type !"
-
+from dao.DAODevis import DAODevis
+from domaine.Devis import Devis
 
 class Client:
-
+    leDAODevis = DAODevis.get_instance()
     leDAOClient = DAOClient.get_instance()
 
     def __init__(self, id_client: int = None, nom: str = None, prenom: str = None, raison_sociale: str = None, adresse: str = None, telephone: str = None, courriel: str = None, enum_status_client: str = None):
@@ -47,12 +46,38 @@ class Client:
 
     @staticmethod
     def charger(id_client):
+        self = Client.leDAOClient.find_client(id_client)
+        un_devis = Devis(-1)
+        un_devis.set_id_client(id_client=id_client)
+        self.__les_devis = Client.leDAODevis.select_devis(un_devis)
         pass
 
     @staticmethod
-    def supprimer(un_client):
-        pass
-    
+    def supprimer(un_client ):
+        if un_client.get_les_devis() :
+            raise Exception("Erreur_suppression_client_avec_devis")
+        else :
+            Client.leDAOClient.delete_client(un_client)
+
+    def ajouter_devis(self, devis : Devis) :
+        if devis.get_id_client() is None:
+            self.__les_devis.append(devis)
+            devis.set_id_client(self.__id_client)
+        else:
+            raise Exception("Erreur_Devis_a_deja_un_Client")        
+
+    def enlever_devis(self, devis : Devis):
+        devis2 = None
+        for d in self.__les_devis :
+            if d.get_numero_devis() == devis.get_numero_devis():
+                devis2 = d
+                break
+        if devis2 is not None:
+            self.__les_devis.remove(devis2)
+            devis.set_id_client(None)
+        else:
+            raise Exception("Erreur_Devis_inexistant_dans_les_devis_du_client")
+
     # Getters
 
     def get_id_client(self):
@@ -83,7 +108,6 @@ class Client:
         return self.__les_devis
 
     # Setters
-    # commentaire : modifier * = attributs du setters :
     def set_id_client(self, id_client):
         if not isinstance(id_client, int):
             raise TypeError(f"l'attribut {id_client} doit être un entier")
