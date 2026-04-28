@@ -53,6 +53,8 @@ class Devis:
         self.__id_client = id_client
         self.__numero_contrat = numero_contrat
 
+        self.__les_colloborateurs = {} #--> faire les getters et les setters.
+
         self.__numero_devis = Devis.leDAODevis.insert_devis(self)
 
     #method statiques : 
