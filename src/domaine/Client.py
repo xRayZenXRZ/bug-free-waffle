@@ -11,23 +11,22 @@ class Client:
 
         # verification type :
         if not isinstance(nom, str):
-            raise TypeError(
-                "l'attribut {nom} doit être une chaine de caractère")
+            raise TypeError(f"l'attribut {nom} doit être une chaine de caractère")
+        
         if not isinstance(prenom, str):
-            raise TypeError(
-                "l'attributs {prenom} doit être une chaine de caractère")
+            raise TypeError(f"l'attributs {prenom} doit être une chaine de caractère")
+        
         if not isinstance(adresse, str):
-            raise TypeError(
-                "l'attributs {adresse} doit être une chaine de caractère")
+            raise TypeError(f"l'attributs {adresse} doit être une chaine de caractère")
+        
         if not isinstance(telephone, str):
-            raise TypeError(
-                "l'attributs {telephone} doit être une chaine de caractère")
+            raise TypeError(f"l'attributs {telephone} doit être une chaine de caractère")
+        
         if not isinstance(courriel, str):
-            raise TypeError(
-                "l'attributs {courriel} doit être une chaine de caractère")
+            raise TypeError(f"l'attributs {courriel} doit être une chaine de caractère")
+        
         if not isinstance(enum_status_client, str):
-            raise TypeError(
-                "l'attributs {enum_status_client} doit être une chaine de caractère")
+            raise TypeError(f"l'attributs {enum_status_client} doit être une chaine de caractère")
 
         self.__nom = nom
         self.__prenom = prenom

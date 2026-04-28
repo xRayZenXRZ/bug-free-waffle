@@ -1,5 +1,5 @@
 from dao.DAOPaiement import DAOPAiement
-
+from datetime import datetime
 
 class Paiement:
 
@@ -10,7 +10,7 @@ class Paiement:
         # verification type :
         if not isinstance(id_paiement, int):
             raise TypeError("l'attribut {id_paiement} doit être un entier")
-        if not isinstance(date, str):
+        if not isinstance(date, str) and self.is_date(date):
             raise TypeError(
                 "l'attribut {date} doit être une chaîne de caractères")
         if not isinstance(montant, float):
@@ -50,7 +50,7 @@ class Paiement:
         Paiement.leDAOPaiement.update_paiement(self)
 
     def set_date(self, date):
-        if not isinstance(date, str):
+        if not isinstance(date, str) and self.is_date(date):
             raise TypeError(
                 "l'attribut {date} doit être une chaîne de caractères")
         self.__date = date
@@ -68,6 +68,13 @@ class Paiement:
                 "l'attribut {numero_Facture} doit être une chaîne de caractères")
         self.__numero_Facture = numero_Facture
         Paiement.leDAOPaiement.update_paiement(self)
+
+    def is_date(self, str_date : str) -> bool :
+        format = "%Y-%m-%d"
+        res = bool(datetime.strptime(str_date, format))
+        if res is False : 
+            raise ValueError(f"l'attributs doit être sous le format 'yyyy-mm-dd'")
+        return res
 
     def __str__(self):
         return f"Paiement(id_paiement={self.__id_paiement}, date={self.__date}, montant={self.__montant}, numeroFacture={self.__numero_Facture})"
