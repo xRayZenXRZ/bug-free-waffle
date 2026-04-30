@@ -1,26 +1,31 @@
-from DAO.DAOClient import DAOClient
-
-invalid_type = "Invalid type !"
+from dao.DAOClient import DAOClient
+from dao.DAODevis import DAODevis
+from domaine.Devis import Devis
 
 class Client:
-
+    leDAODevis = DAODevis.get_instance()
     leDAOClient = DAOClient.get_instance()
 
     def __init__(self, id_client: int = None, nom: str = None, prenom: str = None, raison_sociale: str = None, adresse: str = None, telephone: str = None, courriel: str = None, enum_status_client: str = None):
-        
-        #verification type : 
+
+        # verification type :
         if not isinstance(nom, str):
-            raise TypeError("l'attribut {nom} doit être une chaine de caractère")
+            raise TypeError(f"l'attribut {nom} doit être une chaine de caractère")
+        
         if not isinstance(prenom, str):
-            raise TypeError("l'attributs {prenom} doit être une chaine de caractère")
+            raise TypeError(f"l'attributs {prenom} doit être une chaine de caractère")
+        
         if not isinstance(adresse, str):
-            raise TypeError("l'attributs {adresse} doit être une chaine de caractère")
+            raise TypeError(f"l'attributs {adresse} doit être une chaine de caractère")
+        
         if not isinstance(telephone, str):
-            raise TypeError("l'attributs {telephone} doit être une chaine de caractère")
+            raise TypeError(f"l'attributs {telephone} doit être une chaine de caractère")
+        
         if not isinstance(courriel, str):
-            raise TypeError("l'attributs {courriel} doit être une chaine de caractère")
+            raise TypeError(f"l'attributs {courriel} doit être une chaine de caractère")
+        
         if not isinstance(enum_status_client, str):
-            raise TypeError("l'attributs {enum_status_client} doit être une chaine de caractère")
+            raise TypeError(f"l'attributs {enum_status_client} doit être une chaine de caractère")
 
         self.__nom = nom
         self.__prenom = prenom
@@ -30,10 +35,48 @@ class Client:
         self.__courriel = courriel
         self.__enum_status_client = enum_status_client
 
+        self.__les_devis = [] 
+
         if id_client is not None:
             self.__id_client = id_client
         else:
             self.__id_client = Client.leDAOClient.insert_client(self)
+
+    #les methodes statiques : 
+
+    @staticmethod
+    def charger(id_client):
+        un_client = Client.leDAOClient.find_client(id_client)
+        un_devis = Devis(-1)
+        un_devis.set_id_client(id_client=id_client)
+        un_client.set_les_devis(Client.leDAODevis.select_devis(un_devis))
+        return un_client
+
+    @staticmethod
+    def supprimer(un_client):
+        if un_client.get_les_devis() :
+            raise Exception("Erreur_suppression_client_avec_devis")
+        else :
+            Client.leDAOClient.delete_client(un_client)
+
+    def ajouter_devis(self, devis : Devis) :
+        if devis.get_id_client() is None:
+            self.__les_devis.append(devis)
+            devis.set_id_client(self.__id_client)
+        else:
+            raise Exception("Erreur_Devis_a_deja_un_Client")        
+
+    def enlever_devis(self, devis : Devis):
+        devis2 = None
+        for d in self.__les_devis :
+            if d.get_numero_devis() == devis.get_numero_devis():
+                devis2 = d
+                break
+        if devis2 is not None:
+            self.__les_devis.remove(devis2)
+            devis.set_id_client(None)
+        else:
+            raise Exception("Erreur_Devis_inexistant_dans_les_devis_du_client")
 
     # Getters
 
@@ -60,61 +103,74 @@ class Client:
 
     def get_status_client(self):
         return self.__enum_status_client
+    
+    def get_les_devis(self) : 
+        return self.__les_devis
 
     # Setters
-    #commentaire : modifier * = attributs du setters :
     def set_id_client(self, id_client):
         if not isinstance(id_client, int):
-            raise TypeError("l'attribut {id_client} doit être un entier")            
+            raise TypeError(f"l'attribut {id_client} doit être un entier")
+        
         self.__id_client = id_client
         Client.leDAOClient.update_client(self)
 
     def set_nom(self, nom):
         if not isinstance(nom, str):
-            raise TypeError("l'attribut {nom} doit être une chaine de caractère")               
+            raise TypeError(f"l'attribut {nom} doit être une chaine de caractère")
+        
         self.__nom = nom
         Client.leDAOClient.update_client(self)
 
     def set_prenom(self, prenom):
         if not isinstance(prenom, str):
-            raise TypeError("l'attribut {prenom} doit être une chaine de caractère") 
+            raise TypeError(f"l'attribut {prenom} doit être une chaine de caractère")
+        
         self.__prenom = prenom
         Client.leDAOClient.update_client(self)
 
     def set_raison_sociale(self, raison_sociale):
         if not isinstance(raison_sociale, str):
-            raise TypeError("l'attribut {raison_sociale} doit être une chaine de caractère") 
+            raise TypeError(f"l'attribut {raison_sociale} doit être une chaine de caractère")
+        
         self.__raison_sociale = raison_sociale
         Client.leDAOClient.update_client(self)
 
     def set_adresse(self, adresse):
         if not isinstance(adresse, str):
-            raise TypeError("l'attribut {adresse} doit être une chaine de caractère") 
+            raise TypeError(f"l'attribut {adresse} doit être une chaine de caractère")
+        
         self.__adresse = adresse
         Client.leDAOClient.update_client(self)
 
     def set_telephone(self, telephone):
         if not isinstance(telephone, str):
-            raise TypeError("l'attribut {telephone} doit être une chaine de caractère") 
+            raise TypeError(f"l'attribut {telephone} doit être une chaine de caractère")
+        
         self.__telephone = telephone
         Client.leDAOClient.update_client(self)
 
-
     def set_courriel(self, courriel):
         if not isinstance(courriel, str):
-            raise TypeError("l'attribut {courriel} doit être une chaine de caractère") 
+            raise TypeError(f"l'attribut {courriel} doit être une chaine de caractère")
+        
         self.__courriel = courriel
         Client.leDAOClient.update_client(self)
 
     def set_enum_status_client(self, enum_status_client):
         if not isinstance(enum_status_client, str):
-            raise TypeError("l'attribut {enum_statut_client} doit être une chaine de caractère") 
+            raise TypeError(f"l'attribut {enum_status_client} doit être une chaine de caractère")
+        
         self.__enum_status_client = enum_status_client
         Client.leDAOClient.update_client(self)
 
+    def set_les_devis(self, les_devis) :
+        self.__les_devis = les_devis
+
     def __str__(self):
         return f"Client(id_client={self.__id_client}, nom={self.__nom}, prenom={self.__prenom}, raison_sociale={self.__raison_sociale}, adresse={self.__adresse}, telephone={self.__telephone}, courriel={self.__courriel}, statut={self.__enum_status_client})"
-    
+
+
 """class Client :
     
     def __init__(self, id_client, nom, prenom, raison_sociale, adresse, telephone, courriel, enum_type_client, enum_status_client) :

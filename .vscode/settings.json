@@ -1,4 +1,14 @@
 {
+    "python.envFile": "${workspaceFolder}/.env",
+    "terminal.integrated.env.osx": {
+        "PYTHONPATH": "${workspaceFolder}/src"
+    },
+    "terminal.integrated.env.windows": {
+        "PYTHONPATH": "${workspaceFolder}/src"
+    },
+    "python.analysis.extraPaths": [
+        "${workspaceFolder}/src"
+    ],
     "python.analysis.packageIndexDepths": [
         {
             "name": "sklearn",

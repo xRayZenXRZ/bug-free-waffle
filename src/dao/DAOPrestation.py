@@ -1,5 +1,6 @@
-from DAO.DAOSession import DAOSession
+from dao.DAOSession import DAOSession
 from mysql.connector import Error
+
 
 class DAOPrestation:
 
@@ -13,7 +14,8 @@ class DAOPrestation:
 
     def insert_Prestation(self, prestation):
         sql = "INSERT INTO Prestation (datePrevue, dateEffective, lieu, type, nbPhotosPrevues, nbVideosPrevues, numeroContrat) VALUES (%s, %s, %s, %s, %s, %s, %s)"
-        values = (prestation.get_date_prevue(), prestation.get_date_effective(), prestation.get_lieu(), prestation.get_type(), prestation.get_nb_photos_prevues(), prestation.get_nb_videos_prevues(), prestation.get_numero_contrat())
+        values = (prestation.get_date_prevue(), prestation.get_date_effective(), prestation.get_lieu(), prestation.get_type(
+        ), prestation.get_nb_photos_prevues(), prestation.get_nb_videos_prevues(), prestation.get_numero_contrat())
         try:
             connection = DAOSession.get_connexion()
             cursor = connection.cursor()
@@ -75,7 +77,8 @@ class DAOPrestation:
 
     def update_prestation(self, prestation):
         sql = "UPDATE Prestation SET datePrevue = %s, dateEffective = %s, lieu = %s, type = %s, nbPhotosPrevues = %s, nbVideosPrevues = %s, numeroContrat = %s WHERE idPrestation = %s"
-        values = (prestation.get_date_prevue(), prestation.get_date_effective(), prestation.get_lieu(), prestation.get_type(), prestation.get_nb_photos_prevues(), prestation.get_nb_videos_prevues(), prestation.get_numero_contrat(), prestation.get_id_prestation())
+        values = (prestation.get_date_prevue(), prestation.get_date_effective(), prestation.get_lieu(), prestation.get_type(
+        ), prestation.get_nb_photos_prevues(), prestation.get_nb_videos_prevues(), prestation.get_numero_contrat(), prestation.get_id_prestation())
         try:
             connection = DAOSession.get_connexion()
             cursor = connection.cursor()
@@ -161,5 +164,6 @@ class DAOPrestation:
 
     def set_all_values(self, rs):
         from domaine.Prestation import Prestation
-        prestation = Prestation(rs["idPrestation"], rs["datePrevue"], rs["dateEffective"], rs["lieu"], rs["type"], rs["nbPhotosPrevues"], rs["nbVideosPrevues"], rs["numeroContrat"])
+        prestation = Prestation(rs["idPrestation"], rs["datePrevue"], rs["dateEffective"], rs["lieu"],
+                                rs["type"], rs["nbPhotosPrevues"], rs["nbVideosPrevues"], rs["numeroContrat"])
         return prestation

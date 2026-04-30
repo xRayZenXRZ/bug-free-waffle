@@ -1,5 +1,6 @@
-from DAO.DAOSession import DAOSession
+from dao.DAOSession import DAOSession
 from mysql.connector import Error
+
 
 class DAOContrat:
 
@@ -13,7 +14,8 @@ class DAOContrat:
 
     def insert_contrat(self, contrat):
         sql = "INSERT INTO Contrat (numeroContrat ,dateDebut, duree, nbProductionsTotales, periodicite, montantGlobal, conditionsPaiement, idClient) VALUES (%s ,%s, %s, %s, %s, %s, %s, %s)"
-        values = (contrat.get_numero_contrat() ,contrat.get_date_debut(), contrat.get_duree(), contrat.get_nb_productions_totales(), contrat.get_periodicite(), contrat.get_montant_global(), contrat.get_condition_paiements(), contrat.get_id_client())
+        values = (contrat.get_numero_contrat(), contrat.get_date_debut(), contrat.get_duree(), contrat.get_nb_productions_totales(
+        ), contrat.get_periodicite(), contrat.get_montant_global(), contrat.get_condition_paiements(), contrat.get_id_client())
         try:
             connection = DAOSession.get_connexion()
             cursor = connection.cursor()
@@ -77,7 +79,8 @@ class DAOContrat:
 
     def update_contrat(self, contrat):
         sql = "UPDATE Contrat SET dateDebut = %s, duree = %s, nbProductionsTotales = %s, periodicite = %s, montantGlobal = %s, conditionPaiements = %s, idClient = %s WHERE numeroContrat = %s"
-        values = (contrat.get_date_debut(), contrat.get_duree(), contrat.get_nb_productions_totales(), contrat.get_periodicite(), contrat.get_montant_global(), contrat.get_condition_paiements(), contrat.get_id_client(), contrat.get_numero_contrat())
+        values = (contrat.get_date_debut(), contrat.get_duree(), contrat.get_nb_productions_totales(), contrat.get_periodicite(
+        ), contrat.get_montant_global(), contrat.get_condition_paiements(), contrat.get_id_client(), contrat.get_numero_contrat())
         try:
             connection = DAOSession.get_connexion()
             cursor = connection.cursor()
@@ -163,5 +166,6 @@ class DAOContrat:
 
     def set_all_values(self, rs):
         from domaine.Contrat import Contrat
-        contrat = Contrat(rs["numeroContrat"], rs["dateDebut"], rs["duree"], rs["nbProductionsTotales"], rs["periodicite"], rs["montantGlobal"], rs["conditionPaiements"], rs["idClient"])
+        contrat = Contrat(rs["numeroContrat"], rs["dateDebut"], rs["duree"], rs["nbProductionsTotales"],
+                          rs["periodicite"], rs["montantGlobal"], rs["conditionPaiements"], rs["idClient"])
         return contrat
