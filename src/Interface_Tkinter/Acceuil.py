@@ -1,29 +1,23 @@
-import tkinter as tk
-from tkinter import ttk
+from dao.DAOUtilisateur import DAOUtilisateur
 import tkinter.messagebox as mb
-
-compte_utilisateur = {
-    "Aled": {"email": "root@gmail.com", "mdp": "root"}
-}
+from tkinter import ttk
+import tkinter as tk
 
 
-class ConnexionUI(tk.Frame):  # Hérite de Frame au lieu de rien
-    def __init__(self, parent, on_success_callback):  # Prend parent et callback
+class ConnexionUI(tk.Frame):
+    def __init__(self, parent, on_success_callback):
         super().__init__(parent)
         self.pack(fill="both", expand=True)
+        self.on_success = on_success_callback
 
-        self.on_success = on_success_callback  # Stocke le callback
-
-        # Création email, mdp, bouton connexion :
-        # self au lieu de self.root
+        # Widgets
         self.label_email = ttk.Label(self, text="Email : ")
         self.entry_email = ttk.Entry(self)
         self.label_mdp = ttk.Label(self, text="Mot de passe : ")
         self.entry_mdp = ttk.Entry(self, show="*")
-        self.bouton = ttk.Button(self, text="Valider",
-                                 command=self.verification)
+        self.bouton = ttk.Button(self, text="Valider", command=self.verification)
 
-        # Packs :
+        # Packs
         self.label_email.pack(side='top', anchor='center', pady=(50, 5))
         self.entry_email.pack(side='top', anchor='center', pady=(0, 25))
         self.label_mdp.pack(side='top', anchor='center', pady=(25, 5))
@@ -43,32 +37,29 @@ class ConnexionUI(tk.Frame):  # Hérite de Frame au lieu de rien
                 "Champs Vide", "Veuillez renseigner votre mot de passe")
             return
 
-        if not ("@" in email and "." in email):
+        if "@" not in email or "." not in email:
             mb.showwarning("Erreur", "Email non valide")
             return
 
-        # Chercher l'utilisateur
-        valid = {client for client, identifiant in compte_utilisateur.items()
-                 if identifiant["email"] == email and identifiant["mdp"] == mdp}
+        # Utilisation du DAO au lieu de requête SQL directe
+        utilisateur = DAOUtilisateur.authentifier(email, mdp)
 
-        if len(valid) <= 0:
+        if not utilisateur:
             self.entry_email.delete(0, tk.END)
             self.entry_mdp.delete(0, tk.END)
-            mb.showwarning("Identifiant FAUX !", "Veuillez réessayer.")
+            mb.showwarning("Identifiant FAUX !",
+                           "Email ou mot de passe incorrect.")
             return
 
-        # mb.showinfo("Accès Granted", "Yayyyyyyyyyy !")
+        mb.showinfo("Accès Granted", f"Bienvenue {utilisateur['prenom']} !")
 
-        # Récupérer le nom de l'utilisateur
-        nom_utilisateur = list(valid)[0]
-
-        # Appeler le callback pour passer à la page suivante
-        self.on_success(nom_utilisateur, email)
+        # Passer toutes les infos utilisateur
+        self.on_success(utilisateur)
 
 
 if __name__ == "__main__":
     root = tk.Tk()
     root.title("Com'Art")
     root.geometry("800x400")
-    app = ConnexionUI(root, lambda nom, email: print(f"Connecté: {nom}"))
+    app = ConnexionUI(root, lambda user: print(f"Connecté: {user}"))
     root.mainloop()

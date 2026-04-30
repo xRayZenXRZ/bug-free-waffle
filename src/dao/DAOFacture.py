@@ -1,5 +1,6 @@
-from DAO.DAOSession import DAOSession
+from dao.DAOSession import DAOSession
 from mysql.connector import Error
+
 
 class DAOFacture:
 
@@ -13,7 +14,8 @@ class DAOFacture:
 
     def insert_facture(self, facture):
         sql = "INSERT INTO Facture (numeroFacture ,dateEmission, montatTotal, etat, numeroContrat) VALUES (%s ,%s, %s, %s, %s)"
-        values = (facture.get_date_emission(), facture.get_montant_total(), facture.get_etat(), facture.get_numero_contrat())
+        values = (facture.get_date_emission(), facture.get_montant_total(),
+                  facture.get_etat(), facture.get_numero_contrat())
         try:
             connection = DAOSession.get_connexion()
             cursor = connection.cursor()
@@ -76,7 +78,8 @@ class DAOFacture:
 
     def update_facture(self, facture):
         sql = "UPDATE Facture SET dateEmission = %s, montatTotal = %s, etat = %s, numeroContrat = %s WHERE numeroFacture = %s"
-        values = (facture.get_date_emission(), facture.get_montant_total(), facture.get_etat(), facture.get_numero_contrat(), facture.get_numero_facture())
+        values = (facture.get_date_emission(), facture.get_montant_total(
+        ), facture.get_etat(), facture.get_numero_contrat(), facture.get_numero_facture())
         try:
             connection = DAOSession.get_connexion()
             cursor = connection.cursor()
@@ -150,5 +153,6 @@ class DAOFacture:
 
     def set_all_values(self, rs):
         from domaine.Facture import Facture
-        facture = Facture(rs["numeroFacture"], rs["dateEmission"], rs["montatTotal"], rs["etat"], rs["numeroContrat"])
+        facture = Facture(rs["numeroFacture"], rs["dateEmission"],
+                          rs["montatTotal"], rs["etat"], rs["numeroContrat"])
         return facture

@@ -1,30 +1,49 @@
-from DAO.DAOFacture import DAOFacture
+from dao.DAOFacture import DAOFacture
+from datetime import datetime
 
 class Facture:
 
     leDAOFacture = DAOFacture.get_instance()
 
-    def __init__(self, numero_facture : str = None, date_emission : str = None, montant_total : float = None, etat : str = None, numero_contrat : str = None):
+    def __init__(self, numero_facture: str = None, date_emission: str = None, montant_total: float = None, etat: str = None, numero_contrat: str = None):
 
-        #verification type : 
+        # verification type :
         if not isinstance(numero_facture, str):
-            raise TypeError("l'attribut {numero_facture} doit être une chaîne de caractères")
-        if not isinstance(date_emission, str):
-            raise TypeError("l'attribut {date_emission} doit être une chaîne de caractères")
-        if not isinstance(montant_total, float):
-            raise TypeError("l'attribut {montant_total} doit être un nombre float")
-        if not isinstance(etat, str):
-            raise TypeError("l'attribut {etat} doit être une chaîne de caractères")
-        if not isinstance(numero_contrat, str):
-            raise TypeError("l'attribut {numero_contrat} doit être une chaîne de caractères")
+            raise TypeError(f"l'attribut {numero_facture} doit être une chaîne de caractères")
         
+        if not isinstance(date_emission, str) and self.is_date(date_emission):
+            raise TypeError(f"l'attribut {date_emission} doit être une chaîne de caractères")
+        
+        if not isinstance(montant_total, float):
+            raise TypeError(f"l'attribut {montant_total} doit être un nombre float")
+        
+        if not isinstance(etat, str):
+            raise TypeError(f"l'attribut {etat} doit être une chaîne de caractères")
+        
+        if not isinstance(numero_contrat, str):
+            raise TypeError(f"l'attribut {numero_contrat} doit être une chaîne de caractères")
+
         self.__numero_facture = numero_facture
         self.__date_emission = date_emission
         self.__montant_total = montant_total
         self.__etat = etat
         self.__numero_contrat = numero_contrat
 
+        self.__les_paiements = {} # --> faire les getters et les setters 
+
         self.__numero_facture = Facture.leDAOFacture.insert_facture(self)
+
+    #methode statiques : 
+
+    @staticmethod
+    def charger(numero_facture):
+        pass
+
+    @staticmethod
+    def supprimer(un_facture):
+        pass
+    
+
 
     # Getters
 
@@ -47,38 +66,48 @@ class Facture:
 
     def set_numero_facture(self, numero_facture):
         if not isinstance(numero_facture, str):
-            raise TypeError("l'attribut {numero_facture} doit être une chaîne de caractères")
+            raise TypeError(
+                "l'attribut {numero_facture} doit être une chaîne de caractères")
         self.__numero_facture = numero_facture
         Facture.leDAOFacture.update_facture(self)
 
-    def set_date_emission(self, date_emission):
-        if not isinstance(date_emission, str):
-            raise TypeError("l'attribut {date_emission} doit être une chaîne de caractères")
+    def set_date_emission(self, date_emission) :
+        if not isinstance(date_emission, str) and self.is_date(date_emission):
+            raise TypeError(
+                "l'attribut {date_emission} doit être une chaîne de caractères")
         self.__date_emission = date_emission
         Facture.leDAOFacture.update_facture(self)
 
     def set_montant_total(self, montant_total):
         if not isinstance(montant_total, float):
-            raise TypeError("l'attribut {montant_total} doit être un nombre float")
+            raise TypeError(
+                "l'attribut {montant_total} doit être un nombre float")
         self.__montant_total = montant_total
         Facture.leDAOFacture.update_facture(self)
 
     def set_etat(self, etat):
         if not isinstance(etat, str):
-            raise TypeError("l'attribut {etat} doit être une chaîne de caractères")
+            raise TypeError(
+                "l'attribut {etat} doit être une chaîne de caractères")
         self.__etat = etat
         Facture.leDAOFacture.update_facture(self)
 
     def set_numero_contrat(self, numero_contrat):
         if not isinstance(numero_contrat, str):
-            raise TypeError("l'attribut {numero_contrat} doit être une chaîne de caractères")
+            raise TypeError(
+                "l'attribut {numero_contrat} doit être une chaîne de caractères")
         self.__numero_contrat = numero_contrat
         Facture.leDAOFacture.update_facture(self)
 
+    def is_date(self, str_date : str) -> bool :
+        format = "%Y-%m-%d"
+        res = bool(datetime.strptime(str_date, format))
+        if res is False : 
+            raise ValueError(f"l'attributs doit être sous le format 'yyyy-mm-dd'")
+        return res
+
     def __str__(self):
         return f"Facture(numero_facture={self.__numero_facture}, date_emission={self.__date_emission}, montant_total={self.__montant_total}, etat={self.__etat}, numero_contrat={self.__numero_contrat})"
-    
-
 
 
 """class Facture : 

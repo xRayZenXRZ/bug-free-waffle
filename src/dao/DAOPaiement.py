@@ -1,5 +1,6 @@
-from DAO.DAOSession import DAOSession
+from dao.DAOSession import DAOSession
 from mysql.connector import Error
+
 
 class DAOPAiement:
 
@@ -13,7 +14,8 @@ class DAOPAiement:
 
     def insert_paiement(self, paiement):
         sql = "INSERT INTO Paiement (datePaiement, montantPaye, numeroFacture) VALUES (%s, %s, %s)"
-        values = (paiement.get_date(), paiement.get_montant(), paiement.get_numero_Facture())
+        values = (paiement.get_date(), paiement.get_montant(),
+                  paiement.get_numero_Facture())
         try:
             connection = DAOSession.get_connexion()
             cursor = connection.cursor()
@@ -75,7 +77,8 @@ class DAOPAiement:
 
     def update_paiement(self, paiement):
         sql = "UPDATE Paiement SET datePaiement = %s, montantPaye = %s, numeroFacture = %s WHERE idPaiement = %s"
-        values = (paiement.get_date(), paiement.get_montant(), paiement.get_numero_Facture(), paiement.get_id_paiement())
+        values = (paiement.get_date(), paiement.get_montant(),
+                  paiement.get_numero_Facture(), paiement.get_id_paiement())
         try:
             connection = DAOSession.get_connexion()
             cursor = connection.cursor()
@@ -145,5 +148,6 @@ class DAOPAiement:
 
     def set_all_values(self, rs):
         from domaine.Paiement import Paiement
-        paiement = Paiement(rs["idPaiement"], rs["datePaiement"], rs["montantPaye"], rs["numeroFacture"])
+        paiement = Paiement(rs["idPaiement"], rs["datePaiement"],
+                            rs["montantPaye"], rs["numeroFacture"])
         return paiement

@@ -1,34 +1,44 @@
-from DAO.DAOPrestation import DAOPrestation
+from dao.DAOPrestation import DAOPrestation
+from datetime import datetime
 
 class Prestation:
 
     leDAOPrestation = DAOPrestation.get_instance()
 
-    def __init__(self, id_prestation : int = None, date_prevue : str = None, date_effective : str = None, lieu : str =None, type_prestation : str =None, nb_photos_prevues : int =None, nb_videos_prevues : int =None, numero_contrat : str =None):
-        
-        #verification type : 
+    def __init__(self, id_prestation: int = None, date_prevue: str = None, date_effective: str = None, lieu: str = None, type_prestation: str = None, nb_photos_prevues: int = None, nb_videos_prevues: int = None, numero_contrat: str = None):
+
+        # verification type :
         if id_prestation is not None and not isinstance(id_prestation, int):
             raise TypeError("l'attribut {id_prestation} doit être un entier")
-        if date_prevue is not None and not isinstance(date_prevue, str):
-            raise TypeError("l'attribut {date_prevue} doit être une chaîne de caractères")
-        if date_effective is not None and not isinstance(date_effective, str):
-            raise TypeError("l'attribut {date_effective} doit être une chaîne de caractères")
+        if date_prevue is not None and not isinstance(date_prevue, str) and self.is_date(date_prevue):
+            raise TypeError(
+                "l'attribut {date_prevue} doit être une chaîne de caractères")
+        if date_effective is not None and not isinstance(date_effective, str) and self.is_date(date_effective):
+            raise TypeError(
+                "l'attribut {date_effective} doit être une chaîne de caractères")
         if lieu is not None and not isinstance(lieu, str):
-            raise TypeError("l'attribut {lieu} doit être une chaîne de caractères")
+            raise TypeError(
+                "l'attribut {lieu} doit être une chaîne de caractères")
         if type_prestation is not None and not isinstance(type_prestation, str):
-            raise TypeError("l'attribut {type_prestation} doit être une chaîne de caractères")
+            raise TypeError(
+                "l'attribut {type_prestation} doit être une chaîne de caractères")
         if nb_photos_prevues is not None and not isinstance(nb_photos_prevues, int):
-            raise TypeError("l'attribut {nb_photos_prevues} doit être un entier")
+            raise TypeError(
+                "l'attribut {nb_photos_prevues} doit être un entier")
         if nb_videos_prevues is not None and not isinstance(nb_videos_prevues, int):
-            raise TypeError("l'attribut {nb_videos_prevues} doit être un entier")
+            raise TypeError(
+                "l'attribut {nb_videos_prevues} doit être un entier")
         if numero_contrat is not None and not isinstance(numero_contrat, str):
-            raise TypeError("l'attribut {numero_contrat} doit être une chaîne de caractères")
+            raise TypeError(
+                "l'attribut {numero_contrat} doit être une chaîne de caractères")
 
         # Vérification des valeurs numériques positives -> à refaire sur les autres classes...
         if nb_photos_prevues is not None and nb_photos_prevues < 0:
-            raise ValueError("le nombre de photos prévues ne peut pas être négatif")
+            raise ValueError(
+                "le nombre de photos prévues ne peut pas être négatif")
         if nb_videos_prevues is not None and nb_videos_prevues < 0:
-            raise ValueError("le nombre de vidéos prévues ne peut pas être négatif")
+            raise ValueError(
+                "le nombre de vidéos prévues ne peut pas être négatif")
 
         self.__date_prevue = date_prevue
         self.__date_effective = date_effective
@@ -37,6 +47,8 @@ class Prestation:
         self.__nb_photos_prevues = nb_photos_prevues
         self.__nb_videos_prevues = nb_videos_prevues
         self.__numero_contrat = numero_contrat
+
+        self.__les_activites = {} # --> faire les getters et les setters 
 
         if id_prestation is not None:
             self.__id_prestation = id_prestation
@@ -78,54 +90,71 @@ class Prestation:
         Prestation.leDAOPrestation.update_prestation(self)
 
     def set_date_prevue(self, date_prevue):
-        if date_prevue is not None and not isinstance(date_prevue, str):
-            raise TypeError("l'attribut {date_prevue} doit être une chaîne de caractères ou None")
+        if date_prevue is not None and not isinstance(date_prevue, str) and self.is_date(date_prevue):
+            raise TypeError(
+                "l'attribut {date_prevue} doit être une chaîne de caractères ou None")
         self.__date_prevue = date_prevue
         Prestation.leDAOPrestation.update_prestation(self)
 
     def set_date_effective(self, date_effective):
-        if date_effective is not None and not isinstance(date_effective, str):
-            raise TypeError("l'attribut {date_effective} doit être une chaîne de caractères ou None")
+        if date_effective is not None and not isinstance(date_effective, str) and self.is_date(date_effective):
+            raise TypeError(
+                "l'attribut {date_effective} doit être une chaîne de caractères ou None")
         self.__date_effective = date_effective
         Prestation.leDAOPrestation.update_prestation(self)
 
     def set_lieu(self, lieu):
         if lieu is not None and not isinstance(lieu, str):
-            raise TypeError("l'attribut {lieu} doit être une chaîne de caractères ou None")
+            raise TypeError(
+                "l'attribut {lieu} doit être une chaîne de caractères ou None")
         self.__lieu = lieu
         Prestation.leDAOPrestation.update_prestation(self)
 
     def set_type(self, type_prestation):
         if type_prestation is not None and not isinstance(type_prestation, str):
-            raise TypeError("l'attribut {type_prestation} doit être une chaîne de caractères ou None")
+            raise TypeError(
+                "l'attribut {type_prestation} doit être une chaîne de caractères ou None")
         self.__type = type_prestation
         Prestation.leDAOPrestation.update_prestation(self)
 
     def set_nb_photos_prevues(self, nb_photos_prevues):
         if not isinstance(nb_photos_prevues, int):
-            raise TypeError("l'attribut {nb_photos_prevues} doit être un entier")
+            raise TypeError(
+                "l'attribut {nb_photos_prevues} doit être un entier")
         if nb_photos_prevues < 0:
-            raise ValueError("le nombre de photos prévues ne peut pas être négatif")
+            raise ValueError(
+                "le nombre de photos prévues ne peut pas être négatif")
         self.__nb_photos_prevues = nb_photos_prevues
         Prestation.leDAOPrestation.update_prestation(self)
 
     def set_nb_videos_prevues(self, nb_videos_prevues):
         if not isinstance(nb_videos_prevues, int):
-            raise TypeError("l'attribut {nb_videos_prevues} doit être un entier")
+            raise TypeError(
+                "l'attribut {nb_videos_prevues} doit être un entier")
         if nb_videos_prevues < 0:
-            raise ValueError("le nombre de vidéos prévues ne peut pas être négatif")
+            raise ValueError(
+                "le nombre de vidéos prévues ne peut pas être négatif")
         self.__nb_videos_prevues = nb_videos_prevues
         Prestation.leDAOPrestation.update_prestation(self)
 
     def set_numero_contrat(self, numero_contrat):
         if numero_contrat is not None and not isinstance(numero_contrat, str):
-            raise TypeError("l'attribut {numero_contrat} doit être une chaîne de caractères ou None")
+            raise TypeError(
+                "l'attribut {numero_contrat} doit être une chaîne de caractères ou None")
         self.__numero_contrat = numero_contrat
         Prestation.leDAOPrestation.update_prestation(self)
 
+    def is_date(self, str_date : str) -> bool :
+        format = "%Y-%m-%d"
+        res = bool(datetime.strptime(str_date, format))
+        if res is False : 
+            raise ValueError(f"l'attributs doit être sous le format 'yyyy-mm-dd'")
+        return res
+
     def __str__(self):
         return f"Prestation(id_prestation={self.__id_prestation}, date_prevue={self.__date_prevue}, date_effective={self.__date_effective}, lieu={self.__lieu}, type={self.__type}, nb_photos_prevues={self.__nb_photos_prevues}, nb_videos_prevues={self.__nb_videos_prevues}, numero_contrat={self.__numero_contrat})"
-    
+
+
 """class Prestation : 
 
     def __init__(self, id_prestation, date_prevues, date_effective, lieu, quantite_photos_prevues, quantite_videos_prevues, enum_prestation_type, enum_prestation_mission):
