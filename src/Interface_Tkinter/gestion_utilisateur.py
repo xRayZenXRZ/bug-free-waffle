@@ -59,6 +59,18 @@ class GestionUtilisateur(tk.Frame):
             command=self.supprimer_utilisateur
         ).pack(pady=5, fill='x')
 
+        ttk.Button(
+            frame_gauche,
+            text="❌ Désactiver compte utilisateur",
+            command=self.desactiver_utilisateur
+        ).pack(pady=5, fill='x')
+
+        ttk.Button(
+            frame_gauche,
+            text="✅ Activer compte utilisateur",
+            command=self.activer_utilisateur
+        ).pack(pady=5, fill='x')
+
         # COLONNE DROITE : Tableau
         frame_droite = ttk.Frame(main_frame)
         frame_droite.pack(side='right', fill='both', expand=True, padx=10)
@@ -205,13 +217,13 @@ class GestionUtilisateur(tk.Frame):
                 nom, prenom, email, mdp, role,
                 self.utilisateur['idUtilisateur']  # ID de l'admin qui crée
             )
-            
+
             if succes:
                 tk.messagebox.showinfo(
                     "Succès", f"Utilisateur {prenom} {nom} créé avec succès !")
                 popup.destroy()
                 self.afficher_utilisateurs()  # Rafraîchir la liste
-            else :
+            else:
                 print(f"Erreur : {erreur}")
 
         def annuler():
@@ -269,6 +281,96 @@ class GestionUtilisateur(tk.Frame):
             else:
                 tk.messagebox.showerror(
                     "Erreur", "Impossible de supprimer l'utilisateur")
+
+    def desactiver_utilisateur(self):
+        """desactiver l'utilisateur sélectionné"""
+
+        # Récupérer l'élément sélectionné
+        selection = self.tree.selection()
+
+        if not selection:
+            tk.messagebox.showwarning(
+                "Aucune sélection", "Veuillez sélectionner un utilisateur")
+            return
+
+        # Récupérer les valeurs de la ligne sélectionnée
+        item = self.tree.item(selection[0])
+        values = item['values']
+
+        id_utilisateur = values[0]
+        nom = values[1]
+        prenom = values[2]
+        etat = values[5]
+
+        if etat.upper() != "ACTIF":
+            tk.messagebox.showwarning(
+                "Action impossible", "L'utilisateur sélectionner est déjà inactif.")
+            return
+
+        # Vérifier que l'utilisateur ne se desactiver pas lui-même
+        if id_utilisateur == self.utilisateur['idUtilisateur']:
+            tk.messagebox.showerror(
+                "Action interdite", "Vous ne pouvez pas désactiver votre propre compte !")
+            return
+
+        # Confirmation
+        reponse = tk.messagebox.askyesno(
+            "Confirmation",
+            f"Voulez-vous vraiment desactiver {prenom} {nom} ?"
+        )
+
+        if reponse:
+            # Appeler le DAO pour désactiver
+            succes = DAOUtilisateur.desactiver_utilisateur(id_utilisateur)
+
+            if succes:
+                self.afficher_utilisateurs()  # Rafraîchir la liste
+                tk.messagebox.showinfo("Succès", "Utilisateur desactiver")
+            else:
+                tk.messagebox.showerror(
+                    "Erreur", "Impossible de desactiver l'utilisateur")
+
+    def activer_utilisateur(self):
+        """activer l'utilisateur sélectionné"""
+
+        # Récupérer l'élément sélectionné
+        selection = self.tree.selection()
+
+        if not selection:
+            tk.messagebox.showwarning(
+                "Aucune sélection", "Veuillez sélectionner un utilisateur")
+            return
+
+        # Récupérer les valeurs de la ligne sélectionnée
+        item = self.tree.item(selection[0])
+        values = item['values']
+
+        id_utilisateur = values[0]
+        nom = values[1]
+        prenom = values[2]
+        etat = values[5]
+
+        if etat.upper() != "INACTIF":
+            tk.messagebox.showwarning(
+                "Action impossible", "L'utilisateur sélectionner est déjà actif.")
+            return
+
+        # Confirmation
+        reponse = tk.messagebox.askyesno(
+            "Confirmation",
+            f"Voulez-vous vraiment activer {prenom} {nom} ?"
+        )
+
+        if reponse:
+            # Appeler le DAO pour désactiver
+            succes = DAOUtilisateur.activer_utilisateur(id_utilisateur)
+
+            if succes:
+                self.afficher_utilisateurs()  # Rafraîchir la liste
+                tk.messagebox.showinfo("Succès", "Utilisateur activer")
+            else:
+                tk.messagebox.showerror(
+                    "Erreur", "Impossible d'activer l'utilisateur")
 
     def on_double_click(self, event):
         """Appelé lors d'un double-clic sur une ligne"""

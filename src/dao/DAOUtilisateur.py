@@ -78,13 +78,45 @@ class DAOUtilisateur:
                 return (False, f"Erreur BDD : {error_message}")
 
     @staticmethod
-    def supprimer_utilisateur(id_utilisateur):
+    def desactiver_utilisateur(id_utilisateur):
         """Désactive un utilisateur (soft delete)"""
         try:
             conn = DAOSession.get_connexion()
             cursor = conn.cursor()
             # Soft delete : on passe le statut à INACTIF
             query = "UPDATE Utilisateur SET statut = 'INACTIF' WHERE idUtilisateur = %s"
+            cursor.execute(query, (id_utilisateur,))
+            conn.commit()
+            cursor.close()
+            return True
+        except Exception as e:
+            print(f"Erreur lors de la suppression : {e}")
+            return False
+
+    @staticmethod
+    def activer_utilisateur(id_utilisateur):
+        """Activer un utilisateur"""
+        try:
+            conn = DAOSession.get_connexion()
+            cursor = conn.cursor()
+            # On passe le statut à Actif
+            query = "UPDATE Utilisateur SET statut = 'Actif' WHERE idUtilisateur = %s"
+            cursor.execute(query, (id_utilisateur,))
+            conn.commit()
+            cursor.close()
+            return True
+        except Exception as e:
+            print(f"Erreur lors de la suppression : {e}")
+            return False
+
+    @staticmethod
+    def supprimer_utilisateur(id_utilisateur):
+        """Désactive un utilisateur (soft delete)"""
+        try:
+            conn = DAOSession.get_connexion()
+            cursor = conn.cursor()
+            # Soft delete : on passe le statut à INACTIF
+            query = "DELETE FROM Utilisateur WHERE idUtilisateur = %s"
             cursor.execute(query, (id_utilisateur,))
             conn.commit()
             cursor.close()
