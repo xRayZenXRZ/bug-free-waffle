@@ -7,40 +7,6 @@ class Devis:
 
     def __init__(self, numero_devis: str = None, date_emission: str = None, date_validite: str = None, description_prestation: str = None, quantite_prevue: int = None, details_couts: str = None, montant_total_estime: float = None, statut: str = None, date_acceptation: str = None, id_client: int = None, numero_contrat: str = None):
 
-        # verification Type :
-        if not isinstance(numero_devis, str):
-            raise TypeError(f"l'attribut {numero_devis} doit être une chaîne de caractere")
-        
-        if not isinstance(date_emission, str) and self.is_date(date_emission):
-            raise TypeError(f"l'attribut {date_emission} doit être une chaîne de caractere")
-        
-        if not isinstance(date_validite, str) and self.is_date(date_validite):
-            raise TypeError(f"l'attribut {date_validite} doit être une chaîne de caractères")
-        
-        if not isinstance(description_prestation, str):
-            raise TypeError(f"l'attribut {description_prestation} doit être une chaîne de caractères")
-        
-        if not isinstance(quantite_prevue, int):
-            raise TypeError(f"l'attribut {quantite_prevue} doit être un entier")
-        
-        if not isinstance(details_couts, str):
-            raise TypeError(f"l'attribut {details_couts} doit être une chaîne de caractères ")
-        
-        if not isinstance(montant_total_estime, float):
-            raise TypeError(f"l'attribut {montant_total_estime} doit être un float")
-        
-        if not isinstance(statut, str):
-            raise TypeError(f"l'attribut {statut} doit être une chaîne de caractères")
-        
-        if date_acceptation is not None and not isinstance(date_acceptation, str) and self.is_date(date_acceptation):
-            raise TypeError(f"l'attribut {date_acceptation} doit être une chaîne de caractères")
-        
-        if not isinstance(id_client, int):
-            raise TypeError(f"l'attribut {id_client} doit être un entier")
-        
-        if numero_contrat is not None and not isinstance(numero_contrat, str):
-            raise TypeError(f"l'attribut {numero_contrat} doit être une chaîne de caractères")
-
         self.__numero_devis = numero_devis
         self.__date_emission = date_emission
         self.__date_validite = date_validite
@@ -55,13 +21,16 @@ class Devis:
 
         self.__les_colloborateurs = {} #--> faire les getters et les setters.
 
-        self.__numero_devis = Devis.leDAODevis.insert_devis(self)
+        if numero_devis is not None : 
+            self.__numero_devis = numero_devis
+        else : 
+            self.__numero_devis = Devis.leDAODevis.insert_devis(self)
 
     #method statiques : 
 
     @staticmethod
     def charger(numero_devis):
-        pass
+        return Devis.leDAODevis.find_devis(numero_devis)
 
     @staticmethod
     def supprimer(un_devis):

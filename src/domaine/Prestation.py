@@ -11,31 +11,6 @@ class Prestation:
 
     def __init__(self, id_prestation: int = None, date_prevue: str = None, date_effective: str = None, lieu: str = None, type_prestation: str = None, nb_photos_prevues: int = None, nb_videos_prevues: int = None, numero_contrat: str = None):
 
-        # verification type :
-        if id_prestation is not None and not isinstance(id_prestation, int):
-            raise TypeError("l'attribut {id_prestation} doit être un entier")
-        if date_prevue is not None and not isinstance(date_prevue, str) and self.is_date(date_prevue):
-            raise TypeError(
-                "l'attribut {date_prevue} doit être une chaîne de caractères")
-        if date_effective is not None and not isinstance(date_effective, str) and self.is_date(date_effective):
-            raise TypeError(
-                "l'attribut {date_effective} doit être une chaîne de caractères")
-        if lieu is not None and not isinstance(lieu, str):
-            raise TypeError(
-                "l'attribut {lieu} doit être une chaîne de caractères")
-        if type_prestation is not None and not isinstance(type_prestation, str):
-            raise TypeError(
-                "l'attribut {type_prestation} doit être une chaîne de caractères")
-        if nb_photos_prevues is not None and not isinstance(nb_photos_prevues, int):
-            raise TypeError(
-                "l'attribut {nb_photos_prevues} doit être un entier")
-        if nb_videos_prevues is not None and not isinstance(nb_videos_prevues, int):
-            raise TypeError(
-                "l'attribut {nb_videos_prevues} doit être un entier")
-        if numero_contrat is not None and not isinstance(numero_contrat, str):
-            raise TypeError(
-                "l'attribut {numero_contrat} doit être une chaîne de caractères")
-
         # Vérification des valeurs numériques positives -> à refaire sur les autres classes...
         if nb_photos_prevues is not None and nb_photos_prevues < 0:
             raise ValueError(

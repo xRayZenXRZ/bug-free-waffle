@@ -21,31 +21,6 @@ class Contrat:
 
     def __init__(self, numero_contrat: str = None, date_debut: str = None, duree: str = None, nb_productions_totales: int = None, periodicite: str = None, montant_global: float = None, condition_paiements: str = None, id_client: int = None):
 
-        # verification de type :
-        if not isinstance(numero_contrat, str):
-            raise TypeError(f"l'attribut {numero_contrat} doit être une chaine de caractère")
-        
-        if not isinstance(date_debut, str) and self.is_date(date_debut):
-            raise TypeError(f"l'attribut {date_debut} doit être une chaine de caractère")
-        
-        if not isinstance(duree, str):
-            raise TypeError(f"l'attribut {duree} doit être une chaine de caractère")
-        
-        if not isinstance(nb_productions_totales, int):
-            raise TypeError(f"l'attribut {nb_productions_totales} doit être un entier")
-        
-        if not isinstance(periodicite, str):
-            raise TypeError(f"l'attribut {periodicite} doit être une chaine de caractère")
-        
-        if not isinstance(montant_global, float):
-            raise TypeError(f"l'attribut {montant_global} doit être un float")
-        
-        if not isinstance(condition_paiements, str):
-            raise TypeError(f"l'attribut {condition_paiements} doit être une chaine de caractère")
-        
-        if not isinstance(id_client, int):
-            raise TypeError(f"l'attribut {id_client} doit être une chaine de caractère")
-
         self.__numero_contrat = numero_contrat
         self.__date_debut = date_debut
         self.__duree = duree

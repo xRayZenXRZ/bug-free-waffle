@@ -55,7 +55,7 @@ class DAOActivite:
 
     def find_activite(self, activite):
         sql = "SELECT * FROM Activite WHERE idActivite = %s"
-        values = (activite.get_id_activite())
+        values = (activite,)
         try:
             connection = DAOSession.get_connexion()
             cursor = connection.cursor(dictionary=True)
