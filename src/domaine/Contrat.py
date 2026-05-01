@@ -55,9 +55,9 @@ class Contrat:
         self.__condition_paiements = condition_paiements
         self.__id_client = id_client
 
-        self.__les_devis = [] # --> faire les getters et setters 
-        self.__les_factures = [] # --> faire les getters et les setters
-        self.__les_prestations = [] # --> faire les getters et les setters
+        self.__les_devis = [] 
+        self.__les_factures = [] 
+        self.__les_prestations = [] 
         #self.__les_clients = [] # --> faire les getters et les setters (à faire après avoir fais liens clients --> contrats)
 
         self.__numero_contrat = Contrat.leDAOContrat.insert_contrat(self)
@@ -83,7 +83,7 @@ class Contrat:
     @staticmethod
     def supprimer(un_contrat):
         if Contrat.get_les_devis() and Contrat.get_les_factures() and Contrat.get_les_prestations() : 
-            raise Exception("Erreur_suppression_contrat_avec_les_devis_factures_prestations")
+            raise Exception("Erreur_suppression_contrat_avec_devis_factures_prestations")
         else : 
             Contrat.leDAOContrat.delete_contrat(un_contrat)
 
