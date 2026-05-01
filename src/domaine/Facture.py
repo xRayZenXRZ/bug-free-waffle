@@ -11,15 +11,16 @@ class Facture:
 
     def __init__(self, numero_facture: str = None, date_emission: str = None, montant_total: float = None, etat: str = None, numero_contrat: str = None):
 
-        self.__numero_facture = numero_facture
         self.__date_emission = date_emission
         self.__montant_total = montant_total
         self.__etat = etat
         self.__numero_contrat = numero_contrat
 
         self.__les_paiements = []
-
-        self.__numero_facture = Facture.leDAOFacture.insert_facture(self)
+        if numero_facture is not None : 
+            self.__numero_facture = numero_facture
+        else : 
+            self.__numero_facture = Facture.leDAOFacture.insert_facture(self)
 
     #methode statiques : 
 
