@@ -1,9 +1,13 @@
 from dao.DAOFacture import DAOFacture
+from dao.DAOPaiement import DAOPAiement
 from datetime import datetime
+
+from domaine.Paiement import Paiement
 
 class Facture:
 
     leDAOFacture = DAOFacture.get_instance()
+    leDAOPaiement = DAOPAiement.get_instance()
 
     def __init__(self, numero_facture: str = None, date_emission: str = None, montant_total: float = None, etat: str = None, numero_contrat: str = None):
 
@@ -29,7 +33,7 @@ class Facture:
         self.__etat = etat
         self.__numero_contrat = numero_contrat
 
-        self.__les_paiements = {} # --> faire les getters et les setters 
+        self.__les_paiements = []
 
         self.__numero_facture = Facture.leDAOFacture.insert_facture(self)
 
@@ -37,14 +41,38 @@ class Facture:
 
     @staticmethod
     def charger(numero_facture):
-        pass
+        un_facture = Facture.leDAOFacture.find_facture(numero_facture)
+        un_paiement = Paiement(-1)
+        un_paiement.set_id_paiement(numero_facture=numero_facture)
+        un_facture.set_les_paiements(Facture.leDAOPaiement.select_paiement(un_paiement))
+        return un_facture
 
     @staticmethod
     def supprimer(un_facture):
-        pass
+        if un_facture.get_les_paiements() : 
+            raise Exception("Erreur_suppression_facture_avec_paiements")
+        else :
+            Facture.leDAOFacture.delete_facture(un_facture)
     
-
-
+    def ajouter_paiement(self, paiement : Paiement ):
+        if paiement.get_numero_Facture() is None : 
+            self.__les_paiements.append(paiement)
+            paiement.set_numero_Facture(self.__numero_facture)
+        else : 
+            raise Exception("Erreur_paiement_a_deja_un_contart")
+    
+    def enlever_paiement(self, paiment : Paiement):
+        paiement2 = None
+        for p in self.__les_paiements : 
+            if p.get_numero_Facture() == paiment.get_numero_Facture() :
+                paiement2 = p
+                break
+        if paiement2 is not None : 
+            self.__les_paiements.remove(paiement2)
+            paiment.set_numero_Facture(None)
+        else : 
+            raise Exception("Erreur_Paiement_inexistant_dans_les_paiements_du_facture")
+        
     # Getters
 
     def get_numero_facture(self):
@@ -61,6 +89,9 @@ class Facture:
 
     def get_numero_contrat(self):
         return self.__numero_contrat
+
+    def get_les_paiements(self) : 
+        return self.__les_paiements
 
     # Setters
 
@@ -98,6 +129,9 @@ class Facture:
                 "l'attribut {numero_contrat} doit être une chaîne de caractères")
         self.__numero_contrat = numero_contrat
         Facture.leDAOFacture.update_facture(self)
+
+    def set_les_paiements(self, les_paiements) :
+        self.__les_paiements = les_paiements
 
     def is_date(self, str_date : str) -> bool :
         format = "%Y-%m-%d"
