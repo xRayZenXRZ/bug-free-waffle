@@ -77,8 +77,7 @@ class DAOPAiement:
 
     def update_paiement(self, paiement):
         sql = "UPDATE Paiement SET datePaiement = %s, montantPaye = %s, numeroFacture = %s WHERE idPaiement = %s"
-        values = (paiement.get_date(), paiement.get_montant(),
-                  paiement.get_numero_Facture(), paiement.get_id_paiement())
+        values = (paiement.get_date(), paiement.get_montant(),paiement.get_numero_facture(), paiement.get_id_paiement())
         try:
             connection = DAOSession.get_connexion()
             cursor = connection.cursor()
@@ -107,7 +106,7 @@ class DAOPAiement:
             critere_id_paiement = paiement.get_id_paiement()
             critere_date = paiement.get_date()
             critere_montant = paiement.get_montant()
-            critere_numero_facture = paiement.get_numero_Facture()
+            critere_numero_facture = paiement.get_numero_facture()
 
             values = []
 

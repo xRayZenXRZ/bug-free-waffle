@@ -40,7 +40,7 @@ class Paiement:
     def get_date(self):
         return self.__date
 
-    def get_numero_Facture(self):
+    def get_numero_facture(self):
         return self.__numero_Facture
 
     # Setters
@@ -64,11 +64,11 @@ class Paiement:
         self.__montant = montant
         Paiement.leDAOPaiement.update_paiement(self)
 
-    def set_numero_Facture(self, numero_Facture):
-        if not isinstance(numero_Facture, str):
+    def set_numero_facture(self, numero_facture):
+        if not isinstance(numero_facture, str):
             raise TypeError(
                 "l'attribut {numero_Facture} doit être une chaîne de caractères")
-        self.__numero_Facture = numero_Facture
+        self.__numero_Facture = numero_facture
         Paiement.leDAOPaiement.update_paiement(self)
 
     def is_date(self, str_date : str) -> bool :

@@ -28,7 +28,7 @@ class Facture:
     def charger(numero_facture):
         un_facture = Facture.leDAOFacture.find_facture(numero_facture)
         un_paiement = Paiement(-1)
-        un_paiement.set_id_paiement(numero_facture=numero_facture)
+        un_paiement.set_numero_facture(numero_facture=numero_facture)
         un_facture.set_les_paiements(Facture.leDAOPaiement.select_paiement(un_paiement))
         return un_facture
 
@@ -40,21 +40,21 @@ class Facture:
             Facture.leDAOFacture.delete_facture(un_facture)
     
     def ajouter_paiement(self, paiement : Paiement ):
-        if paiement.get_numero_Facture() is None : 
+        if paiement.get_numero_facture() is None : 
             self.__les_paiements.append(paiement)
-            paiement.set_numero_Facture(self.__numero_facture)
+            paiement.set_numero_facture(self.__numero_facture)
         else : 
             raise Exception("Erreur_paiement_a_deja_un_contart")
     
     def enlever_paiement(self, paiment : Paiement):
         paiement2 = None
         for p in self.__les_paiements : 
-            if p.get_numero_Facture() == paiment.get_numero_Facture() :
+            if p.get_numero_Facture() == paiment.get_numero_facture() :
                 paiement2 = p
                 break
         if paiement2 is not None : 
             self.__les_paiements.remove(paiement2)
-            paiment.set_numero_Facture(None)
+            paiment.set_numero_facture(None)
         else : 
             raise Exception("Erreur_Paiement_inexistant_dans_les_paiements_du_facture")
         

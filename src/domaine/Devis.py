@@ -7,7 +7,6 @@ class Devis:
 
     def __init__(self, numero_devis: str = None, date_emission: str = None, date_validite: str = None, description_prestation: str = None, quantite_prevue: int = None, details_couts: str = None, montant_total_estime: float = None, statut: str = None, date_acceptation: str = None, id_client: int = None, numero_contrat: str = None):
 
-        self.__numero_devis = numero_devis
         self.__date_emission = date_emission
         self.__date_validite = date_validite
         self.__description_prestation = description_prestation
