@@ -57,7 +57,7 @@ class DAOContrat:
 
     def find_contrat(self, contrat):
         sql = "SELECT * FROM Contrat WHERE numeroContrat = %s"
-        values = (contrat.get_numero_contrat(),)
+        values = (contrat,)
         try:
             connection = DAOSession.get_connexion()
             cursor = connection.cursor(dictionary=True)

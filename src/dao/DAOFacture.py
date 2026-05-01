@@ -56,7 +56,7 @@ class DAOFacture:
 
     def find_facture(self, facture):
         sql = "SELECT * FROM Facture WHERE numeroFacture = %s"
-        values = (facture.get_numero_facture(),)
+        values = (facture,)
         try:
             connection = DAOSession.get_connexion()
             cursor = connection.cursor(dictionary=True)

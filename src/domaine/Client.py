@@ -8,25 +8,6 @@ class Client:
 
     def __init__(self, id_client: int = None, nom: str = None, prenom: str = None, raison_sociale: str = None, adresse: str = None, telephone: str = None, courriel: str = None, enum_status_client: str = None):
 
-        # verification type :
-        if not isinstance(nom, str):
-            raise TypeError(f"l'attribut {nom} doit être une chaine de caractère")
-        
-        if not isinstance(prenom, str):
-            raise TypeError(f"l'attributs {prenom} doit être une chaine de caractère")
-        
-        if not isinstance(adresse, str):
-            raise TypeError(f"l'attributs {adresse} doit être une chaine de caractère")
-        
-        if not isinstance(telephone, str):
-            raise TypeError(f"l'attributs {telephone} doit être une chaine de caractère")
-        
-        if not isinstance(courriel, str):
-            raise TypeError(f"l'attributs {courriel} doit être une chaine de caractère")
-        
-        if not isinstance(enum_status_client, str):
-            raise TypeError(f"l'attributs {enum_status_client} doit être une chaine de caractère")
-
         self.__nom = nom
         self.__prenom = prenom
         self.__raison_sociale = raison_sociale
@@ -47,9 +28,9 @@ class Client:
     @staticmethod
     def charger(id_client):
         un_client = Client.leDAOClient.find_client(id_client)
-        un_devis = Devis(-1)
+        un_devis = Devis(numero_devis="-1")
         un_devis.set_id_client(id_client=id_client)
-        un_client.set_les_devis(Client.leDAODevis.select_devis(un_devis))
+        un_client.set_les_devis(Client.leDAODevis.select_devis(un_devis))  
         return un_client
 
     @staticmethod

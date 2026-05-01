@@ -20,7 +20,6 @@ class DAOClient:
             connection = DAOSession.get_connexion()
             cursor = connection.cursor()
             cursor.execute(sql, values)
-            connection.commit()
             print("Client inséré avec succès")
             cle = cursor.lastrowid
             return cle
@@ -57,7 +56,7 @@ class DAOClient:
 
     def find_client(self, client):
         sql = "SELECT * FROM Client WHERE idClient = %s"
-        values = (client.get_id_client(),)
+        values = (client,)
         try:
             connection = DAOSession.get_connexion()
             cursor = connection.cursor(dictionary=True)
