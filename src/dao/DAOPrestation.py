@@ -55,7 +55,7 @@ class DAOPrestation:
 
     def find_prestation(self, prestation):
         sql = "SELECT * FROM Prestation WHERE idPrestation = %s"
-        values = (prestation.get_id_prestation(),)
+        values = (prestation,)
         try:
             connection = DAOSession.get_connexion()
             cursor = connection.cursor(dictionary=True)

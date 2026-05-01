@@ -55,7 +55,7 @@ class DAOPAiement:
 
     def find_paiement(self, paiement):
         sql = "SELECT * FROM Paiement WHERE idPaiement = %s"
-        values = (paiement.get_id_paiement(),)
+        values = (paiement,)
         try:
             connection = DAOSession.get_connexion()
             cursor = connection.cursor(dictionary=True)
