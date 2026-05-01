@@ -31,12 +31,14 @@ class Paiement:
 
     @staticmethod
     def charger(id_paiement):
-        pass
+        return Paiement.leDAOPaiement.find_paiement(id_paiement)
 
     @staticmethod
     def supprimer(un_paiement):
-        pass
-    
+        if un_paiement.get_numero_Facture() is None : 
+            Paiement.leDAOPaiement.delete_paiement(un_paiement)
+        else : 
+            raise Exception("Erreur_suppression_paiement_avec_facture")
     
     # Getters
 
