@@ -188,7 +188,7 @@ class Devis:
         return res
 
     def __str__(self):
-        return (f"Devis(numero_devis={self.__numero_devis}, date_emission={self.__date_emission}, date_validite={self.__date_validite}, description_prestation={self.__description_prestation}, quantite_prevue={self.__quantite_prevue}, details_couts={self.__details_couts}, montant_total_estime={self.__montant_total_estime}, statut={self.__statut}, date_acceptation={self.__date_acceptation}, id_client={self.__id_client}, numero_contrat={self.__numero_contrat})")
+        return (f'Devis(numero_devis={self.__numero_devis}, date_emission={self.__date_emission}, date_validite={self.__date_validite}, description_prestation={self.__description_prestation}, quantite_prevue={self.__quantite_prevue}, details_couts={self.__details_couts}, montant_total_estime={self.__montant_total_estime}, statut={self.__statut}, date_acceptation={self.__date_acceptation}, id_client={self.__id_client}, numero_contrat={self.__numero_contrat})')
 
 
 """class Devis :
