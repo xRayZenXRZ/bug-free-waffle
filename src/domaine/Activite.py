@@ -42,11 +42,17 @@ class Activite:
         else:
             self.__id_activite = Activite.leDAOActivite.insert_activite(self)
 
+    @staticmethod
     def charger(id_activite):
-        pass
+        return Activite.leDAOActivite.find_activite(id_activite)
 
+    @staticmethod
     def supprimer(un_activite):
-        pass
+        if un_activite.get_id_activite() is None : 
+            Activite.leDAOActivite.delete_activite(un_activite)
+        else : 
+            raise Exception("Erreur_suppression_activite_avec_prestation")
+    
 
     # Getters :
 
