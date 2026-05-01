@@ -31,6 +31,13 @@ def main():
 
     """for paiement in un_facture.get_les_paiements() :
         print(paiement)"""
+    
+    un_prestation = Prestation.charger(5)
+
+    """print(un_prestation)"""
+
+    for activite in un_prestation.get_les_activites() :
+        print(activite)
 
     #client_1 = Client(nom="Descartes", prenom="René", adresse="Panthéon 76000", telephone="0123456789", courriel="D_Rere@gmail.com", enum_status_client="ANCIEN")
 
