@@ -77,7 +77,7 @@ class DAOFacture:
                 cursor.close()
 
     def update_facture(self, facture):
-        sql = "UPDATE Facture SET dateEmission = %s, montatTotal = %s, etat = %s, numeroContrat = %s WHERE numeroFacture = %s"
+        sql = "UPDATE Facture SET dateEmission = %s, montantTotal = %s, etat = %s, numeroContrat = %s WHERE numeroFacture = %s"
         values = (facture.get_date_emission(), facture.get_montant_total(
         ), facture.get_etat(), facture.get_numero_contrat(), facture.get_numero_facture())
         try:
@@ -113,7 +113,7 @@ class DAOFacture:
 
             values = []
 
-            if critere_numero_facture is not None and critere_numero_facture != -1:
+            if critere_numero_facture is not None and critere_numero_facture != "-1":
                 sql += "numeroFacture = %s"
                 values.append(critere_numero_facture)
             elif all(c is None for c in [critere_date_emission, critere_montant_total, critere_etat, critere_numero_contrat]):
@@ -153,6 +153,5 @@ class DAOFacture:
 
     def set_all_values(self, rs):
         from domaine.Facture import Facture
-        facture = Facture(rs["numeroFacture"], rs["dateEmission"],
-                          rs["montatTotal"], rs["etat"], rs["numeroContrat"])
+        facture = Facture(rs["numeroFacture"], rs["dateEmission"], rs["montantTotal"], rs["etat"], rs["numeroContrat"])
         return facture

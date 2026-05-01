@@ -13,10 +13,21 @@ def main():
     # Ouvrir la session DAO
 
     DAOSession.open()
+
     un_client = Client.charger(5);
 
-    
+    un_contrat = Contrat.charger("CONT-2026-005");
 
+    """for devis in un_contrat.get_les_devis() :
+        print(devis)"""
+
+    """for facture in un_contrat.get_les_factures() :
+        print(facture)"""
+
+    """for prestations in un_contrat.get_les_prestations() :
+        print(prestations)"""
+
+    un
 
     #client_1 = Client(nom="Descartes", prenom="René", adresse="Panthéon 76000", telephone="0123456789", courriel="D_Rere@gmail.com", enum_status_client="ANCIEN")
 

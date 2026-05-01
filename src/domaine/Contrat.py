@@ -21,7 +21,6 @@ class Contrat:
 
     def __init__(self, numero_contrat: str = None, date_debut: str = None, duree: str = None, nb_productions_totales: int = None, periodicite: str = None, montant_global: float = None, condition_paiements: str = None, id_client: int = None):
 
-        self.__numero_contrat = numero_contrat
         self.__date_debut = date_debut
         self.__duree = duree
         self.__nb_productions_totales = nb_productions_totales
@@ -35,15 +34,18 @@ class Contrat:
         self.__les_prestations = [] 
         #self.__les_clients = [] # --> faire les getters et les setters (à faire après avoir fais liens clients --> contrats)
 
-        self.__numero_contrat = Contrat.leDAOContrat.insert_contrat(self)
+        if numero_contrat is not None :
+            self.__numero_contrat = numero_contrat
+        else :
+            self.__numero_contrat = Contrat.leDAOContrat.insert_contrat(self)
 
     #Method statiques : 
 
     @staticmethod
     def charger(numero_contrat):
         un_contrat = Contrat.leDAOContrat.find_contrat(numero_contrat)
-        un_devis = Devis(-1)
-        une_facture = Facture(-1)
+        un_devis = Devis("-1")
+        une_facture = Facture("-1")
         une_prestation = Prestation(-1)
 
         un_devis.set_numero_contrat(numero_contrat=numero_contrat)
