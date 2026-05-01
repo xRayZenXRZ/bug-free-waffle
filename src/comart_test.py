@@ -27,7 +27,10 @@ def main():
     """for prestations in un_contrat.get_les_prestations() :
         print(prestations)"""
 
-    un
+    un_facture = Facture.charger("FACT-2026-005");
+
+    """for paiement in un_facture.get_les_paiements() :
+        print(paiement)"""
 
     #client_1 = Client(nom="Descartes", prenom="René", adresse="Panthéon 76000", telephone="0123456789", courriel="D_Rere@gmail.com", enum_status_client="ANCIEN")
 
