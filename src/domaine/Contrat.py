@@ -82,7 +82,7 @@ class Contrat:
 
     @staticmethod
     def supprimer(un_contrat):
-        if Contrat.get_les_devis() and Contrat.get_les_factures() and Contrat.get_les_prestations() : 
+        if un_contrat.get_les_devis() and un_contrat.get_les_factures() and un_contrat.get_les_prestations() : 
             raise Exception("Erreur_suppression_contrat_avec_devis_factures_prestations")
         else : 
             Contrat.leDAOContrat.delete_contrat(un_contrat)
