@@ -112,6 +112,9 @@ CREATE TABLE Activite (
     FOREIGN KEY(idPrestation) REFERENCES Prestation(idPrestation)
 );
 
+
+
+
 -- UTILISATEUR (Collaborateurs et Admins)
 CREATE TABLE Utilisateur (
     idUtilisateur INT AUTO_INCREMENT PRIMARY KEY,
