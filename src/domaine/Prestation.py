@@ -1,36 +1,15 @@
+from dao.DAOActivite import DAOActivite
 from dao.DAOPrestation import DAOPrestation
 from datetime import datetime
+
+from domaine.Activite import Activite
 
 class Prestation:
 
     leDAOPrestation = DAOPrestation.get_instance()
+    leDAOActivite = DAOActivite.get_instance()
 
     def __init__(self, id_prestation: int = None, date_prevue: str = None, date_effective: str = None, lieu: str = None, type_prestation: str = None, nb_photos_prevues: int = None, nb_videos_prevues: int = None, numero_contrat: str = None):
-
-        # verification type :
-        if id_prestation is not None and not isinstance(id_prestation, int):
-            raise TypeError("l'attribut {id_prestation} doit être un entier")
-        if date_prevue is not None and not isinstance(date_prevue, str) and self.is_date(date_prevue):
-            raise TypeError(
-                "l'attribut {date_prevue} doit être une chaîne de caractères")
-        if date_effective is not None and not isinstance(date_effective, str) and self.is_date(date_effective):
-            raise TypeError(
-                "l'attribut {date_effective} doit être une chaîne de caractères")
-        if lieu is not None and not isinstance(lieu, str):
-            raise TypeError(
-                "l'attribut {lieu} doit être une chaîne de caractères")
-        if type_prestation is not None and not isinstance(type_prestation, str):
-            raise TypeError(
-                "l'attribut {type_prestation} doit être une chaîne de caractères")
-        if nb_photos_prevues is not None and not isinstance(nb_photos_prevues, int):
-            raise TypeError(
-                "l'attribut {nb_photos_prevues} doit être un entier")
-        if nb_videos_prevues is not None and not isinstance(nb_videos_prevues, int):
-            raise TypeError(
-                "l'attribut {nb_videos_prevues} doit être un entier")
-        if numero_contrat is not None and not isinstance(numero_contrat, str):
-            raise TypeError(
-                "l'attribut {numero_contrat} doit être une chaîne de caractères")
 
         # Vérification des valeurs numériques positives -> à refaire sur les autres classes...
         if nb_photos_prevues is not None and nb_photos_prevues < 0:
@@ -48,13 +27,47 @@ class Prestation:
         self.__nb_videos_prevues = nb_videos_prevues
         self.__numero_contrat = numero_contrat
 
-        self.__les_activites = {} # --> faire les getters et les setters 
+        self.__les_activites = []
 
         if id_prestation is not None:
             self.__id_prestation = id_prestation
         else:
             self.__id_prestation = Prestation.leDAOPrestation.insert_Prestation(self)
 
+    @staticmethod
+    def charger(id_prestation) : 
+        un_prestation = Prestation.leDAOPrestation.find_prestation(id_prestation)
+        un_activite = Activite(-1)
+        un_activite.set_id_prestation(id_prestation=id_prestation)
+        un_prestation.set_les_activites(Prestation.leDAOActivite.select_activite(un_activite))
+        return un_prestation
+
+    @staticmethod
+    def supprimer(un_prestation) :
+        if un_prestation.get_les_activites() :
+            raise Exception("Erreur_suppression_prestation_avec_activite")
+        else : 
+            Prestation.leDAOPrestation.delete_prestation(un_prestation)
+
+    def ajouter_activite(self, activite : Activite) :
+        if activite.get_id_prestation() is None :
+            self.__les_activites.append(activite)
+            activite.set_id_prestation(self.__numero_contrat)
+        else : 
+            raise Exception("Erreur_activite_a_deja_un_prestation")
+    
+    def enlever_activite(self, activite: Activite):
+        activite2 = None
+        for a in self.__les_activites:
+            if a.get_numero_activite() == activite.get_numero_activite():
+                activite2 = a
+                break
+        if activite2 is not None:
+            self.__les_activites.remove(activite2)
+            activite.set_id_activite(None)
+        else:
+            raise Exception("Erreur_Activite_inexistante_dans_les_activites_du_prestation")
+    
     # Getters
 
     def get_id_prestation(self):
@@ -80,6 +93,9 @@ class Prestation:
 
     def get_numero_contrat(self):
         return self.__numero_contrat
+    
+    def get_les_activites(self):
+        return self.__les_activites
 
     # Setters
 
@@ -143,6 +159,9 @@ class Prestation:
                 "l'attribut {numero_contrat} doit être une chaîne de caractères ou None")
         self.__numero_contrat = numero_contrat
         Prestation.leDAOPrestation.update_prestation(self)
+
+    def set_les_activites(self, les_activites) :
+        self.__les_activites = les_activites
 
     def is_date(self, str_date : str) -> bool :
         format = "%Y-%m-%d"

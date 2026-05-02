@@ -7,17 +7,6 @@ class Paiement:
 
     def __init__(self, id_paiement: int = None, date: str = None, montant: float = None, numero_Facture: str = None):
 
-        # verification type :
-        if not isinstance(id_paiement, int):
-            raise TypeError("l'attribut {id_paiement} doit être un entier")
-        if not isinstance(date, str) and self.is_date(date):
-            raise TypeError(
-                "l'attribut {date} doit être une chaîne de caractères")
-        if not isinstance(montant, float):
-            raise TypeError("l'attribut {montant} doit être un nombre float")
-        if not isinstance(numero_Facture, str):
-            raise TypeError(
-                "l'attribut {numero_Facture} doit être une chaîne de caractères")
         self.__date = date
         self.__montant = montant
         self.__numero_Facture = numero_Facture
@@ -31,12 +20,14 @@ class Paiement:
 
     @staticmethod
     def charger(id_paiement):
-        pass
+        return Paiement.leDAOPaiement.find_paiement(id_paiement)
 
     @staticmethod
     def supprimer(un_paiement):
-        pass
-    
+        if un_paiement.get_numero_Facture() is None : 
+            Paiement.leDAOPaiement.delete_paiement(un_paiement)
+        else : 
+            raise Exception("Erreur_suppression_paiement_avec_facture")
     
     # Getters
 
@@ -49,7 +40,7 @@ class Paiement:
     def get_date(self):
         return self.__date
 
-    def get_numero_Facture(self):
+    def get_numero_facture(self):
         return self.__numero_Facture
 
     # Setters
@@ -73,11 +64,11 @@ class Paiement:
         self.__montant = montant
         Paiement.leDAOPaiement.update_paiement(self)
 
-    def set_numero_Facture(self, numero_Facture):
-        if not isinstance(numero_Facture, str):
+    def set_numero_facture(self, numero_facture):
+        if not isinstance(numero_facture, str):
             raise TypeError(
                 "l'attribut {numero_Facture} doit être une chaîne de caractères")
-        self.__numero_Facture = numero_Facture
+        self.__numero_Facture = numero_facture
         Paiement.leDAOPaiement.update_paiement(self)
 
     def is_date(self, str_date : str) -> bool :
