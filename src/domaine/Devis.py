@@ -1,9 +1,13 @@
+from dao.DAOCollaborateur import DAOCollaborateur
 from dao.DAODevis import DAODevis
 from datetime import datetime
+
+from domaine.Collaborateur import Collaborateur
 
 class Devis:
 
     leDAODevis = DAODevis.get_instance()
+    leDAOCollaborateur = DAOCollaborateur.get_instance()
 
     def __init__(self, numero_devis: str = None, date_emission: str = None, date_validite: str = None, description_prestation: str = None, quantite_prevue: int = None, details_couts: str = None, montant_total_estime: float = None, statut: str = None, date_acceptation: str = None, id_client: int = None, numero_contrat: str = None):
 
@@ -18,7 +22,7 @@ class Devis:
         self.__id_client = id_client
         self.__numero_contrat = numero_contrat
 
-        self.__les_colloborateurs = {} #--> faire les getters et les setters.
+        self.__les_colloborateurs = []
 
         if numero_devis is not None : 
             self.__numero_devis = numero_devis
@@ -29,7 +33,12 @@ class Devis:
 
     @staticmethod
     def charger(numero_devis):
-        return Devis.leDAODevis.find_devis(numero_devis)
+        un_devis = Devis.leDAODevis.find_devis(numero_devis)
+        un_collaborateur = Collaborateur(-1)
+        un_collaborateur.set_numero_devis(numero_devis=numero_devis)
+        print(un_collaborateur)
+        un_devis.set_les_collaborateurs(Devis.leDAOCollaborateur.select_collaborateur(un_collaborateur))
+        return un_devis
 
     @staticmethod
     def supprimer(un_devis):
@@ -69,6 +78,9 @@ class Devis:
 
     def get_numero_contrat(self):
         return self.__numero_contrat
+    
+    def get_les_collaborateurs(self):
+        return self.__les_colloborateurs
 
     # Setters
 
@@ -147,6 +159,9 @@ class Devis:
         
         self.__numero_contrat = numero_contrat
         Devis.leDAODevis.update_devis(self)
+
+    def set_les_collaborateurs(self, les_collaborateurs):
+        self.__les_colloborateurs = les_collaborateurs
 
     def is_date(self, str_date : str) -> bool :
         format = "%Y-%m-%d"
