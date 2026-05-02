@@ -1,5 +1,6 @@
 from dao.DAOSession import DAOSession
 from mysql.connector import Error
+import traceback
 
 
 class DAOClient:
@@ -13,28 +14,31 @@ class DAOClient:
         return DAOClient.unique_instance
 
     def insert_client(self, client):
-        sql = "INSERT INTO Client (nom, prenom, raisonSociale, adressePostale, telephone, email, statut) VALUES (%s, %s, %s, %s, %s, %s, %s)"
-        values = (client.get_nom(), client.get_prenom(), client.get_raison_sociale(), client.get_adresse(
-        ), client.get_telephone(), client.get_courriel(), client.get_status_client())
+        traceback.print_stack()
+        print("Appel insert_client")
         try:
             connection = DAOSession.get_connexion()
             cursor = connection.cursor()
-            cursor.execute(sql, values)
+            sql = """
+                INSERT INTO Client (nom, prenom, raisonSociale, adressePostale, telephone, email, statut)
+                VALUES (%s, %s, %s, %s, %s, %s, %s)
+            """
+            cursor.execute(sql, (
+                client.get_nom(),
+                client.get_prenom(),
+                client.get_raison_sociale(),
+                client.get_adresse(),
+                client.get_telephone(),
+                client.get_courriel(),
+                client.get_status_client()
+            ))
             connection.commit()
-            print("Client inséré avec succès")
             cle = cursor.lastrowid
-            return cle
-        except Error as e:
-            print("\n<--------------------------------------->")
+            cursor.close()
+            return (True, cle)
+        except Exception as e:
             print(f"Erreur lors de la création du Client : {e}")
-            print(sql)
-            print(values)
-            print("rollback")
-            connection.rollback()
-            return -1
-        finally:
-            if cursor:
-                cursor.close()
+            return (False, str(e))
 
     def delete_client(self, client):
         sql = "DELETE FROM Client WHERE idClient = %s"
