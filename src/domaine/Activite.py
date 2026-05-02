@@ -6,28 +6,6 @@ class Activite:
     leDAOActivite = DAOActivite()
 
     def __init__(self, id_activite: int = None, libelle_operationnel: str = None, date_prevues: str = None, date_effective: str = None, duree_estimee: int = None, responsable: str = None, statut: str = None, id_prestation: int = None):
-        
-        if not isinstance(libelle_operationnel, str):
-            raise TypeError(f"l'attribut {libelle_operationnel} doit être une chaine de caractère")
-        
-        if not isinstance(date_prevues, str) and self.is_date(date_effective):
-            raise TypeError(f"l'attribut {date_prevues} doit être une chaine de caractère")
-
-        if date_effective is not None and not isinstance(date_effective, str) and self.is_date(date_effective):
-            raise TypeError(f"l'attribut {date_effective} doit être une chaine de caractère")
-    
-        if not isinstance(duree_estimee, int):
-            raise TypeError(f"l'attribut {duree_estimee} doit être un entier")
-        
-        if not isinstance(responsable, str):
-            raise TypeError(f"l'attribut {responsable} doit être une chaine de caractère")
-        
-        if not isinstance(statut, str):  # verifier bien in enum
-            raise TypeError(f"l'attribut {statut} doit être une chaine de caractère")
-        
-        if not isinstance(id_prestation, int):
-            raise TypeError(f"l'attribut {id_prestation} doit être un entier")
-        
 
         self.__libelle_operationnel = libelle_operationnel
         self.__date_prevues = date_prevues
@@ -42,11 +20,17 @@ class Activite:
         else:
             self.__id_activite = Activite.leDAOActivite.insert_activite(self)
 
+    @staticmethod
     def charger(id_activite):
-        pass
+        return Activite.leDAOActivite.find_activite(id_activite)
 
+    @staticmethod
     def supprimer(un_activite):
-        pass
+        if un_activite.get_id_activite() is None : 
+            Activite.leDAOActivite.delete_activite(un_activite)
+        else : 
+            raise Exception("Erreur_suppression_activite_avec_prestation")
+    
 
     # Getters :
 
