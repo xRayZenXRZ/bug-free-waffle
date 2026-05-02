@@ -2,13 +2,15 @@ from domaine.Activite import Activite
 from domaine.Collaborateur import Collaborateur
 from domaine.Paiement import Paiement
 from domaine.Client import Client
-
-import csv
-
 from domaine.Contrat import Contrat
 from domaine.Devis import Devis
 from domaine.Facture import Facture
 from domaine.Prestation import Prestation
+import pandas as pd
+import os
+
+import csv
+
 
 def importation_clients_csv():
 
@@ -233,5 +235,78 @@ def importation_all_csv():
     importations_factures_csv()
     importation_prestations_csv()
 
+def importation_combined_csv():
+
+    clients       = pd.read_csv(f"src/Interface_Tkinter/importation/client/clients.csv",             sep=",", encoding="utf-8")
+    contrats      = pd.read_csv(f"src/Interface_Tkinter/importation/contrat/contrats.csv",           sep=",", encoding="utf-8")
+    devis         = pd.read_csv(f"src/Interface_Tkinter/importation/devis/devis.csv",                sep=",", encoding="utf-8")
+    prestations   = pd.read_csv(f"src/Interface_Tkinter/importation/prestation/prestations.csv",     sep=",", encoding="utf-8")
+    factures      = pd.read_csv(f"src/Interface_Tkinter/importation/facture/factures.csv",           sep=",", encoding="utf-8")
+    paiements     = pd.read_csv(f"src/Interface_Tkinter/importation/paiement/paiements.csv",         sep=",", encoding="utf-8")
+    activites     = pd.read_csv(f"src/Interface_Tkinter/importation/activite/activites.csv",         sep=",", encoding="utf-8")
+    collaborateurs = pd.read_csv(f"src/Interface_Tkinter/importation/collaborateur/collaborateurs.csv", sep=",", encoding="utf-8")
+
+    # Vue contrats (contrat + client)
+    contrats_clients = contrats.merge(clients[["idClient", "nom", "prenom", "raisonSociale", "email", "telephone"]], on="idClient", how="left")
+
+    # Vue prestations (prestation + contrat + client)
+    prestations_full = prestations.merge(contrats_clients, on="numeroContrat", how="left")
+
+    # csv -> str 
+    activites["idCollaborateur"]      = activites["idCollaborateur"].astype(str)
+    collaborateurs["idCollaborateur"] = collaborateurs["idCollaborateur"].astype(str)
+    contrats["idClient"]              = contrats["idClient"].astype(str)
+    clients["idClient"]               = clients["idClient"].astype(str)
+    prestations["numeroContrat"]      = prestations["numeroContrat"].astype(str)
+    contrats["numeroContrat"]         = contrats["numeroContrat"].astype(str)
+    factures["numeroContrat"]         = factures["numeroContrat"].astype(str)
+    devis["idClient"]                 = devis["idClient"].astype(str)
+    devis["numeroContrat"]            = devis["numeroContrat"].astype(str)
+    paiements["numeroFacture"]        = paiements["numeroFacture"].astype(str)
+    factures["numeroFacture"]         = factures["numeroFacture"].astype(str)
+
+    # Vue activités (activite + prestation + collaborateur) 
+    activites_full = activites.merge( prestations_full[["idPrestation", "lieu", "type", "numeroContrat"]], on="idPrestation", how="left"
+    ).merge(
+        collaborateurs[["idCollaborateur", "nom", "prenom", "poste"]],
+        on="idCollaborateur", how="left",
+        suffixes=("_activite", "_collaborateur")
+    )
+
+    # Vue factures complètes (facture + contrat + client + paiements) 
+    factures_full = factures.merge(contrats_clients, on="numeroContrat", how="left")
+    paiements_full = paiements.merge(
+        factures_full[["numeroFacture", "montantTotal", "etat", "idClient"]],
+        on="numeroFacture", how="left"
+    )
+
+    # Vue devis (devis + client + contrat)
+    devis_full = devis.merge( clients[["idClient", "nom", "prenom", "raisonSociale"]], on="idClient", how="left"
+    ).merge(
+        contrats[["numeroContrat", "montantGlobal", "periodicite"]], on="numeroContrat", how="left"
+    )
+
+    #export
+
+    dossier_sortie = "src/Interface_Tkinter/importation/combined"
+
+    contrats_clients.to_csv(f"{dossier_sortie}/contrats_clients.csv", index=False, sep=";", encoding="utf-8")
+    print(f"Le fichier {dossier_sortie}/contrats_clients.csv a été créé avec succès.")
+
+    prestations_full.to_csv(f"{dossier_sortie}/prestations_full.csv", index=False, sep=";", encoding="utf-8")
+    print(f"Le fichier {dossier_sortie}/prestations_full.csv a été créé avec succès.")
+
+    activites_full.to_csv(f"{dossier_sortie}/activites_full.csv", index=False, sep=";", encoding="utf-8")
+    print(f"Le fichier {dossier_sortie}/activites_full.csv a été créé avec succès.")
+
+    factures_full.to_csv(f"{dossier_sortie}/factures_full.csv", index=False, sep=";", encoding="utf-8")
+    print(f"Le fichier {dossier_sortie}/factures_full.csv a été créé avec succès.")
+
+    paiements_full.to_csv(f"{dossier_sortie}/paiements_full.csv", index=False, sep=";", encoding="utf-8")
+    print(f"Le fichier {dossier_sortie}/paiements_full.csv a été créé avec succès.")
+
+    devis_full.to_csv(f"{dossier_sortie}/devis_full.csv", index=False, sep=";", encoding="utf-8")
+    print(f"Le fichier {dossier_sortie}/devis_full.csv a été créé avec succès.")
+
 if __name__ == "__main__" :
-    importation_all_csv()
+    importation_combined_csv()
