@@ -2,6 +2,8 @@ from domaine.Client import Client
 
 import csv
 
+from domaine.Contrat import Contrat
+from domaine.Facture import Facture
 from domaine.Prestation import Prestation
 
 def importation_clients_csv():
@@ -60,12 +62,58 @@ def importation_prestations_csv():
 
     print(f"Le fichier {fichier_csv} a été créé avec succès.")
 
+def importations_factures_csv():
 
+    factures = Facture.leDAOFacture.select_facture()
 
+    fichier_texte = "src/Interface_Tkinter/importation/facture/factures.txt"
+    fichier_csv = "src/Interface_Tkinter/importation/facture/factures.csv"
 
+    with open(fichier_texte, "w", encoding="utf;8") as facture_file : 
+        facture_file.write("numeroFacture;dateEmission;montantTotal;etat;numeroContrat")
+        for x in factures : 
+            ligne = (f"{x.get_numero_facture()};{x.get_date_emission()};{x.get_montant_total()};{x.get_etat()};{x.get_numero_contrat()}").strip()
+            facture_file.write("\n"+ligne)
+    
+    print(f"Le fichier {fichier_texte} a été créé avec succès.")
+    
+    with open(fichier_texte, "r", encoding="utf;8") as facture_file : 
+        lignes = facture_file.readlines()
+                
+    donnees = [ligne.strip().split(";") for ligne in lignes]
 
+    with open(fichier_csv, "w", newline="", encoding="utf;8") as facture_file_csv:
+        writer = csv.writer(facture_file_csv)
+        writer.writerows(donnees)
 
+    print(f"Le fichier {fichier_csv} a été créé avec succès.")
+
+def importation_contrat_csv():
+
+    contrats = Contrat.leDAOContrat.select_contrat()
+
+    fichier_texte = "src/Interface_Tkinter/importation/contrat/contrats.txt"
+    fichier_csv = "src/Interface_Tkinter/importation/contrat/contrats.csv"
+
+    with open(fichier_texte, "w", encoding="utf;8") as contrat_file : 
+        contrat_file.write("numeroContrat;dateDebut;duree;nbProductionsTotales;periodicite;montantGlobal;conditionsPaiement;idClient")
+        for x in contrats :
+            ligne = (f"{x.get_numero_contrat()};{x.get_date_debut()};{x.get_duree()};{x.get_nb_productions_totales()};{x.get_periodicite()};{x.get_montant_global()};{x.get_condition_paiements()};{x.get_id_client()}").strip()
+            contrat_file.write("\n"+ligne)
+    
+    print(f"Le fichier {fichier_texte} a été créé avec succès.")
+    
+    with open(fichier_texte, "r", encoding="utf;8") as contrat_file : 
+        lignes = contrat_file.readlines()
+                
+    donnees = [ligne.strip().split(";") for ligne in lignes]
+
+    with open(fichier_csv, "w", newline="", encoding="utf;8") as contrat_file_csv:
+        writer = csv.writer(contrat_file_csv)
+        writer.writerows(donnees)
+
+    print(f"Le fichier {fichier_csv} a été créé avec succès.")
 
 
 if __name__ == "__main__" :
-    importation_prestations_csv()
+    importation_contrat_csv()
