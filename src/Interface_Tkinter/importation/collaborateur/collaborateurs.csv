@@ -1,0 +1,9 @@
+idCollaborateur,nom,prenom,poste,telephonePro,numeroDevis,idUtilisateur
+1,Martin,Sophie,Photographe Senior,0601010101,None,3
+2,Dubois,Pierre,Responsable Vidéo,0602020202,DEV-2026-001,4
+3,Leroy,Claire,Retoucheuse Photo,0603030303,None,5
+4,Bernard,Thomas,Commercial Terrain,0604040404,DEV-2026-002,6
+5,Moreau,Élodie,Chef de projet,0605050505,None,7
+6,Fontaine,Luc,Assistant Plateau,0606060606,None,8
+7,Girard,Camille,Community Manager,0607070707,None,9
+8,Roux,Antoine,Vidéaste Junior,0608080808,None,10
