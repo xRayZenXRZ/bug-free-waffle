@@ -1,9 +1,9 @@
-from dao.DAOPaiement import DAOPAiement
+from dao.DAOPaiement import DAOPaiement
 from datetime import datetime
 
 class Paiement:
 
-    leDAOPaiement = DAOPAiement.get_instance()
+    leDAOPaiement = DAOPaiement.get_instance()
 
     def __init__(self, id_paiement: int = None, date: str = None, montant: float = None, numero_Facture: str = None):
 

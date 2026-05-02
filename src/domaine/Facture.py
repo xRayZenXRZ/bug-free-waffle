@@ -1,5 +1,5 @@
 from dao.DAOFacture import DAOFacture
-from dao.DAOPaiement import DAOPAiement
+from dao.DAOPaiement import DAOPaiement
 from datetime import datetime
 
 from domaine.Paiement import Paiement
@@ -7,7 +7,7 @@ from domaine.Paiement import Paiement
 class Facture:
 
     leDAOFacture = DAOFacture.get_instance()
-    leDAOPaiement = DAOPAiement.get_instance()
+    leDAOPaiement = DAOPaiement.get_instance()
 
     def __init__(self, numero_facture: str = None, date_emission: str = None, montant_total: float = None, etat: str = None, numero_contrat: str = None):
 
