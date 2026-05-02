@@ -5,13 +5,13 @@ class Activite:
 
     leDAOActivite = DAOActivite()
 
-    def __init__(self, id_activite: int = None, libelle_operationnel: str = None, date_prevues: str = None, date_effective: str = None, duree_estimee: int = None, responsable: str = None, statut: str = None, id_prestation: int = None):
+    def __init__(self, id_activite: int = None, libelle_operationnel: str = None, date_prevues: str = None, date_effective: str = None, duree_estimee: int = None, id_collaborateur: int = None, statut: str = None, id_prestation: int = None):
 
         self.__libelle_operationnel = libelle_operationnel
         self.__date_prevues = date_prevues
         self.__date_effective = date_effective
         self.__duree_estimee = duree_estimee
-        self.__responsable = responsable
+        self.__id_collaborateur = id_collaborateur
         self.__statut = statut
         self.__id_prestation = id_prestation
 
@@ -49,8 +49,8 @@ class Activite:
     def get_duree_estimee(self):
         return self.__duree_estimee
 
-    def get_responsable(self):
-        return self.__responsable
+    def get_id_collaborateur(self):
+        return self.__id_collaborateur
 
     def get_statut(self):
         return self.__statut
@@ -95,11 +95,11 @@ class Activite:
         self.__duree_estimee = duree_estimee
         Activite.leDAOActivite.update_activite(self)
 
-    def set_responsable(self, responsable):
-        if not isinstance(responsable, str):
-            raise TypeError(f"l'attribut {responsable} doit être une chaine de caractère")
+    def set_id_collaborateur(self, id_collaborateur):
+        if not isinstance(id_collaborateur, int):
+            raise TypeError(f"l'attribut {id_collaborateur} doit être un entier")
         
-        self.__responsable = responsable
+        self.__id_collaborateur = id_collaborateur
         Activite.leDAOActivite.update_activite(self)
 
     def set_statut(self, statut):
@@ -124,54 +124,5 @@ class Activite:
         return res
 
     def __str__(self):
-        return f"Activite(id_activite={self.__id_activite}, libelle_operationnel={self.__libelle_operationnel}, date_prevues={self.__date_prevues}, date_effective={self.__date_effective}, duree_estimee={self.__duree_estimee}, responsable={self.__responsable}, statut={self.__statut}, id_prestation={self.__id_prestation})"
-
-
-"""class Activite : 
-
-    def __init__(self, id_activite, enum_activite, date_prevues, duree_estimee, enum_activite_statut):
-        self.__id_activite = id_activite
-        self.__enum_activite = enum_activite
-        self.__date_prevues = date_prevues
-        self.__duree_estimee = duree_estimee
-        self.__enum_activite_statut = enum_activite_statut
-
-    #EnumEmployeeStatus pas déclarer car attente rep prof
-
-    # Getters
-    def get_id_activite(self):
-        return self.__id_activite
-
-    def get_enum_activite(self):
-        return self.__enum_activite
-
-    def get_date_prevues(self):
-        return self.__date_prevues
-
-    def get_duree_estimee(self):
-        return self.__duree_estimee
-
-    def get_enum_activite_statut(self):
-        return self.__enum_activite_statut
-
-    # Setters
-
-    #Commentaire : verification à faire ....
-
-    def set_id_activite(self, id_activite):
-        self.__id_activite = id_activite
-
-    def set_enum_activite(self, enum_activite):
-        self.__enum_activite = enum_activite
-
-    def set_date_prevues(self, date_prevues):
-        self.__date_prevues = date_prevues
-
-    def set_duree_estimee(self, duree_estimee):
-        self.__duree_estimee = duree_estimee
-
-    def set_enum_activite_statut(self, enum_activite_statut):
-        self.__enum_activite_statut = enum_activite_statut
-
-    def __str__(self):
-        return f"Activite(id_activite={self.__id_activite}, activite={self.__enum_activite}, date_prevues={self.__date_prevues}, duree_estimee={self.__duree_estimee}, statut={self.__enum_activite_statut})"""
+        return f"Activite(id_activite={self.__id_activite}, libelle_operationnel={self.__libelle_operationnel}, date_prevues={self.__date_prevues}, date_effective={self.__date_effective}, duree_estimee={self.__duree_estimee}, id_collaborateur={self.__id_collaborateur}, statut={self.__statut}, id_prestation={self.__id_prestation})"
+    

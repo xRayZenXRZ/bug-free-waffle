@@ -13,9 +13,9 @@ class DAOActivite:
         return DAOActivite.unique_instance
 
     def insert_activite(self, activite):
-        sql = "INSERT INTO Activite (libelleOperationnel, datePrevue, dateEffective, dureeEstimeeHeures, responsable, statut, idPrestation) VALUES (%s,%s,%s,%s,%s,%s,%s)"
+        sql = "INSERT INTO Activite (libelleOperationnel, datePrevue, dateEffective, dureeEstimeeHeures, idCollaborateur, statut, idPrestation) VALUES (%s,%s,%s,%s,%s,%s,%s)"
         values = (activite.get_libelle_operationnel(), activite.get_date_prevues(), activite.get_date_effective(
-        ), activite.get_duree_estimee(), activite.get_responsable(), activite.get_statut(), activite.get_id_prestation())
+        ), activite.get_duree_estimee(), activite.get_id_collaborateur(), activite.get_statut(), activite.get_id_prestation())
         try:
             connection = DAOSession.get_connexion()
             cursor = connection.cursor()
@@ -76,9 +76,9 @@ class DAOActivite:
                 cursor.close()
 
     def update_activite(self, activite):
-        sql = "UPDATE Activite SET libelleOperationnel = %s, datePrevue = %s, dateEffective = %s , dureeEstimeeHeures= %s, responsable = %s, statut = %s, idPrestation = %s WHERE idActivite = %s"
+        sql = "UPDATE Activite SET libelleOperationnel = %s, datePrevue = %s, dateEffective = %s , dureeEstimeeHeures= %s, idCollaborateur = %s, statut = %s, idPrestation = %s WHERE idActivite = %s"
         valeurs = (activite.get_libelle_operationnel(), activite.get_date_prevues(), activite.get_date_effective(), activite.get_duree_estimee(
-        ), activite.get_responsable(), activite.get_statut(), activite.get_id_prestation(), activite.get_id_activite())
+        ), activite.get_id_collaborateur(), activite.get_statut(), activite.get_id_prestation(), activite.get_id_activite())
         try:
             connection = DAOSession.get_connexion()
             cursor = connection.cursor()
@@ -109,7 +109,7 @@ class DAOActivite:
             critere_date_prevues = activite.get_date_prevues()
             critere_date_effective = activite.get_date_effective()
             critere_duree_estimee = activite.get_duree_estimee()
-            critere_responsable = activite.get_responsable()
+            critere_id_collaborateur = activite.get_id_collaborateur()
             critere_statut = activite.get_statut()
             critere_id_prestation = activite.get_id_prestation()
 
@@ -118,7 +118,7 @@ class DAOActivite:
             if critere_id_activite is not None and critere_id_activite != -1:
                 sql += "idActivite = %s"
                 values.append(critere_id_activite)
-            elif all(c is None for c in [critere_libelle_operationnel, critere_date_prevues, critere_date_effective, critere_duree_estimee, critere_responsable, critere_statut, critere_id_prestation]):
+            elif all(c is None for c in [critere_libelle_operationnel, critere_date_prevues, critere_date_effective, critere_duree_estimee, critere_id_collaborateur, critere_statut, critere_id_prestation]):
                 sql = "SELECT * FROM Activite"
             else:
                 conditions = []
@@ -138,9 +138,9 @@ class DAOActivite:
                     conditions.append("dureeEstimeeHeures = %s")
                     values.append(critere_duree_estimee)
 
-                if critere_responsable is not None:
-                    conditions.append("responsable = %s")
-                    values.append(critere_responsable)
+                if critere_id_collaborateur is not None:
+                    conditions.append("idCollaborateur = %s")
+                    values.append(critere_id_collaborateur)
 
                 if critere_statut is not None:
                     conditions.append("statut = %s")
@@ -172,5 +172,5 @@ class DAOActivite:
     def set_all_values(self, rs):
         from domaine.Activite import Activite
         activite = Activite(rs["idActivite"], rs["libelleOperationnel"], rs["datePrevue"], rs["dateEffective"],
-                            rs["dureeEstimeeHeures"], rs["responsable"], rs["statut"], rs["idPrestation"])
+                            rs["dureeEstimeeHeures"], rs["idCollaborateur"], rs["statut"], rs["idPrestation"])
         return activite
