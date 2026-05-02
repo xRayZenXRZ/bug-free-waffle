@@ -19,6 +19,7 @@ class DAOClient:
         try:
             connection = DAOSession.get_connexion()
             cursor = connection.cursor()
+            
             sql = """
                 INSERT INTO Client (nom, prenom, raisonSociale, adressePostale, telephone, email, statut)
                 VALUES (%s, %s, %s, %s, %s, %s, %s)
@@ -61,7 +62,7 @@ class DAOClient:
 
     def find_client(self, client):
         sql = "SELECT * FROM Client WHERE idClient = %s"
-        values = (client.get_id_client(),)
+        values = (client,)
         try:
             connection = DAOSession.get_connexion()
             cursor = connection.cursor(dictionary=True)

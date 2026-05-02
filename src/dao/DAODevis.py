@@ -1,7 +1,6 @@
 from dao.DAOSession import DAOSession
 from mysql.connector import Error
 
-
 class DAODevis:
 
     unique_instance = None
@@ -14,13 +13,11 @@ class DAODevis:
 
     def insert_devis(self, devis):
         sql = "INSERT INTO Devis (numeroDevis ,dateEmission, dateValidite, descriptionPrestation, quantitePrevue, detailsCouts, montantTotalEstime, statut, dateAcceptation, idClient, numeroContrat) VALUES (%s,%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
-        values = (devis.get_numero_devis(), devis.get_date_emission(), devis.get_date_validite(), devis.get_description_prestation(), devis.get_quantite_prevue(
-        ), devis.get_details_couts(), devis.get_montant_total_estime(), devis.get_statut(), devis.get_date_acceptation(), devis.get_id_client(), devis.get_numero_contrat())
+        values = (devis.get_numero_devis(), devis.get_date_emission(), devis.get_date_validite(), devis.get_description_prestation(), devis.get_quantite_prevue(), devis.get_details_couts(), devis.get_montant_total_estime(), devis.get_statut(), devis.get_date_acceptation(), devis.get_id_client(), devis.get_numero_contrat())
         try:
             connection = DAOSession.get_connexion()
             cursor = connection.cursor()
             cursor.execute(sql, values)
-            connection.commit()
             print("Devis inséré avec succès !")
             cle = devis.get_numero_contrat()
             return cle
@@ -31,7 +28,7 @@ class DAODevis:
             print(values)
             print("rollback")
             connection.rollback()
-            return False
+            return -1
         finally:
             if cursor:
                 cursor.close()
@@ -57,7 +54,7 @@ class DAODevis:
 
     def find_devis(self, devis):
         sql = "SELECT * FROM Devis WHERE numeroDevis = %s"
-        values = (devis.get_numero_devis(),)
+        values = (devis,)
         try:
             connection = DAOSession.get_connexion()
             cursor = connection.cursor(dictionary=True)
@@ -79,8 +76,7 @@ class DAODevis:
 
     def update_devis(self, devis):
         sql = "UPDATE Devis SET dateEmission = %s, dateValidite = %s, descriptionPrestation = %s, quantitePrevue = %s, detailsCouts = %s, montantTotalEstime = %s, statut = %s, dateAcceptation = %s, idClient = %s, numeroContrat = %s WHERE numeroDevis = %s"
-        values = (devis.get_date_emission(), devis.get_date_validite(), devis.get_description_prestation(), devis.get_quantite_prevue(), devis.get_details_couts(
-        ), devis.get_montant_total_estime(), devis.get_statut(), devis.get_date_acceptation(), devis.get_id_client(), devis.get_numero_contrat(), devis.get_numero_devis())
+        values = (devis.get_date_emission(), devis.get_date_validite(), devis.get_description_prestation(), devis.get_quantite_prevue(), devis.get_details_couts(), devis.get_montant_total_estime(), devis.get_statut(), devis.get_date_acceptation(), devis.get_id_client(), devis.get_numero_contrat(), devis.get_numero_devis())
         try:
             connection = DAOSession.get_connexion()
             cursor = connection.cursor()
@@ -120,7 +116,7 @@ class DAODevis:
 
             values = []
 
-            if critere_numero_devis is not None and critere_numero_devis != -1:
+            if critere_numero_devis is not None and critere_numero_devis != "-1":
                 sql += "numeroDevis = %s"
                 values.append(critere_numero_devis)
             elif all(c is None for c in [critere_date_emission, critere_date_validite, critere_description, critere_quantite, critere_details_couts, critere_montant, critere_statut, critere_date_acceptation, critere_id_client, critere_numero_contrat]):
