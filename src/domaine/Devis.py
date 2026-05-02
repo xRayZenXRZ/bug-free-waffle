@@ -36,7 +36,6 @@ class Devis:
         un_devis = Devis.leDAODevis.find_devis(numero_devis)
         un_collaborateur = Collaborateur(-1)
         un_collaborateur.set_numero_devis(numero_devis=numero_devis)
-        print(un_collaborateur)
         un_devis.set_les_collaborateurs(Devis.leDAOCollaborateur.select_collaborateur(un_collaborateur))
         return un_devis
 
