@@ -1,0 +1,11 @@
+idPrestation;datePrevue;dateEffective;lieu;type;nbPhotosPrevues;nbVideosPrevues;numeroContrat;dateDebut;duree;nbProductionsTotales;periodicite;montantGlobal;conditionsPaiement;idClient;nom;prenom;raisonSociale;email;telephone
+1;2026-02-15 14:00:00;;Paris;MARIAGE;100;5;CONT-2026-001;2026-01-01;12 mois;12;MENSUELLE;5000.0;Paiement en 3 fois;1;Descartes;René;;rene.descartes@email.com;123456789
+2;2026-03-01 10:00:00;2026-03-01 10:00:00;Studio Photo Paris;COMM_REGULIERE;50;0;CONT-2026-002;2026-02-15;6 mois;6;MENSUELLE;3000.0;Paiement comptant;2;Martin;Sophie;;sophie.martin@email.com;612345678
+3;2026-04-10 09:00:00;;Château de Versailles;MARIAGE;200;10;CONT-2026-003;2026-03-01;24 mois;24;ANNUELLE;10000.0;Paiement en 10 fois;3;Dubois;Pierre;;pierre.dubois@email.com;478123456
+4;2026-01-20 15:00:00;2026-01-20 15:00:00;Studio Lumière;COMM_REGULIERE;10;0;CONT-2026-004;2026-01-10;3 mois;3;HEBDOMADAIRE;1500.0;Paiement à la livraison;4;Leroy;Claire;;claire.leroy@email.com;556789012
+5;2026-05-15 11:00:00;;Palais des Congrès;EVENT_PRO;50;3;CONT-2026-005;2026-04-01;12 mois;12;MENSUELLE;7500.0;Paiement en 4 fois;5;Bernard;Thomas;;thomas.bernard@email.com;789012345
+6;2026-03-05 14:00:00;;Bureau Client;AUTRE;20;0;CONT-2026-006;2026-02-20;9 mois;9;MENSUELLE;4500.0;Paiement en 2 fois;6;;;PhotoPro SAS;contact@photopro.fr;320123456
+7;2026-03-25 16:00:00;2026-03-25 16:00:00;Parc de la Tête d'Or;COMM_REGULIERE;15;0;CONT-2026-007;2026-03-15;1 mois;1;MENSUELLE;800.0;Paiement comptant;7;;;Studio Lumière;info@studio-lumiere.fr;145678901
+8;2026-02-10 08:00:00;;Stade de France;EVENT_PRO;100;5;CONT-2026-008;2026-01-25;18 mois;18;ANNUELLE;9000.0;Paiement en 6 fois;8;;;EventCorp;contact@eventcorp.com;450123456
+9;2026-06-01 12:00:00;;Mairie de Strasbourg;MARIAGE;80;2;CONT-2026-009;2026-05-01;6 mois;6;MENSUELLE;2500.0;Paiement en 3 fois;9;;;Médias & Co;hello@medias-co.fr;388123456
+10;2026-03-10 13:00:00;2026-03-10 13:00:00;Siège Social;EVENT_PRO;50;0;CONT-2026-010;2026-02-01;12 mois;12;MENSUELLE;6000.0;Paiement en 5 fois;10;;;Art & Image;contact@art-image.net;240123456
