@@ -2,15 +2,15 @@ from dao.DAOSession import DAOSession
 from mysql.connector import Error
 
 
-class DAOPAiement:
+class DAOPaiement:
 
     unique_instance = None
 
     @staticmethod
     def get_instance():
-        if DAOPAiement.unique_instance is None:
-            DAOPAiement.unique_instance = DAOPAiement()
-        return DAOPAiement.unique_instance
+        if DAOPaiement.unique_instance is None:
+            DAOPaiement.unique_instance = DAOPaiement()
+        return DAOPaiement.unique_instance
 
     def insert_paiement(self, paiement):
         sql = "INSERT INTO Paiement (datePaiement, montantPaye, numeroFacture) VALUES (%s, %s, %s)"
