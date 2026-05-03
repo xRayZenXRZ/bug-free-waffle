@@ -5,7 +5,7 @@ import tkinter.messagebox
 
 
 class GestionClient(tk.Frame):
-    def __init__(self, parent, utilisateur):
+    def __init__(self, parent, utilisateur, on_back=None):
         super().__init__(parent)
         self.pack(fill="both", expand=True)
         self.utilisateur = utilisateur
@@ -31,13 +31,22 @@ class GestionClient(tk.Frame):
 
         # COLONNE GAUCHE : Boutons
         frame_gauche = ttk.Frame(main_frame)
-        frame_gauche.pack(side='left', fill='y', padx=10)
+        frame_gauche.pack(side='left', fill='both', padx=10)
+        
         ttk.Label(frame_gauche, text="Actions :", font=('Arial', 14, 'bold')).pack(pady=10)
         ttk.Button(frame_gauche, text="➕ Ajouter client",   command=self.ajouter_client).pack(pady=5, fill='x')
         ttk.Button(frame_gauche, text="👁️ Voir les clients", command=self.afficher_clients).pack(pady=5, fill='x')
         ttk.Button(frame_gauche, text="✏️ Modifier client",  command=self.modifier_client).pack(pady=5, fill='x')
         if utilisateur['role'] == 'ADMIN':
             ttk.Button(frame_gauche, text="🗑️ Supprimer client", command=self.supprimer_client).pack(pady=5, fill='x')
+            
+        if on_back:
+            ttk.Label(frame_gauche, text="").pack(expand=True)
+            ttk.Button(
+                frame_gauche,
+                text="🏠 Accueil",
+                command=on_back
+            ).pack(pady=5, fill='x', side='bottom')
 
         # COLONNE DROITE : Tableau
         frame_droite = ttk.Frame(main_frame)

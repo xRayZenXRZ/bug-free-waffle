@@ -41,7 +41,7 @@ class App:
             widget.destroy()
 
         # Afficher la page de gestion
-        GestionUtilisateur(self.container, self.utilisateur_connecte)
+        GestionUtilisateur(self.container, self.utilisateur_connecte,on_back=lambda: self.afficher_main_window(self.utilisateur_connecte))
         
     def afficher_gestion_clients(self):
         # Nettoyer le container
@@ -49,7 +49,7 @@ class App:
             widget.destroy()
 
         # Afficher la page de gestion
-        GestionClient(self.container, self.utilisateur_connecte)
+        GestionClient(self.container, self.utilisateur_connecte,on_back=lambda: self.afficher_main_window(self.utilisateur_connecte))
 
 
 if __name__ == "__main__":
