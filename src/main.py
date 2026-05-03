@@ -3,7 +3,6 @@ from Interface_Tkinter.main_windows import MainWindow
 from Interface_Tkinter.Acceuil import ConnexionUI
 import tkinter as tk
 from Interface_Tkinter.gestion_utilisateur import GestionUtilisateur
-from Interface_Tkinter.gestion_devis import GestionDevis
 
 
 class App:
@@ -34,11 +33,7 @@ class App:
 
         # Afficher main window
         MainWindow(self.container, utilisateur,
-<<<<<<< HEAD
                    self.afficher_gestion_utilisateurs,self.afficher_gestion_clients)
-=======
-                   self.afficher_gestion_utilisateurs,self.afficher_gestion_clients,self.afficher_gestion_devis)
->>>>>>> Clement
 
     def afficher_gestion_utilisateurs(self):
         # Nettoyer le container
@@ -46,11 +41,7 @@ class App:
             widget.destroy()
 
         # Afficher la page de gestion
-<<<<<<< HEAD
-        GestionUtilisateur(self.container, self.utilisateur_connecte)
-=======
         GestionUtilisateur(self.container, self.utilisateur_connecte,on_back=lambda: self.afficher_main_window(self.utilisateur_connecte))
->>>>>>> Clement
         
     def afficher_gestion_clients(self):
         # Nettoyer le container
@@ -58,19 +49,7 @@ class App:
             widget.destroy()
 
         # Afficher la page de gestion
-<<<<<<< HEAD
-        GestionClient(self.container, self.utilisateur_connecte)
-=======
         GestionClient(self.container, self.utilisateur_connecte,on_back=lambda: self.afficher_main_window(self.utilisateur_connecte))
-        
-    def afficher_gestion_devis(self):
-        # Nettoyer le container
-        for widget in self.container.winfo_children():
-            widget.destroy()
-
-        # Afficher la page de gestion
-        GestionDevis(self.container, self.utilisateur_connecte,on_back=lambda: self.afficher_main_window(self.utilisateur_connecte))
->>>>>>> Clement
 
 
 if __name__ == "__main__":

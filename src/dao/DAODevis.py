@@ -177,18 +177,3 @@ class DAODevis:
         devis = Devis(rs["numeroDevis"], rs["dateEmission"], rs["dateValidite"], rs["descriptionPrestation"], rs["quantitePrevue"],
                       rs["detailsCouts"], rs["montantTotalEstime"], rs["statut"], rs["dateAcceptation"], rs["idClient"], rs["numeroContrat"])
         return devis
-
-    @staticmethod
-    def get_all_devis():
-        """Récupère tous les devis"""
-        try:
-            conn = DAOSession.get_connexion()
-            cursor = conn.cursor(dictionary=True)
-            query = "SELECT * FROM Devis"
-            cursor.execute(query)
-            devis = cursor.fetchall()
-            cursor.close()
-            return devis
-        except Exception as e:
-            print(f"Erreur lors de la récupération des devis : {e}")
-            return []

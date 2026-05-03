@@ -3,14 +3,13 @@ from tkinter import ttk
 
 
 class MainWindow(tk.Frame):
-    def __init__(self, parent, utilisateur, on_gestion_users_callback, on_gestion_client_callback, on_gestion_devis_callback):
+    def __init__(self, parent, utilisateur, on_gestion_users_callback, on_gestion_client_callback):
         super().__init__(parent)
         self.pack(fill="both", expand=True)
 
         self.utilisateur = utilisateur
         self.on_gestion_users = on_gestion_users_callback
         self.on_gestion_client = on_gestion_client_callback
-        self.on_gestion_devis = on_gestion_devis_callback
 
         # Header avec infos utilisateur
         header = ttk.Frame(self)
@@ -55,6 +54,6 @@ class MainWindow(tk.Frame):
 
         ttk.Button(
             content,
-            text="📄 Gérer les devis",
-            command=lambda: self.on_gestion_devis()
+            text="📄 Créer un devis",
+            command=lambda: print("Créer devis")
         ).pack(pady=10, ipadx=20, ipady=5)
