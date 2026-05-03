@@ -11,31 +11,6 @@ class Prestation:
 
     def __init__(self, id_prestation: int = None, date_prevue: str = None, date_effective: str = None, lieu: str = None, type_prestation: str = None, nb_photos_prevues: int = None, nb_videos_prevues: int = None, numero_contrat: str = None):
 
-        # verification type :
-        if id_prestation is not None and not isinstance(id_prestation, int):
-            raise TypeError("l'attribut {id_prestation} doit être un entier")
-        if date_prevue is not None and not isinstance(date_prevue, str) and self.is_date(date_prevue):
-            raise TypeError(
-                "l'attribut {date_prevue} doit être une chaîne de caractères")
-        if date_effective is not None and not isinstance(date_effective, str) and self.is_date(date_effective):
-            raise TypeError(
-                "l'attribut {date_effective} doit être une chaîne de caractères")
-        if lieu is not None and not isinstance(lieu, str):
-            raise TypeError(
-                "l'attribut {lieu} doit être une chaîne de caractères")
-        if type_prestation is not None and not isinstance(type_prestation, str):
-            raise TypeError(
-                "l'attribut {type_prestation} doit être une chaîne de caractères")
-        if nb_photos_prevues is not None and not isinstance(nb_photos_prevues, int):
-            raise TypeError(
-                "l'attribut {nb_photos_prevues} doit être un entier")
-        if nb_videos_prevues is not None and not isinstance(nb_videos_prevues, int):
-            raise TypeError(
-                "l'attribut {nb_videos_prevues} doit être un entier")
-        if numero_contrat is not None and not isinstance(numero_contrat, str):
-            raise TypeError(
-                "l'attribut {numero_contrat} doit être une chaîne de caractères")
-
         # Vérification des valeurs numériques positives -> à refaire sur les autres classes...
         if nb_photos_prevues is not None and nb_photos_prevues < 0:
             raise ValueError(
@@ -197,72 +172,3 @@ class Prestation:
 
     def __str__(self):
         return f"Prestation(id_prestation={self.__id_prestation}, date_prevue={self.__date_prevue}, date_effective={self.__date_effective}, lieu={self.__lieu}, type={self.__type}, nb_photos_prevues={self.__nb_photos_prevues}, nb_videos_prevues={self.__nb_videos_prevues}, numero_contrat={self.__numero_contrat})"
-
-
-"""class Prestation : 
-
-    def __init__(self, id_prestation, date_prevues, date_effective, lieu, quantite_photos_prevues, quantite_videos_prevues, enum_prestation_type, enum_prestation_mission):
-        self.__id_prestation = id_prestation
-        self.__date_prevues = date_prevues
-        self.__date_effective = date_effective
-        self.__lieu = lieu
-        self.__quantite_photos_prevues = quantite_photos_prevues
-        self.__quantite_videos_prevues = quantite_videos_prevues
-        self.__enum_prestation_type = enum_prestation_type
-        self.__enum_prestation_mission = enum_prestation_mission
-
-    # Getters
-    def get_id_prestation(self):
-        return self.__id_prestation
-
-    def get_date_prevues(self):
-        return self.__date_prevues
-
-    def get_date_effective(self):
-        return self.__date_effective
-
-    def get_lieu(self):
-        return self.__lieu
-
-    def get_quantite_photos_prevues(self):
-        return self.__quantite_photos_prevues
-
-    def get_quantite_videos_prevues(self):
-        return self.__quantite_videos_prevues
-
-    def get_enum_prestation_type(self):
-        return self.__enum_prestation_type
-
-    def get_enum_prestation_mission(self):
-        return self.__enum_prestation_mission
-
-    # Setters
-
-    # Commentaire : verification à faire plus tard...
-
-    def set_id_prestation(self, id_prestation):
-        self.__id_prestation = id_prestation
-
-    def set_date_prevues(self, date_prevues):
-        self.__date_prevues = date_prevues
-
-    def set_date_effective(self, date_effective):
-        self.__date_effective = date_effective
-
-    def set_lieu(self, lieu):
-        self.__lieu = lieu
-
-    def set_quantite_photos_prevues(self, quantite_photos_prevues):
-        self.__quantite_photos_prevues = quantite_photos_prevues
-
-    def set_quantite_videos_prevues(self, quantite_videos_prevues):
-        self.__quantite_videos_prevues = quantite_videos_prevues
-
-    def set_enum_prestation_type(self, enum_prestation_type):
-        self.__enum_prestation_type = enum_prestation_type
-
-    def set_enum_prestation_mission(self, enum_prestation_mission):
-        self.__enum_prestation_mission = enum_prestation_mission
-    
-    def __str__(self):
-        return f"Prestation(date_prevues={self.__date_prevues}, date_effective={self.__date_effective}, lieu={self.__lieu}, quantite_photos_prevues={self.__quantite_photos_prevues}, quantite_videos_prevues={self.__quantite_videos_prevues}, type_prestation={self.__enum_prestation_type}, mission={self.__enum_prestation_mission})"""

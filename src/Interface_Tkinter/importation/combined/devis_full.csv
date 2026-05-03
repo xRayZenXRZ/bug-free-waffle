@@ -1,0 +1,11 @@
+numeroDevis;dateEmission;dateValidite;descriptionPrestation;quantitePrevue;detailsCouts;montantTotalEstime;statut;dateAcceptation;idClient;numeroContrat;nom;prenom;raisonSociale;montantGlobal;periodicite
+DEV-2026-001;2026-01-01;2026-01-31;Prestation de photographie pour événement;1;Détails des coûts estimés;1500.0;EN_ATTENTE;;1;CONT-2026-001;Descartes;René;;5000.0;MENSUELLE
+DEV-2026-002;2026-02-10;2026-02-28;Shooting photo professionnel;1;Inclut retouches et livraison;2000.0;ACCEPTE;2026-02-12;2;CONT-2026-002;Martin;Sophie;;3000.0;MENSUELLE
+DEV-2026-003;2026-03-05;2026-03-20;Reportage mariage complet;1;2 photographes, 8h de couverture;3500.0;REFUSE;;3;CONT-2026-003;Dubois;Pierre;;10000.0;ANNUELLE
+DEV-2026-004;2026-01-08;2026-01-22;Séance portrait en studio;1;10 photos retouchées;1200.0;EN_ATTENTE;;4;CONT-2026-004;Leroy;Claire;;1500.0;HEBDOMADAIRE
+DEV-2026-005;2026-04-01;2026-04-15;Couverture événement corporate;1;50 photos, livraison sous 48h;2800.0;ACCEPTE;2026-04-03;5;CONT-2026-005;Bernard;Thomas;;7500.0;MENSUELLE
+DEV-2026-006;2026-02-18;2026-03-02;Shooting produit e-commerce;1;20 produits, fond blanc;1800.0;EXPIRE;;6;CONT-2026-006;;;PhotoPro SAS;4500.0;MENSUELLE
+DEV-2026-007;2026-03-10;2026-03-25;Portraits familiaux;1;Séance en extérieur, 15 photos;900.0;ACCEPTE;2026-03-12;7;CONT-2026-007;;;Studio Lumière;800.0;MENSUELLE
+DEV-2026-008;2026-01-20;2026-02-05;Reportage sportif;1;100 photos, droits d'usage inclus;4000.0;REFUSE;;8;CONT-2026-008;;;EventCorp;9000.0;ANNUELLE
+DEV-2026-009;2026-05-01;2026-05-15;Mariage intimiste;1;6h de couverture, album inclus;3000.0;EN_ATTENTE;;9;CONT-2026-009;;;Médias & Co;2500.0;MENSUELLE
+DEV-2026-010;2026-02-01;2026-02-15;Événement d'entreprise;1;Team building, 50 photos;2200.0;ACCEPTE;2026-02-05;10;CONT-2026-010;;;Art & Image;6000.0;MENSUELLE

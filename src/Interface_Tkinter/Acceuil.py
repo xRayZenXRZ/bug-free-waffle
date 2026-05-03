@@ -3,7 +3,6 @@ import tkinter.messagebox as mb
 from tkinter import ttk
 import tkinter as tk
 
-
 class ConnexionUI(tk.Frame):
     def __init__(self, parent, on_success_callback):
         super().__init__(parent)
@@ -41,8 +40,8 @@ class ConnexionUI(tk.Frame):
             mb.showwarning("Erreur", "Email non valide")
             return
 
-        # Utilisation du DAO au lieu de requête SQL directe
-        utilisateur = DAOUtilisateur.authentifier(email, mdp)
+        # Utilisation du DAO au lieu de requête SQL directe ( hashed now but if not hashed -> x.authentifier(...))
+        utilisateur = DAOUtilisateur.authentifier_hash(email, mdp)
 
         if not utilisateur:
             self.entry_email.delete(0, tk.END)
