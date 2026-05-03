@@ -8,6 +8,8 @@ Keyword :
 
 Pour récuperer : git pull
 
+##  Avancer de lancer le projet
+pip install -r requirements.txt
 ## Project Structure
 
 ```
