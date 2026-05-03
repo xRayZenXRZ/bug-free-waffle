@@ -1,7 +1,7 @@
 # A completer
 from dao.DAOSession import DAOSession
 from mysql.connector import Error
-
+import hashlib
 
 class DAOUtilisateur:
     unique_instance = None
@@ -30,6 +30,31 @@ class DAOUtilisateur:
             utilisateur = cursor.fetchone()
             cursor.close()
             return utilisateur  # None si pas trouvé
+        except Exception as e:
+            print(f"Erreur lors de l'authentification : {e}")
+            return None
+        
+    @staticmethod
+    def authentifier_hash(email, mot_de_passe):
+        try:
+            conn = DAOSession.get_connexion()
+            cursor = conn.cursor(dictionary=True)
+            query = "SELECT idUtilisateur, nom, prenom, motDePasse , email, role, statut FROM Utilisateur WHERE email = %s"
+
+            cursor.execute(query, (email,))
+            utilisateur = cursor.fetchone()
+
+            if utilisateur is None:
+                return None  # Email introuvable
+
+            hache_stocke = hashlib.sha256(utilisateur['motDePasse'].strip().encode()).hexdigest()
+            hache_saisi  = hashlib.sha256(mot_de_passe.strip().encode()).hexdigest()
+
+            print(f"hash saisi : {hache_saisi} | hash stocké : {hache_stocke}")
+
+            cursor.close()
+            return utilisateur if hache_saisi == hache_stocke else None
+
         except Exception as e:
             print(f"Erreur lors de l'authentification : {e}")
             return None

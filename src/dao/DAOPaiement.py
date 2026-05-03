@@ -2,15 +2,15 @@ from dao.DAOSession import DAOSession
 from mysql.connector import Error
 
 
-class DAOPAiement:
+class DAOPaiement:
 
     unique_instance = None
 
     @staticmethod
     def get_instance():
-        if DAOPAiement.unique_instance is None:
-            DAOPAiement.unique_instance = DAOPAiement()
-        return DAOPAiement.unique_instance
+        if DAOPaiement.unique_instance is None:
+            DAOPaiement.unique_instance = DAOPaiement()
+        return DAOPaiement.unique_instance
 
     def insert_paiement(self, paiement):
         sql = "INSERT INTO Paiement (datePaiement, montantPaye, numeroFacture) VALUES (%s, %s, %s)"
@@ -55,7 +55,7 @@ class DAOPAiement:
 
     def find_paiement(self, paiement):
         sql = "SELECT * FROM Paiement WHERE idPaiement = %s"
-        values = (paiement.get_id_paiement(),)
+        values = (paiement,)
         try:
             connection = DAOSession.get_connexion()
             cursor = connection.cursor(dictionary=True)
@@ -77,8 +77,7 @@ class DAOPAiement:
 
     def update_paiement(self, paiement):
         sql = "UPDATE Paiement SET datePaiement = %s, montantPaye = %s, numeroFacture = %s WHERE idPaiement = %s"
-        values = (paiement.get_date(), paiement.get_montant(),
-                  paiement.get_numero_Facture(), paiement.get_id_paiement())
+        values = (paiement.get_date(), paiement.get_montant(),paiement.get_numero_facture(), paiement.get_id_paiement())
         try:
             connection = DAOSession.get_connexion()
             cursor = connection.cursor()
@@ -107,7 +106,7 @@ class DAOPAiement:
             critere_id_paiement = paiement.get_id_paiement()
             critere_date = paiement.get_date()
             critere_montant = paiement.get_montant()
-            critere_numero_facture = paiement.get_numero_Facture()
+            critere_numero_facture = paiement.get_numero_facture()
 
             values = []
 

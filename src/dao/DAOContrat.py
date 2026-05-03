@@ -57,7 +57,7 @@ class DAOContrat:
 
     def find_contrat(self, contrat):
         sql = "SELECT * FROM Contrat WHERE numeroContrat = %s"
-        values = (contrat.get_numero_contrat(),)
+        values = (contrat,)
         try:
             connection = DAOSession.get_connexion()
             cursor = connection.cursor(dictionary=True)
@@ -166,6 +166,5 @@ class DAOContrat:
 
     def set_all_values(self, rs):
         from domaine.Contrat import Contrat
-        contrat = Contrat(rs["numeroContrat"], rs["dateDebut"], rs["duree"], rs["nbProductionsTotales"],
-                          rs["periodicite"], rs["montantGlobal"], rs["conditionPaiements"], rs["idClient"])
+        contrat = Contrat(rs["numeroContrat"], rs["dateDebut"], rs["duree"], rs["nbProductionsTotales"], rs["periodicite"], rs["montantGlobal"], rs["conditionsPaiement"], rs["idClient"])
         return contrat
