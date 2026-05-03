@@ -54,6 +54,6 @@ class MainWindow(tk.Frame):
 
         ttk.Button(
             content,
-            text="📄 Créer un devis",
+            text="📄 Gerer les devis",
             command=lambda: print("Créer devis")
         ).pack(pady=10, ipadx=20, ipady=5)
