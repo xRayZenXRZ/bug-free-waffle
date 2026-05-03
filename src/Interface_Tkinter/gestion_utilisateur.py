@@ -5,7 +5,7 @@ import tkinter.messagebox
 
 
 class GestionUtilisateur(tk.Frame):
-    def __init__(self, parent, utilisateur):
+    def __init__(self, parent, utilisateur, on_back=None):
         super().__init__(parent)
         self.pack(fill="both", expand=True)
         self.utilisateur = utilisateur
@@ -33,7 +33,7 @@ class GestionUtilisateur(tk.Frame):
 
         # COLONNE GAUCHE : Boutons
         frame_gauche = ttk.Frame(main_frame)
-        frame_gauche.pack(side='left', fill='y', padx=10)
+        frame_gauche.pack(side='left', fill='both', padx=10)
 
         ttk.Label(
             frame_gauche,
@@ -70,6 +70,14 @@ class GestionUtilisateur(tk.Frame):
             text="✅ Activer compte utilisateur",
             command=self.activer_utilisateur
         ).pack(pady=5, fill='x')
+        
+        if on_back:
+            ttk.Label(frame_gauche, text="").pack(expand=True)
+            ttk.Button(
+                frame_gauche,
+                text="🏠 Accueil",
+                command=on_back
+            ).pack(pady=5, fill='x', side='bottom')
 
         # COLONNE DROITE : Tableau
         frame_droite = ttk.Frame(main_frame)
