@@ -7,6 +7,7 @@ def main():
     from domaine.Devis import Devis
     from domaine.Facture import Facture
     from domaine.Paiement import Paiement
+    from domaine.Collaborateur import Collaborateur
     from domaine.Prestation import Prestation
     from dao.DAOSession import DAOSession
 
@@ -14,30 +15,10 @@ def main():
 
     DAOSession.open()
 
-    un_client = Client.charger(5);
+    un_devis = Devis.charger("DEV-2026-001")
 
-    un_contrat = Contrat.charger("CONT-2026-005");
-
-    """for devis in un_contrat.get_les_devis() :
-        print(devis)"""
-
-    """for facture in un_contrat.get_les_factures() :
-        print(facture)"""
-
-    """for prestations in un_contrat.get_les_prestations() :
-        print(prestations)"""
-
-    un_facture = Facture.charger("FACT-2026-005");
-
-    """for paiement in un_facture.get_les_paiements() :
-        print(paiement)"""
-    
-    un_prestation = Prestation.charger(5)
-
-    """print(un_prestation)"""
-
-    for activite in un_prestation.get_les_activites() :
-        print(activite)
+    for collaborateur in un_devis.get_les_collaborateurs() :
+        print(collaborateur)
 
     #client_1 = Client(nom="Descartes", prenom="René", adresse="Panthéon 76000", telephone="0123456789", courriel="D_Rere@gmail.com", enum_status_client="ANCIEN")
 

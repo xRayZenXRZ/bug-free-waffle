@@ -1,0 +1,11 @@
+numeroContrat;dateDebut;duree;nbProductionsTotales;periodicite;montantGlobal;conditionsPaiement;idClient;nom;prenom;raisonSociale;email;telephone
+CONT-2026-001;2026-01-01;12 mois;12;MENSUELLE;5000.0;Paiement en 3 fois;1;Descartes;René;;rene.descartes@email.com;123456789
+CONT-2026-002;2026-02-15;6 mois;6;MENSUELLE;3000.0;Paiement comptant;2;Martin;Sophie;;sophie.martin@email.com;612345678
+CONT-2026-003;2026-03-01;24 mois;24;ANNUELLE;10000.0;Paiement en 10 fois;3;Dubois;Pierre;;pierre.dubois@email.com;478123456
+CONT-2026-004;2026-01-10;3 mois;3;HEBDOMADAIRE;1500.0;Paiement à la livraison;4;Leroy;Claire;;claire.leroy@email.com;556789012
+CONT-2026-005;2026-04-01;12 mois;12;MENSUELLE;7500.0;Paiement en 4 fois;5;Bernard;Thomas;;thomas.bernard@email.com;789012345
+CONT-2026-006;2026-02-20;9 mois;9;MENSUELLE;4500.0;Paiement en 2 fois;6;;;PhotoPro SAS;contact@photopro.fr;320123456
+CONT-2026-007;2026-03-15;1 mois;1;MENSUELLE;800.0;Paiement comptant;7;;;Studio Lumière;info@studio-lumiere.fr;145678901
+CONT-2026-008;2026-01-25;18 mois;18;ANNUELLE;9000.0;Paiement en 6 fois;8;;;EventCorp;contact@eventcorp.com;450123456
+CONT-2026-009;2026-05-01;6 mois;6;MENSUELLE;2500.0;Paiement en 3 fois;9;;;Médias & Co;hello@medias-co.fr;388123456
+CONT-2026-010;2026-02-01;12 mois;12;MENSUELLE;6000.0;Paiement en 5 fois;10;;;Art & Image;contact@art-image.net;240123456
