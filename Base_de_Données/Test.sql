@@ -151,12 +151,7 @@ INSERT INTO Utilisateur (idUtilisateur, nom, prenom, email, motDePasse, role, st
 (7,  'Moreau',   'Élodie',  'e.moreau@comart.fr',  'hashed_password_7',  'COLLABORATEUR',  'ACTIF',   '2025-05-01 00:00:00', 1),
 (8,  'Fontaine', 'Luc',     'l.fontaine@comart.fr','hashed_password_8',  'COLLABORATEUR',  'ACTIF',   '2025-05-15 00:00:00', 2),
 (9,  'Girard',   'Camille', 'c.girard@comart.fr',  'hashed_password_9',  'COLLABORATEUR',  'INACTIF', '2025-06-01 00:00:00', 1),
-<<<<<<< HEAD
 (10, 'Roux',     'Antoine', 'a.roux@comart.fr',    'hashed_password_10', 'COLLABORATEUR',  'ACTIF',   '2025-06-15 00:00:00', 2);
-=======
-(10, 'Roux',     'Antoine', 'a.roux@comart.fr',    'hashed_password_10', 'COLLABORATEUR',  'ACTIF',   '2025-06-15 00:00:00', 2),
-(11,  'root',    'root',    'root@comart.fr',      'root',               'ADMIN',          'ACTIF',   '2025-02-01 00:00:00', 1);
->>>>>>> Clement
 
 
 INSERT INTO Contrat (numeroContrat, dateDebut, duree, nbProductionsTotales, periodicite, montantGlobal, conditionsPaiement, idClient) VALUES
