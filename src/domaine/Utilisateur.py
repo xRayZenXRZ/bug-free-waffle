@@ -11,18 +11,6 @@ class Utilisateur:
 
     def __init__(self, id_utilisateur: int = None, nom: str = None, prenom: str = None, email: str = None, mot_de_passe: str = None, role: str = None, statut: str = "ACTIF", date_creation: datetime = None, id_createur: int = None):
 
-        # Vérification type :
-        if not isinstance(nom, str):
-            raise TypeError("l'attribut {nom} doit être une chaine de caractère")
-        if not isinstance(prenom, str):
-            raise TypeError("l'attribut {prenom} doit être une chaine de caractère")
-        if not isinstance(email, str):
-            raise TypeError("l'attribut {email} doit être une chaine de caractère")
-        if not isinstance(mot_de_passe, str):
-            raise TypeError("l'attribut {mot_de_passe} doit être une chaine de caractère")
-        if id_createur is not None and not isinstance(id_createur, int):
-            raise TypeError("l'attribut {id_createur} doit être un entier")
-
         # Vérification 
         if role not in ROLES_VALIDES:
             raise ValueError(f"l'attribut role est invalide : '{role}'. Valeurs acceptées : {ROLES_VALIDES}")

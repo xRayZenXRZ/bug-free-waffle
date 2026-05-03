@@ -1,0 +1,11 @@
+idActivite;libelleOperationnel;datePrevue;dateEffective;dureeEstimeeHeures;statut;idCollaborateur;idPrestation;lieu;type;numeroContrat;nom;prenom;poste
+Préparation du matériel;2026-02-14 10:00:00;;2;PREVUE;1;PREVUE;1;Paris;MARIAGE;CONT-2026-001;;;
+Retouches photos;2026-03-02 14:00:00;2026-03-02 14:00:00;3;TERMINEE;3;TERMINEE;2;Studio Photo Paris;COMM_REGULIERE;CONT-2026-002;;;
+Repérage lieu;2026-04-09 11:00:00;;1;PREVUE;6;PREVUE;3;Château de Versailles;MARIAGE;CONT-2026-003;;;
+Installation studio;2026-01-19 09:00:00;2026-01-19 09:00:00;1;TERMINEE;1;TERMINEE;4;Studio Lumière;COMM_REGULIERE;CONT-2026-004;;;
+Brief client;2026-05-14 10:00:00;;2;PREVUE;2;PREVUE;5;Palais des Congrès;EVENT_PRO;CONT-2026-005;;;
+Prise de vue produits;2026-03-04 15:00:00;;4;EN_COURS;8;EN_COURS;6;Bureau Client;AUTRE;CONT-2026-006;;;
+Sélection photos;2026-03-26 10:00:00;2026-03-26 10:00:00;2;TERMINEE;7;TERMINEE;7;Parc de la Tête d'Or;COMM_REGULIERE;CONT-2026-007;;;
+Montage vidéo;2026-02-11 09:00:00;;5;EN_COURS;4;EN_COURS;8;Stade de France;EVENT_PRO;CONT-2026-008;;;
+Préparation album;2026-05-31 14:00:00;;3;PREVUE;5;PREVUE;9;Mairie de Strasbourg;MARIAGE;CONT-2026-009;;;
+Livraison photos;2026-03-11 16:00:00;2026-03-11 16:00:00;1;TERMINEE;3;TERMINEE;10;Siège Social;EVENT_PRO;CONT-2026-010;;;
