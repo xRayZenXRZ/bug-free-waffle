@@ -1,0 +1,11 @@
+numeroDevis;dateEmission;dateValidite;descriptionPrestation;quantitePrevue;detailsCouts;montantTotalEstime;statut;dateAcceptation;idClient;numeroContrat
+DEV-2026-001;2026-01-01;2026-01-31;Prestation de photographie pour événement;1;Détails des coûts estimés;1500.00;EN_ATTENTE;None;1;CONT-2026-001
+DEV-2026-002;2026-02-10;2026-02-28;Shooting photo professionnel;1;Inclut retouches et livraison;2000.00;ACCEPTE;2026-02-12;2;CONT-2026-002
+DEV-2026-003;2026-03-05;2026-03-20;Reportage mariage complet;1;2 photographes, 8h de couverture;3500.00;REFUSE;None;3;CONT-2026-003
+DEV-2026-004;2026-01-08;2026-01-22;Séance portrait en studio;1;10 photos retouchées;1200.00;EN_ATTENTE;None;4;CONT-2026-004
+DEV-2026-005;2026-04-01;2026-04-15;Couverture événement corporate;1;50 photos, livraison sous 48h;2800.00;ACCEPTE;2026-04-03;5;CONT-2026-005
+DEV-2026-006;2026-02-18;2026-03-02;Shooting produit e-commerce;1;20 produits, fond blanc;1800.00;EXPIRE;None;6;CONT-2026-006
+DEV-2026-007;2026-03-10;2026-03-25;Portraits familiaux;1;Séance en extérieur, 15 photos;900.00;ACCEPTE;2026-03-12;7;CONT-2026-007
+DEV-2026-008;2026-01-20;2026-02-05;Reportage sportif;1;100 photos, droits d'usage inclus;4000.00;REFUSE;None;8;CONT-2026-008
+DEV-2026-009;2026-05-01;2026-05-15;Mariage intimiste;1;6h de couverture, album inclus;3000.00;EN_ATTENTE;None;9;CONT-2026-009
+DEV-2026-010;2026-02-01;2026-02-15;Événement d'entreprise;1;Team building, 50 photos;2200.00;ACCEPTE;2026-02-05;10;CONT-2026-010

@@ -171,6 +171,5 @@ class DAOClient:
 
     def set_all_values(self, rs):
         from domaine.Client import Client
-        client = Client(rs["idClient"], rs["nom"], rs["prenom"], rs["raisonSociale"],
-                        rs["adressePostale"], rs["telephone"], rs["email"], rs["statut"])
+        client = Client(rs["idClient"], rs["nom"], rs["prenom"], rs["raisonSociale"], rs["adressePostale"], rs["telephone"], rs["email"], rs["statut"])
         return client
