@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+.DS_Store
+
+# Fichier de configuration contenant des accès sensibles
+src/connexion.py
