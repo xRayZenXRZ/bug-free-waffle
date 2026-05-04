@@ -78,7 +78,7 @@ class DAOContrat:
                 cursor.close()
 
     def update_contrat(self, contrat):
-        sql = "UPDATE Contrat SET dateDebut = %s, duree = %s, nbProductionsTotales = %s, periodicite = %s, montantGlobal = %s, conditionPaiements = %s, idClient = %s WHERE numeroContrat = %s"
+        sql = "UPDATE Contrat SET dateDebut = %s, duree = %s, nbProductionsTotales = %s, periodicite = %s, montantGlobal = %s, conditionPaiement = %s, idClient = %s WHERE numeroContrat = %s"
         values = (contrat.get_date_debut(), contrat.get_duree(), contrat.get_nb_productions_totales(), contrat.get_periodicite(
         ), contrat.get_montant_global(), contrat.get_condition_paiements(), contrat.get_id_client(), contrat.get_numero_contrat())
         try:
@@ -166,5 +166,6 @@ class DAOContrat:
 
     def set_all_values(self, rs):
         from domaine.Contrat import Contrat
-        contrat = Contrat(rs["numeroContrat"], rs["dateDebut"], rs["duree"], rs["nbProductionsTotales"], rs["periodicite"], rs["montantGlobal"], rs["conditionsPaiement"], rs["idClient"])
+        contrat = Contrat(rs["numeroContrat"], rs["dateDebut"], rs["duree"], rs["nbProductionsTotales"],
+                          rs["periodicite"], rs["montantGlobal"], rs["conditionsPaiement"], rs["idClient"])
         return contrat
