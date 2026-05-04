@@ -7,7 +7,6 @@ from domaine.Devis import Devis
 from domaine.Facture import Facture
 from domaine.Prestation import Prestation
 import pandas as pd
-import os
 
 import csv
 
@@ -180,9 +179,9 @@ def importation_activite_csv():
     fichier_csv = "src/Interface_Tkinter/importation/activite/activites.csv"
 
     with open(fichier_texte, "w", encoding="utf=8") as activite_file : 
-        activite_file.write("idActivite;libelleOperationnel;datePrevue;dateEffective;dureeEstimeeHeures;statut;idCollaborateur;idPrestation")
+        activite_file.write("idActivite;libelleOperationnel;datePrevue;dateEffective;dureeEstimeeHeures;statut;idPrestation;idCollaborateur")
         for x in activites :
-            ligne = (f"{x.get_id_activite()};{x.get_libelle_operationnel()};{x.get_date_prevues()};{x.get_date_effective()};{x.get_duree_estimee()};{x.get_statut()};{x.get_id_collaborateur()};{x.get_statut()};{x.get_id_prestation()}").strip()
+            ligne = (f"{x.get_id_activite()};{x.get_libelle_operationnel()};{x.get_date_prevues()};{x.get_date_effective()};{x.get_duree_estimee()};{x.get_statut()};{x.get_id_prestation()};{x.get_id_collaborateur()}")
             activite_file.write("\n"+ligne)
     
     print(f"Le fichier {fichier_texte} a été créé avec succès.")
@@ -309,4 +308,5 @@ def importation_combined_csv():
     print(f"Le fichier {dossier_sortie}/devis_full.csv a été créé avec succès.")
 
 if __name__ == "__main__" :
+    importation_all_csv()
     importation_combined_csv()
