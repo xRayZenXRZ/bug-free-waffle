@@ -5,7 +5,7 @@ import tkinter as tk
 from Interface_Tkinter.gestion_utilisateur import GestionUtilisateur
 from Interface_Tkinter.gestion_devis import GestionDevis
 from Interface_Tkinter.gestion_contrat import GestionContrat
-
+from Interface_Tkinter.gestion_prestations_devis import GestionPrestationActivite
 
 class App:
     def __init__(self, root):
@@ -35,7 +35,7 @@ class App:
 
         # Afficher main window
         MainWindow(self.container, utilisateur,
-                   self.afficher_gestion_utilisateurs,self.afficher_gestion_clients,self.afficher_gestion_devis, self.afficher_gestion_contrat)
+                   self.afficher_gestion_utilisateurs,self.afficher_gestion_clients,self.afficher_gestion_devis, self.afficher_gestion_contrat,self.afficher_gestion_prestations_activites)
 
     def afficher_gestion_utilisateurs(self):
         # Nettoyer le container
@@ -68,6 +68,14 @@ class App:
             
         #Afficher la page de gestion
         GestionContrat(self.container,self.utilisateur_connecte,on_back=lambda:self.afficher_main_window(self.utilisateur_connecte))
+        
+    def afficher_gestion_prestations_activites(self):
+        # Nettoyer le container
+        for widget in self.container.winfo_children():
+            widget.destroy()
+            
+        #Afficher la page de gestion
+        GestionPrestationActivite(self.container,self.utilisateur_connecte,on_back=lambda:self.afficher_main_window(self.utilisateur_connecte))
         
         
         
