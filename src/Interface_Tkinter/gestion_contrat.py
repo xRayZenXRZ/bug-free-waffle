@@ -1,14 +1,14 @@
 import tkinter as tk
 from tkinter import ttk
-from dao.DAODevis import DAODevis
+from dao.DAOContrat import DAOContrat
 from dao.DAOClient import DAOClient
-from domaine.Devis import Devis
+from domaine.Contrat import Contrat
 from datetime import date
 from tkcalendar import DateEntry
-from dao.DAOContrat import DAOContrat
+from dao.DAODevis import DAODevis
 
 
-class GestionDevis(tk.Frame):
+class GestionContrat(tk.Frame):
     def __init__(self, parent, utilisateur, on_back=None):
         super().__init__(parent)
         self.pack(fill="both", expand=True)
@@ -19,7 +19,7 @@ class GestionDevis(tk.Frame):
         header.pack(fill='x', pady=10)
         ttk.Label(
             header,
-            text=f"Gestion des Devis - {utilisateur['prenom']} {utilisateur['nom']}",
+            text=f"Gestion des Contrats - {utilisateur['prenom']} {utilisateur['nom']}",
             font=('Arial', 18, 'bold')
         ).pack()
         ttk.Label(
@@ -39,16 +39,15 @@ class GestionDevis(tk.Frame):
 
         ttk.Label(frame_gauche, text="Actions :", font=(
             'Arial', 14, 'bold')).pack(pady=10)
-        ttk.Button(frame_gauche, text="➕ Créer un devis",
-                   command=self.ajouter_devis).pack(pady=5, fill='x')
-        ttk.Button(frame_gauche, text="👁️ Voir les devis",
-                   command=self.afficher_devis).pack(pady=5, fill='x')
-        ttk.Button(frame_gauche, text="✏️ Modifier statut",
-                   command=self.modifier_statut).pack(pady=5, fill='x')
+        '''ttk.Button(frame_gauche, text="➕ Créer un contrat",
+                   command=self.ajouter_contrat).pack(pady=5, fill='x')'''
+        ttk.Button(frame_gauche, text="👁️ Voir les contrats",
+                   command=self.afficher_contrat).pack(pady=5, fill='x')
+        '''ttk.Button(frame_gauche, text="✏️ Modifier statut",
+                   command=self.modifier_contrat).pack(pady=5, fill='x')'''
         if utilisateur['role'] == 'ADMIN':
-            ttk.Button(frame_gauche, text="🗑️ Supprimer devis",
-                       command=self.supprimer_devis).pack(pady=5, fill='x')
-
+            ttk.Button(frame_gauche, text="🗑️ Supprimer contrat",
+                       command=self.supprimer_contrat).pack(pady=5, fill='x')
         if on_back:
             ttk.Label(frame_gauche, text="").pack(expand=True)
             ttk.Button(frame_gauche, text="🏠 Accueil", command=on_back).pack(
@@ -57,11 +56,11 @@ class GestionDevis(tk.Frame):
         # COLONNE DROITE : Tableau
         frame_droite = ttk.Frame(main_frame)
         frame_droite.pack(side='right', fill='both', expand=True, padx=10)
-        ttk.Label(frame_droite, text="Liste des devis :",
+        ttk.Label(frame_droite, text="Liste des contrats :",
                   font=('Arial', 12, 'bold')).pack(pady=5)
 
-        colonnes = ('Numéro', 'Date émission', 'Date validité',
-                    'Description', 'Montant', 'Statut', 'Client', 'Contrat')
+        colonnes = ('Numéro', 'Date début', 'Durée',
+                    'Nombre de prestations totales', 'Périodicité', 'Montant du contrat', 'Type de paiement', 'Client')
         self.tree = ttk.Treeview(
             frame_droite, columns=colonnes, show='headings', height=15)
 
@@ -69,13 +68,13 @@ class GestionDevis(tk.Frame):
             self.tree.heading(col, text=col)
 
         self.tree.column('Numéro',        width=110, anchor='center')
-        self.tree.column('Date émission', width=100, anchor='center')
-        self.tree.column('Date validité', width=100, anchor='center')
-        self.tree.column('Description',   width=200, anchor='w')
-        self.tree.column('Montant',       width=80,  anchor='center')
-        self.tree.column('Statut',        width=90,  anchor='center')
-        self.tree.column('Client',        width=60,  anchor='center')
-        self.tree.column('Contrat',       width=110, anchor='center')
+        self.tree.column('Date début', width=100, anchor='center')
+        self.tree.column('Durée', width=100, anchor='center')
+        self.tree.column('Nombre de prestations totales',   width=200, anchor='w')
+        self.tree.column('Périodicité',       width=80,  anchor='center')
+        self.tree.column('Montant du contrat',        width=90,  anchor='center')
+        self.tree.column('Type de paiement',        width=60,  anchor='center')
+        self.tree.column('Client',       width=110, anchor='center')
 
         scrollbar_x = ttk.Scrollbar(
             frame_droite, orient='horizontal', command=self.tree.xview)
@@ -88,39 +87,81 @@ class GestionDevis(tk.Frame):
         self.tree.pack(fill='both', expand=True)
 
         self.tree.bind('<Double-1>', self.on_double_click)
-        self.afficher_devis()
+        self.afficher_contrat()
 
     # ------------------------------------------------------------------ #
 
-    def afficher_devis(self):
+    def afficher_contrat(self):
         for item in self.tree.get_children():
             self.tree.delete(item)
 
-        devis_liste = DAODevis.get_instance().select_devis()
+        contrat_liste = DAOContrat.get_instance().select_contrat()
 
-        for d in devis_liste:
+        for c in contrat_liste:
             self.tree.insert('', 'end', values=(
-                d.get_numero_devis(),
-                d.get_date_emission(),
-                d.get_date_validite(),
-                d.get_description_prestation(),
-                f"{d.get_montant_total_estime()} €",
-                d.get_statut(),
-                d.get_id_client(),
-                d.get_numero_contrat() or ''
+                c.get_numero_contrat(),
+                c.get_date_debut(),
+                c.get_duree(),
+                c.get_nb_productions_totales(),
+                c.get_periodicite(),
+                f"{c.get_montant_global()} €",
+                c.get_condition_paiements(),
+                c.get_id_client(),
             ))
-        print(f"{len(devis_liste)} devis affiché(s)")
+        print(f"{len(contrat_liste)} contrat(s) affiché(s)")
+        
+    # ------------------------------------------------------------------ #
+    
+    def supprimer_contrat(self):
+        selection = self.tree.selection()
+        if not selection:
+            tk.messagebox.showwarning(
+                "Aucune sélection", "Veuillez sélectionner un contrat")
+            return
+
+        values = self.tree.item(selection[0])['values']
+        numero = values[0]
+
+        reponse = tk.messagebox.askyesno(
+            "Confirmation", f"Voulez-vous vraiment supprimer le contrat « {numero} » ?")
+
+        if reponse:
+            c = Contrat(numero, None, None, None, None,
+                      None, None, None)
+            succes = DAOContrat.get_instance().delete_contrat(c)
+            if succes:
+                self.tree.delete(selection[0])
+                tk.messagebox.showinfo("Succès", "Contrat supprimé")
+            else:
+                tk.messagebox.showerror(
+                    "Erreur", "Impossible de supprimer le contrat")
+
 
     # ------------------------------------------------------------------ #
 
-    def ajouter_devis(self):
+
+    def on_double_click(self, event):
+        selection = self.tree.selection()
+        if selection:
+            values = self.tree.item(selection[0])['values']
+            tk.messagebox.showinfo("Détails contrat", (
+                f"Numéro    : {values[0]}\n"
+                f"Date début    : {values[1]}\n"
+                f"Durée    : {values[2]}\n"
+                f"Nombre de prestations totales    : {values[3]}\n"
+                f"Périodicité    : {values[4]}\n"
+                f"Montant du contrat    : {values[5]}\n"
+                f"Type de paiement    : {values[6]}\n"
+                f"Client ID    : {values[7]}"
+            ))
+    '''def ajouter_contrat(self):
         if hasattr(self, '_popup_ajout') and self._popup_ajout and self._popup_ajout.winfo_exists():
             self._popup_ajout.focus()
             return
 
         popup = tk.Toplevel(self)
         self._popup_ajout = popup
-        popup.title("Créer un devis")
+        popup.title("Créer un contrat")
         popup.geometry("480x500")
         popup.resizable(False, False)
         popup.transient(self)
@@ -128,67 +169,67 @@ class GestionDevis(tk.Frame):
 
         def generer_numero():
             annee = date.today().year
-            devis_liste = DAODevis.get_instance().select_devis()
+            contrat_liste = DAOContrat.get_instance().select_contrat()
             numeros = [
-                d.get_numero_devis() for d in devis_liste
-                if d.get_numero_devis() and str(annee) in d.get_numero_devis()
+                c.get_numero_contrat() for c in contrat_liste
+                if c.get_numero_contrat() and str(annee) in c.get_numero_contrat()
             ]
             if numeros:
                 dernier = max(numeros)
                 numero_seq = int(dernier.split('-')[-1]) + 1
             else:
                 numero_seq = 1
-            return f"DEV-{annee}-{numero_seq:03d}"
+            return f"CONT-{annee}-{numero_seq:03d}"
 
         numero_auto = generer_numero()
 
-        ttk.Label(popup, text="Créer un nouveau devis",
+        ttk.Label(popup, text="Créer un nouveau contrat",
                   font=('Arial', 14, 'bold')).pack(pady=15)
 
         form_frame = ttk.Frame(popup)
         form_frame.pack(padx=20, pady=10, fill='both', expand=True)
 
-        ttk.Label(form_frame, text="Numéro devis :").grid(
+        ttk.Label(form_frame, text="Numéro contrat :").grid(
             row=0, column=0, sticky='w', pady=5)
         ttk.Label(form_frame, text=numero_auto, foreground='blue').grid(
             row=0, column=1, sticky='w', pady=5, padx=5)
 
-        ttk.Label(form_frame, text="Client :").grid(
+        ttk.Label(form_frame, text="Contrat :").grid(
             row=1, column=0, sticky='w', pady=5)
-        client_var = tk.StringVar(value="Aucun client sélectionné")
-        ttk.Label(form_frame, textvariable=client_var, foreground='blue').grid(
+        contrat_var = tk.StringVar(value="Aucun contrat sélectionné")
+        ttk.Label(form_frame, textvariable=contrat_var, foreground='blue').grid(
             row=1, column=1, sticky='w', pady=5, padx=5)
-        client_selectionne = {'id': None}
+        con_selectionne = {'id': None}
 
-        def choisir_client():
-            popup_client = tk.Toplevel(popup)
-            popup_client.title("Choisir un client")
-            popup_client.geometry("600x300")
-            popup_client.transient(popup)
-            popup_client.grab_set()
+        def choisir_devis():
+            popup_devis = tk.Toplevel(popup)
+            popup_devis.title("Choisir un devis")
+            popup_devis.geometry("600x300")
+            popup_devis.transient(popup)
+            popup_devis.grab_set()
 
-            ttk.Label(popup_client, text="Sélectionnez un client :",
+            ttk.Label(popup_devis, text="Sélectionnez un client :",
                       font=('Arial', 12, 'bold')).pack(pady=10)
 
             cols = ('ID', 'Type', 'Nom', 'Prénom',
                     'Raison Sociale', 'Email', 'Statut')
-            tree_client = ttk.Treeview(
-                popup_client, columns=cols, show='headings', height=8)
+            tree_devis = ttk.Treeview(
+                popup_devis, columns=cols, show='headings', height=8)
             for col in cols:
-                tree_client.heading(col, text=col)
-            tree_client.column('ID',            width=40,  anchor='center')
-            tree_client.column('Type',          width=90,  anchor='center')
-            tree_client.column('Nom',           width=100, anchor='center')
-            tree_client.column('Prénom',        width=100, anchor='center')
-            tree_client.column('Raison Sociale', width=130, anchor='center')
-            tree_client.column('Email',         width=150, anchor='center')
-            tree_client.column('Statut',        width=80,  anchor='center')
-            tree_client.pack(fill='both', expand=True, padx=10)
+                tree_devis.heading(col, text=col)
+            tree_devis.column('ID',            width=40,  anchor='center')
+            tree_devis.column('Type',          width=90,  anchor='center')
+            tree_devis.column('Nom',           width=100, anchor='center')
+            tree_devis.column('Prénom',        width=100, anchor='center')
+            tree_devis.column('Raison Sociale', width=130, anchor='center')
+            tree_devis.column('Email',         width=150, anchor='center')
+            tree_devis.column('Statut',        width=80,  anchor='center')
+            tree_devis.pack(fill='both', expand=True, padx=10)
 
-            clients = DAOClient.get_instance().select_client()
-            for c in clients:
-                tree_client.insert('', 'end', values=(
-                    c.get_id_client(),
+            devis = DAODevis.get_instance().select_devis()
+            for d in devis:
+                tree_devis.insert('', 'end', values=(
+                    d.get_numero_devis(),
                     'ENTREPRISE' if c.get_raison_sociale() else 'PARTICULIER',
                     c.get_nom() or '',
                     c.get_prenom() or '',
@@ -298,11 +339,12 @@ class GestionDevis(tk.Frame):
         ttk.Button(btn_frame, text="✓ Valider",
                    command=valider).pack(side='left', padx=5)
         ttk.Button(btn_frame, text="✗ Annuler",
-                   command=popup.destroy).pack(side='left', padx=5)
+                   command=popup.destroy).pack(side='left', padx=5)'''
 
     # ------------------------------------------------------------------ #
+#numeroContrat, dateDebut, duree, nbProductionsTotales, periodicite, montantGlobal, conditionsPaiement, idClient
 
-    def modifier_statut(self):
+'''    def modifier_(self):
         selection = self.tree.selection()
         if not selection:
             tk.messagebox.showwarning(
@@ -613,46 +655,11 @@ class GestionDevis(tk.Frame):
                    command=valider).pack(side='left', padx=5)
         ttk.Button(btn_frame, text="✗ Annuler",
                    command=popup.destroy).pack(side='left', padx=5)
-
+'''
     # ------------------------------------------------------------------ #
 
-    def supprimer_devis(self):
-        selection = self.tree.selection()
-        if not selection:
-            tk.messagebox.showwarning(
-                "Aucune sélection", "Veuillez sélectionner un devis")
-            return
-
-        values = self.tree.item(selection[0])['values']
-        numero = values[0]
-
-        reponse = tk.messagebox.askyesno(
-            "Confirmation", f"Voulez-vous vraiment supprimer le devis « {numero} » ?")
-
-        if reponse:
-            d = Devis(numero, None, None, None, None,
-                      None, None, None, None, None, None)
-            succes = DAODevis.get_instance().delete_devis(d)
-            if succes:
-                self.tree.delete(selection[0])
-                tk.messagebox.showinfo("Succès", "Devis supprimé")
-            else:
-                tk.messagebox.showerror(
-                    "Erreur", "Impossible de supprimer le devis")
 
     # ------------------------------------------------------------------ #
+#numeroContrat, dateDebut, duree, nbProductionsTotales, periodicite, montantGlobal, conditionsPaiement, idClient
 
-    def on_double_click(self, event):
-        selection = self.tree.selection()
-        if selection:
-            values = self.tree.item(selection[0])['values']
-            tk.messagebox.showinfo("Détails devis", (
-                f"Numéro      : {values[0]}\n"
-                f"Émission    : {values[1]}\n"
-                f"Validité    : {values[2]}\n"
-                f"Description : {values[3]}\n"
-                f"Montant     : {values[4]}\n"
-                f"Statut      : {values[5]}\n"
-                f"Client ID   : {values[6]}\n"
-                f"Contrat     : {values[7]}"
-            ))
+
