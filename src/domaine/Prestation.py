@@ -1,4 +1,6 @@
-from DAO.DAOPrestation import DAOPrestation
+from dao.DAOPrestation import DAOPrestation
+from dao.DAOActivite import DAOActivite
+from domaine.Activite import Activite
 
 class Prestation:
 

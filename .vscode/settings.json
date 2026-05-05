@@ -1,43 +1,43 @@
 {
-    "python.envFile": "${workspaceFolder}/.env",
-    "terminal.integrated.env.osx": {
-        "PYTHONPATH": "${workspaceFolder}/src"
+  "python.envFile": "${workspaceFolder}/.env",
+  "terminal.integrated.env.osx": {
+    "PYTHONPATH": "${workspaceFolder}/src"
+  },
+  "terminal.integrated.env.windows": {
+    "PYTHONPATH": "${workspaceFolder}/src"
+  },
+  "python.analysis.extraPaths": ["${workspaceFolder}/src"],
+  "python.analysis.packageIndexDepths": [
+    {
+      "name": "sklearn",
+      "depth": 2
     },
-    "terminal.integrated.env.windows": {
-        "PYTHONPATH": "${workspaceFolder}/src"
+    {
+      "name": "matplotlib",
+      "depth": 2
     },
-    "python.analysis.extraPaths": [
-        "${workspaceFolder}/src"
-    ],
-    "python.analysis.packageIndexDepths": [
-        {
-            "name": "sklearn",
-            "depth": 2
-        },
-        {
-            "name": "matplotlib",
-            "depth": 2
-        },
-        {
-            "name": "scipy",
-            "depth": 2
-        },
-        {
-            "name": "django",
-            "depth": 2
-        },
-        {
-            "name": "flask",
-            "depth": 2
-        },
-        {
-            "name": "fastapi",
-            "depth": 2
-        },
-        {
-            "name": "cuda",
-            "depth": 3,
-            "includeAllSymbols": true
-        }
-    ]
+    {
+      "name": "scipy",
+      "depth": 2
+    },
+    {
+      "name": "django",
+      "depth": 2
+    },
+    {
+      "name": "flask",
+      "depth": 2
+    },
+    {
+      "name": "fastapi",
+      "depth": 2
+    },
+    {
+      "name": "cuda",
+      "depth": 3,
+      "includeAllSymbols": true
+    }
+  ],
+  "python-envs.defaultEnvManager": "ms-python.python:venv",
+  "python-envs.defaultPackageManager": "ms-python.python:pip"
 }
