@@ -11,9 +11,9 @@ import pandas as pd
 import csv
 
 
-def exportation_clients_csv():
+def exportation_clients_csv(client=None):
 
-    clients = Client.leDAOClient.select_client()
+    clients = Client.leDAOClient.select_client(client)
 
     fichier_texte = "src/Interface_Tkinter/exportation/client/clients.txt"
     fichier_csv = "src/Interface_Tkinter/exportation/client/clients.csv"
@@ -41,9 +41,9 @@ def exportation_clients_csv():
 
     print(f"Le fichier {fichier_csv} a été créé avec succès.")
 
-def exportation_prestations_csv():
+def exportation_prestations_csv(prestation=None):
     
-    prestations = Prestation.leDAOPrestation.select_prestation()
+    prestations = Prestation.leDAOPrestation.select_prestation(prestation)
 
     fichier_texte = "src/Interface_Tkinter/exportation/prestation/prestations.txt"
     fichier_csv = "src/Interface_Tkinter/exportation/prestation/prestations.csv"
@@ -67,9 +67,9 @@ def exportation_prestations_csv():
 
     print(f"Le fichier {fichier_csv} a été créé avec succès.")
 
-def exportations_factures_csv():
+def exportations_factures_csv(facture=None):
 
-    factures = Facture.leDAOFacture.select_facture()
+    factures = Facture.leDAOFacture.select_facture(facture)
 
     fichier_texte = "src/Interface_Tkinter/exportation/facture/factures.txt"
     fichier_csv = "src/Interface_Tkinter/exportation/facture/factures.csv"
@@ -93,9 +93,9 @@ def exportations_factures_csv():
 
     print(f"Le fichier {fichier_csv} a été créé avec succès.")
 
-def exportation_contrat_csv():
+def exportation_contrat_csv(contrat=None):
 
-    contrats = Contrat.leDAOContrat.select_contrat()
+    contrats = Contrat.leDAOContrat.select_contrat(contrat)
 
     fichier_texte = "src/Interface_Tkinter/exportation/contrat/contrats.txt"
     fichier_csv = "src/Interface_Tkinter/exportation/contrat/contrats.csv"
@@ -119,9 +119,9 @@ def exportation_contrat_csv():
 
     print(f"Le fichier {fichier_csv} a été créé avec succès.")
 
-def exportation_devis_csv():
+def exportation_devis_csv(devis=None):
 
-    devis = Devis.leDAODevis.select_devis()
+    devis = Devis.leDAODevis.select_devis(devis)
 
     fichier_texte = "src/Interface_Tkinter/exportation/devis/devis.txt"
     fichier_csv = "src/Interface_Tkinter/exportation/devis/devis.csv"
@@ -145,9 +145,9 @@ def exportation_devis_csv():
 
     print(f"Le fichier {fichier_csv} a été créé avec succès.")
 
-def exportation_paiement_csv():
+def exportation_paiement_csv(paiement=None):
 
-    paiements = Paiement.leDAOPaiement.select_paiement()
+    paiements = Paiement.leDAOPaiement.select_paiement(paiement)
 
     fichier_texte = "src/Interface_Tkinter/exportation/paiement/paiements.txt"
     fichier_csv = "src/Interface_Tkinter/exportation/paiement/paiements.csv"
@@ -171,9 +171,9 @@ def exportation_paiement_csv():
 
     print(f"Le fichier {fichier_csv} a été créé avec succès.")
 
-def exportation_activite_csv():
+def exportation_activite_csv(activite=None):
 
-    activites = Activite.leDAOActivite.select_activite()
+    activites = Activite.leDAOActivite.select_activite(activite)
 
     fichier_texte = "src/Interface_Tkinter/exportation/activite/activites.txt"
     fichier_csv = "src/Interface_Tkinter/exportation/activite/activites.csv"
@@ -197,9 +197,9 @@ def exportation_activite_csv():
 
     print(f"Le fichier {fichier_csv} a été créé avec succès.")
 
-def exportation_collaborateur_csv():
+def exportation_collaborateur_csv(collaboratuer=None):
 
-    collaborateurs = Collaborateur.leDAOCollaborateur.select_collaborateur()
+    collaborateurs = Collaborateur.leDAOCollaborateur.select_collaborateur(collaboratuer)
 
     fichier_texte = "src/Interface_Tkinter/exportation/collaborateur/collaborateurs.txt"
     fichier_csv = "src/Interface_Tkinter/exportation/collaborateur/collaborateurs.csv"
@@ -233,6 +233,27 @@ def exportation_all_csv():
     exportation_paiement_csv()
     exportations_factures_csv()
     exportation_prestations_csv()
+
+
+import pandas as pd
+
+def exportation_contrats_clients_combined_csv(id_client : int):
+
+    contrats_clients = pd.read_csv("src/Interface_Tkinter/exportation/combined/contrats_clients.csv", sep=";", encoding="utf-8-sig")
+    
+    # Filter by id_client if provided
+    if id_client is not None:
+        filtered_contrat_clients = contrats_clients[contrats_clients["idClient"] == int(id_client)]
+    else:
+        # If no id_client is provided, keep all rows
+        filtered_contrat_clients = contrats_clients
+
+    # Save combined CSV
+    output_path = "src/Interface_Tkinter/exportation/combined/byclient/contrats_clients.csv"
+    filtered_contrat_clients.to_csv(output_path, index=False, sep=";", encoding="utf-8")
+
+    print(f"Le fichier {output_path} via id_client a été créé avec succès.")
+
 
 def exportation_combined_csv():
 
@@ -308,4 +329,4 @@ def exportation_combined_csv():
     print(f"Le fichier {dossier_sortie}/devis_full.csv a été créé avec succès.")
 
 if __name__ == "__main__" :
-    print("nothing to see here")
+    exportation_contrats_clients_combined_csv(id_client=4)
