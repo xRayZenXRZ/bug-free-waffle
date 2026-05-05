@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
+import Interface_Tkinter.exportation 
 
 
 class MainWindow(tk.Frame):
@@ -57,4 +58,10 @@ class MainWindow(tk.Frame):
             content,
             text="📄 Gérer les devis",
             command=lambda: self.on_gestion_devis()
+        ).pack(pady=10, ipadx=20, ipady=5)
+
+        ttk.Button(
+            content,
+            text="icon Exportation",
+            command= Interface_Tkinter.exportation.exportation_combined_csv()
         ).pack(pady=10, ipadx=20, ipady=5)
