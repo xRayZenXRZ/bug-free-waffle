@@ -1,3 +1,4 @@
+from domaine.Contrat import Contrat
 import tkinter as tk
 from tkinter import ttk
 from dao.DAODevis import DAODevis
@@ -6,7 +7,6 @@ from domaine.Devis import Devis
 from datetime import date
 from tkcalendar import DateEntry
 from dao.DAOContrat import DAOContrat
-from domaine.Contrat import Contrat
 
 
 class GestionDevis(tk.Frame):
@@ -389,11 +389,9 @@ class GestionDevis(tk.Frame):
 
             def charger_contrats():
                 tree_contrat.delete(*tree_contrat.get_children())
-                print(int(values[6]))
                 critere = Contrat(-1, None, None, None,
                                   None, None, None, int(values[6]))
                 contrats = DAOContrat.get_instance().select_contrat(critere)
-                print(f"{len(contrats)} contrat(s) trouvé(s)")
                 for c in contrats:
                     tree_contrat.insert('', 'end', values=(
                         c.get_numero_contrat(),
@@ -498,6 +496,7 @@ class GestionDevis(tk.Frame):
 
                     nouveau = Contrat(numero_contrat_auto, debut, duree, nb_i,
                                       combo_periode.get(), montant_f, conditions, values[6])
+
                     cle = DAOContrat.get_instance().insert_contrat(nouveau)
 
                     if cle != -1:
