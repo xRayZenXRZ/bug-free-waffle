@@ -4,7 +4,7 @@ import Interface_Tkinter.exportation
 
 
 class MainWindow(tk.Frame):
-    def __init__(self, parent, utilisateur, on_gestion_users_callback, on_gestion_client_callback, on_gestion_devis_callback):
+    def __init__(self, parent, utilisateur, on_gestion_users_callback, on_gestion_client_callback, on_gestion_devis_callback, gestion_prestation_et_activites):
         super().__init__(parent)
 
         self.pack(fill="both", expand=True)
@@ -13,6 +13,7 @@ class MainWindow(tk.Frame):
         self.on_gestion_users = on_gestion_users_callback
         self.on_gestion_client = on_gestion_client_callback
         self.on_gestion_devis = on_gestion_devis_callback
+        self.gestion_prestation_et_activites = gestion_prestation_et_activites
 
         # Header avec infos utilisateur
         header = ttk.Frame(self)
@@ -64,7 +65,7 @@ class MainWindow(tk.Frame):
         ttk.Button(
             content,
             text="icon Gérer les prestation et activites",
-            command=lambda: None
+            command=lambda: self.gestion_prestation_et_activites()
         ).pack(pady=10, ipadx=20, ipady=5)
 
         ttk.Button(
