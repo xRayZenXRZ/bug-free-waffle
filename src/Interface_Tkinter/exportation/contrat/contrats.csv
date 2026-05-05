@@ -1,11 +1,11 @@
-numeroContrat,dateDebut,duree,nbProductionsTotales,periodicite,montantGlobal,conditionsPaiement,idClient
-CONT-2026-001,2026-01-01,12 mois,12,MENSUELLE,5000.00,Paiement en 3 fois,1
-CONT-2026-002,2026-02-15,6 mois,6,MENSUELLE,3000.00,Paiement comptant,2
-CONT-2026-003,2026-03-01,24 mois,24,ANNUELLE,10000.00,Paiement en 10 fois,3
-CONT-2026-004,2026-01-10,3 mois,3,HEBDOMADAIRE,1500.00,Paiement à la livraison,4
-CONT-2026-005,2026-04-01,12 mois,12,MENSUELLE,7500.00,Paiement en 4 fois,5
-CONT-2026-006,2026-02-20,9 mois,9,MENSUELLE,4500.00,Paiement en 2 fois,6
-CONT-2026-007,2026-03-15,1 mois,1,MENSUELLE,800.00,Paiement comptant,7
-CONT-2026-008,2026-01-25,18 mois,18,ANNUELLE,9000.00,Paiement en 6 fois,8
-CONT-2026-009,2026-05-01,6 mois,6,MENSUELLE,2500.00,Paiement en 3 fois,9
-CONT-2026-010,2026-02-01,12 mois,12,MENSUELLE,6000.00,Paiement en 5 fois,10
+numeroContrat;dateDebut;duree;nbProductionsTotales;periodicite;montantGlobal;conditionsPaiement;idClient
+CONT-2026-001;2026-01-01;12 mois;12;MENSUELLE;5000.00;Paiement en 3 fois;1
+CONT-2026-002;2026-02-15;6 mois;6;MENSUELLE;3000.00;Paiement comptant;2
+CONT-2026-003;2026-03-01;24 mois;24;ANNUELLE;10000.00;Paiement en 10 fois;3
+CONT-2026-004;2026-01-10;3 mois;3;HEBDOMADAIRE;1500.00;Paiement à la livraison;4
+CONT-2026-005;2026-04-01;12 mois;12;MENSUELLE;7500.00;Paiement en 4 fois;5
+CONT-2026-006;2026-02-20;9 mois;9;MENSUELLE;4500.00;Paiement en 2 fois;6
+CONT-2026-007;2026-03-15;1 mois;1;MENSUELLE;800.00;Paiement comptant;7
+CONT-2026-008;2026-01-25;18 mois;18;ANNUELLE;9000.00;Paiement en 6 fois;8
+CONT-2026-009;2026-05-01;6 mois;6;MENSUELLE;2500.00;Paiement en 3 fois;9
+CONT-2026-010;2026-02-01;12 mois;12;MENSUELLE;6000.00;Paiement en 5 fois;10
