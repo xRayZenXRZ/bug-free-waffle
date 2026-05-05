@@ -7,49 +7,46 @@ from dao.DAOPrestation import DAOPrestation
 
 
 class GestionPrestationActivite(tk.Frame):
-    def __init__(self, parent, utilisateur):
+    def __init__(self, parent, utilisateur, on_back=None):
         super().__init__(parent)
         self.pack(fill="both", expand=True)
         self.utilisateur = utilisateur
-        
-        # Notebook 
+
+        # Notebook
         onglets = ttk.Notebook(self)
         onglets.pack(fill="both", expand=True)
-        
-        # Pages
-        page_clients = ttk.Frame(onglets)
-        page_prestations = ttk.Frame(onglets)
-        page_activites = ttk.Frame(onglets)
 
-        onglets.add(page_clients, text="Gestion des Clients")
+        # Pages
+        page_clients     = ttk.Frame(onglets)
+        page_prestations = ttk.Frame(onglets)
+        page_activites   = ttk.Frame(onglets)
+
+        onglets.add(page_clients,     text="Gestion des Clients")
         onglets.add(page_prestations, text="Gestion des Prestations")
-        onglets.add(page_activites, text="Gestion des Activités")
-        
- 
+        onglets.add(page_activites,   text="Gestion des Activités")
+
         # Treeview Clients
- 
         self.tree_clients = self.create_treeview(
             page_clients,
             columns=('ID', 'Type', 'Nom', 'Prénom', 'Raison Sociale', 'Email', 'Téléphone', 'Statut'),
-            heading="Liste des Clients"
+            heading="Liste des Clients",
+            on_back=on_back
         )
 
- 
         # Treeview Prestations
- 
         self.tree_prestations = self.create_treeview(
             page_prestations,
-            columns=('ID', 'Date Prevue', 'Lieu', 'Type', 'nb Photos Prevues','nb Videos Prevues', 'Numero Contrat'),
-            heading="Liste des Prestations"
+            columns=('ID', 'Date Prevue', 'Lieu', 'Type', 'nb Photos Prevues', 'nb Videos Prevues', 'Numero Contrat'),
+            heading="Liste des Prestations",
+            on_back=on_back
         )
 
- 
         # Treeview Activités
- 
         self.tree_activites = self.create_treeview(
             page_activites,
-            columns=('ID', 'libelle Operationnel', 'Date Prevue', 'Date Effective', 'dureeEstimeeHeures','statut', 'idCollaborateur', 'idPrestation' ),
-            heading="Liste des Activités"
+            columns=('ID', 'libelle Operationnel', 'Date Prevue', 'Date Effective', 'dureeEstimeeHeures', 'statut', 'idCollaborateur', 'idPrestation'),
+            heading="Liste des Activités",
+            on_back=on_back
         )
 
         self.afficher_clients()
@@ -58,7 +55,7 @@ class GestionPrestationActivite(tk.Frame):
 
     # Fonction utilitaire pour créer un Treeview
 
-    def create_treeview(self, parent, columns, heading=""):
+    def create_treeview(self, parent, columns, heading="", on_back=None):
         frame = ttk.Frame(parent)
         frame.pack(fill='both', expand=True, padx=10, pady=10)
 
@@ -77,9 +74,17 @@ class GestionPrestationActivite(tk.Frame):
 
         tree.configure(yscrollcommand=scrollbar_y.set, xscrollcommand=scrollbar_x.set)
         tree.pack(fill='both', expand=True)
-        
-        return tree
 
+        # Bouton retour 
+        if on_back:
+            ttk.Label(frame, text="").pack(expand=True)
+            ttk.Button(
+                frame,
+                text="🏠 Accueil",
+                command=on_back
+            ).pack(pady=5, fill='x', side='bottom')
+
+        return tree
 
     def afficher_clients(self):
         tree = self.tree_clients
@@ -101,7 +106,6 @@ class GestionPrestationActivite(tk.Frame):
             ))
         print(f"{len(clients)} client(s) affiché(s)")
 
-    # Affichage Prestations
     def afficher_prestations(self):
         tree = self.tree_prestations
         for item in tree.get_children():
@@ -120,8 +124,6 @@ class GestionPrestationActivite(tk.Frame):
                 p.get_numero_contrat()
             ))
         print(f"{len(prestations)} prestation(s) affichée(s)")
-
-    # Affichage Activités
 
     def afficher_activites(self):
         tree = self.tree_activites
@@ -148,7 +150,7 @@ if __name__ == "__main__":
     root = tk.Tk()
     root.geometry("900x600")
     root.title("Gestion des Prestations et Activités")
-    utilisateur = {"prenom":"Alice", "nom":"Dupont", "role":"ADMIN"}
-    app = GestionPrestationActivite(root, utilisateur)
+    utilisateur = {"prenom": "Alice", "nom": "Dupont", "role": "ADMIN"}
+    app = GestionPrestationActivite(root, utilisateur, on_back=lambda: print("Retour accueil"))
     app.pack(fill='both', expand=True)
     root.mainloop()
