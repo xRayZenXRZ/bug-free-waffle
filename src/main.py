@@ -1,10 +1,11 @@
-from Interface_Tkinter.gestion_client import GestionClient
-from Interface_Tkinter.main_windows import MainWindow
-from Interface_Tkinter.Acceuil import ConnexionUI
-import tkinter as tk
-from Interface_Tkinter.gestion_utilisateur import GestionUtilisateur
-from Interface_Tkinter.gestion_devis import GestionDevis
 from Interface_Tkinter.gestion_contrat import GestionContrat
+from Interface_Tkinter.gestion_devis import GestionDevis
+from Interface_Tkinter.gestion_utilisateur import GestionUtilisateur
+import tkinter as tk
+from Interface_Tkinter.Acceuil import ConnexionUI
+from Interface_Tkinter.main_windows import MainWindow
+from Interface_Tkinter.gestion_prestations_devis import GestionPrestationActivite
+from Interface_Tkinter.gestion_client import GestionClient
 
 
 class App:
@@ -35,7 +36,8 @@ class App:
 
         # Afficher main window
         MainWindow(self.container, utilisateur,
-                   self.afficher_gestion_utilisateurs,self.afficher_gestion_clients,self.afficher_gestion_devis, self.afficher_gestion_contrat)
+
+                   self.afficher_gestion_utilisateurs, self.afficher_gestion_clients, self.afficher_gestion_devis, self.afficher_gestion_contrat, self.afficher_gestion_prestation_activite)
 
     def afficher_gestion_utilisateurs(self):
         # Nettoyer le container
@@ -43,37 +45,47 @@ class App:
             widget.destroy()
 
         # Afficher la page de gestion
-        GestionUtilisateur(self.container, self.utilisateur_connecte,on_back=lambda: self.afficher_main_window(self.utilisateur_connecte))
-        
+
+        GestionUtilisateur(self.container, self.utilisateur_connecte,
+                           on_back=lambda: self.afficher_main_window(self.utilisateur_connecte))
+
     def afficher_gestion_clients(self):
         # Nettoyer le container
         for widget in self.container.winfo_children():
             widget.destroy()
 
         # Afficher la page de gestion
-        GestionClient(self.container, self.utilisateur_connecte,on_back=lambda: self.afficher_main_window(self.utilisateur_connecte))
-        
+        GestionClient(self.container, self.utilisateur_connecte,
+                      on_back=lambda: self.afficher_main_window(self.utilisateur_connecte))
+
     def afficher_gestion_devis(self):
         # Nettoyer le container
         for widget in self.container.winfo_children():
             widget.destroy()
 
         # Afficher la page de gestion
-        GestionDevis(self.container, self.utilisateur_connecte,on_back=lambda: self.afficher_main_window(self.utilisateur_connecte))
+        GestionDevis(self.container, self.utilisateur_connecte,
+                     on_back=lambda: self.afficher_main_window(self.utilisateur_connecte))
 
     def afficher_gestion_contrat(self):
         # Nettoyer le container
         for widget in self.container.winfo_children():
             widget.destroy()
-            
-        #Afficher la page de gestion
-        GestionContrat(self.container,self.utilisateur_connecte,on_back=lambda:self.afficher_main_window(self.utilisateur_connecte))
-        
-        
-        
-        
-        
-        
+
+        # Afficher la page de gestion
+        GestionContrat(self.container, self.utilisateur_connecte,
+                       on_back=lambda: self.afficher_main_window(self.utilisateur_connecte))
+
+    def afficher_gestion_prestation_activite(self):
+        # Nettoyer le container
+        for widget in self.container.winfo_children():
+            widget.destroy()
+
+        # Afficher la page de gestion
+        GestionPrestationActivite(self.container, self.utilisateur_connecte,
+                                  on_back=lambda: self.afficher_main_window(self.utilisateur_connecte))
+
+
 if __name__ == "__main__":
     root = tk.Tk()
     app = App(root)

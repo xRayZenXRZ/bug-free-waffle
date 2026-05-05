@@ -1,0 +1,11 @@
+idClient;type_client;nom;prenom;raisonSociale;adressePostale;telephone;email;statut
+1;PARTICULIER;Descartes;René;;Panthéon 76000;0123456789;rene.descartes@email.com;ANCIEN
+2;PARTICULIER;Martin;Sophie;;12 Rue de Rivoli, 75004 Paris;0612345678;sophie.martin@email.com;CLIENT
+3;PARTICULIER;Dubois;Pierre;;45 Av des Champs, 69000 Lyon;0478123456;pierre.dubois@email.com;CLIENT
+4;PARTICULIER;Leroy;Claire;;3 Impasse des Fleurs, 33000 Bordeaux;0556789012;claire.leroy@email.com;PROSPECT
+5;PARTICULIER;Bernard;Thomas;;8 Bd de la République, 13000 Marseille;0789012345;thomas.bernard@email.com;ANCIEN
+6;ENTREPRISE;;;PhotoPro SAS;22 Rue des Écoles, 59000 Lille;0320123456;contact@photopro.fr;CLIENT
+7;ENTREPRISE;;;Studio Lumière;15 Quai de Seine, 75001 Paris;0145678901;info@studio-lumiere.fr;PROSPECT
+8;ENTREPRISE;;;EventCorp;7 Rue des Alpes, 74000 Annecy;0450123456;contact@eventcorp.com;CLIENT
+9;ENTREPRISE;;;Médias & Co;10 Av de la Gare, 67000 Strasbourg;0388123456;hello@medias-co.fr;ANCIEN
+10;ENTREPRISE;;;Art & Image;3 Rue du Commerce, 44000 Nantes;0240123456;contact@art-image.net;CLIENT
