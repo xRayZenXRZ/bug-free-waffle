@@ -308,5 +308,4 @@ def exportation_combined_csv():
     print(f"Le fichier {dossier_sortie}/devis_full.csv a été créé avec succès.")
 
 if __name__ == "__main__" :
-    exportation_all_csv()
-    exportation_combined_csv()
+    print("nothing to see here")

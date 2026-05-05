@@ -1,6 +1,5 @@
 import tkinter as tk
 from tkinter import ttk
-from Interface_Tkinter.exportation import exportation_clients_csv
 from dao.DAOClient import DAOClient
 import tkinter.messagebox
 
@@ -38,8 +37,6 @@ class GestionClient(tk.Frame):
         ttk.Button(frame_gauche, text="➕ Ajouter client",   command=self.ajouter_client).pack(pady=5, fill='x')
         ttk.Button(frame_gauche, text="👁️ Voir les clients", command=self.afficher_clients).pack(pady=5, fill='x')
         ttk.Button(frame_gauche, text="✏️ Modifier client",  command=self.modifier_client).pack(pady=5, fill='x')
-        #ajouter d'exporatation : 
-        ttk.Button(frame_gauche, text="Exportation", command=exportation_clients_csv).pack(pady = 5, fill ='x', side = 'bottom')
 
         if utilisateur['role'] == 'ADMIN':
             ttk.Button(frame_gauche, text="🗑️ Supprimer client", command=self.supprimer_client).pack(pady=5, fill='x')
