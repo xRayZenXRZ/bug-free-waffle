@@ -2,11 +2,11 @@ import tkinter as tk
 from tkinter import ttk
 from dao.DAODevis import DAODevis
 from dao.DAOClient import DAOClient
-import tkinter.messagebox
 from domaine.Devis import Devis
 from datetime import date
 from tkcalendar import DateEntry
 from dao.DAOContrat import DAOContrat
+from domaine.Contrat import Contrat
 
 
 class GestionDevis(tk.Frame):
@@ -389,7 +389,11 @@ class GestionDevis(tk.Frame):
 
             def charger_contrats():
                 tree_contrat.delete(*tree_contrat.get_children())
-                contrats = DAOContrat.get_instance().select_contrat()
+                print(int(values[6]))
+                critere = Contrat(-1, None, None, None,
+                                  None, None, None, int(values[6]))
+                contrats = DAOContrat.get_instance().select_contrat(critere)
+                print(f"{len(contrats)} contrat(s) trouvé(s)")
                 for c in contrats:
                     tree_contrat.insert('', 'end', values=(
                         c.get_numero_contrat(),
@@ -429,76 +433,11 @@ class GestionDevis(tk.Frame):
                 ttk.Label(form, text=numero_contrat_auto, foreground='blue').grid(
                     row=0, column=1, sticky='w', pady=5, padx=5)
 
-                # Client — sélection via popup
+                # Client
                 ttk.Label(form, text="Client :").grid(
                     row=1, column=0, sticky='w', pady=5)
-                client_var_contrat = tk.StringVar(
-                    value="Aucun client sélectionné")
-                ttk.Label(form, textvariable=client_var_contrat, foreground='blue').grid(
+                ttk.Label(form, text=f"Client ID : {values[6]}", foreground='blue').grid(
                     row=1, column=1, sticky='w', pady=5, padx=5)
-                client_selectionne_contrat = {'id': None}
-
-                def choisir_client_contrat():
-                    popup_client = tk.Toplevel(popup_creer)
-                    popup_client.title("Choisir un client")
-                    popup_client.geometry("600x300")
-                    popup_client.transient(popup_creer)
-                    popup_client.grab_set()
-
-                    ttk.Label(popup_client, text="Sélectionnez un client :", font=(
-                        'Arial', 12, 'bold')).pack(pady=10)
-
-                    cols = ('ID', 'Type', 'Nom', 'Prénom',
-                            'Raison Sociale', 'Email', 'Statut')
-                    tree_client = ttk.Treeview(
-                        popup_client, columns=cols, show='headings', height=8)
-                    for col in cols:
-                        tree_client.heading(col, text=col)
-                    tree_client.column(
-                        'ID',             width=40,  anchor='center')
-                    tree_client.column(
-                        'Type',           width=90,  anchor='center')
-                    tree_client.column(
-                        'Nom',            width=100, anchor='center')
-                    tree_client.column(
-                        'Prénom',         width=100, anchor='center')
-                    tree_client.column(
-                        'Raison Sociale', width=130, anchor='center')
-                    tree_client.column(
-                        'Email',          width=150, anchor='center')
-                    tree_client.column(
-                        'Statut',         width=80,  anchor='center')
-                    tree_client.pack(fill='both', expand=True, padx=10)
-
-                    clients = DAOClient.get_instance().select_client()
-                    for c in clients:
-                        tree_client.insert('', 'end', values=(
-                            c.get_id_client(),
-                            'ENTREPRISE' if c.get_raison_sociale() else 'PARTICULIER',
-                            c.get_nom() or '',
-                            c.get_prenom() or '',
-                            c.get_raison_sociale() or '',
-                            c.get_courriel(),
-                            c.get_status_client()
-                        ))
-
-                    def confirmer():
-                        sel = tree_client.selection()
-                        if not sel:
-                            tk.messagebox.showwarning(
-                                "Aucune sélection", "Veuillez sélectionner un client")
-                            return
-                        valeurs = tree_client.item(sel[0])['values']
-                        client_selectionne_contrat['id'] = valeurs[0]
-                        nom_affiche = valeurs[2] or valeurs[4]
-                        client_var_contrat.set(f"{valeurs[0]} - {nom_affiche}")
-                        popup_client.destroy()
-
-                    ttk.Button(popup_client, text="✓ Choisir",
-                               command=confirmer).pack(pady=10)
-
-                ttk.Button(form, text="👤 Choisir un client", command=choisir_client_contrat).grid(
-                    row=1, column=2, padx=5)
 
                 ttk.Label(form, text="Date début :").grid(
                     row=2, column=0, sticky='w', pady=5)
@@ -538,10 +477,6 @@ class GestionDevis(tk.Frame):
                 btn_frame_creer.pack(pady=15)
 
                 def valider_contrat():
-                    if not client_selectionne_contrat['id']:
-                        tk.messagebox.showwarning(
-                            "Client manquant", "Veuillez sélectionner un client")
-                        return
 
                     duree = entry_duree.get().strip()
                     nb = entry_nb.get().strip()
@@ -561,11 +496,8 @@ class GestionDevis(tk.Frame):
                             "Valeur invalide", "Nb productions et montant doivent être numériques")
                         return
 
-                    from domaine.Contrat import Contrat
                     nouveau = Contrat(numero_contrat_auto, debut, duree, nb_i,
-                                      combo_periode.get(), montant_f, conditions,
-                                      # ← id du client choisi
-                                      client_selectionne_contrat['id'])
+                                      combo_periode.get(), montant_f, conditions, values[6])
                     cle = DAOContrat.get_instance().insert_contrat(nouveau)
 
                     if cle != -1:
