@@ -62,6 +62,12 @@ class MainWindow(tk.Frame):
 
         ttk.Button(
             content,
+            text="icon Gérer les prestation et activites",
+            command=lambda: None
+        ).pack(pady=10, ipadx=20, ipady=5)
+
+        ttk.Button(
+            content,
             text="icon Exportation",
             command= Interface_Tkinter.exportation.exportation_combined_csv()
         ).pack(pady=10, ipadx=20, ipady=5)
