@@ -1,11 +1,11 @@
-idActivite,libelleOperationnel,datePrevue,dateEffective,dureeEstimeeHeures,statut,idPrestation,idCollaborateur
-1,Préparation du matériel,2026-02-14 10:00:00,None,2,PREVUE,1,1
-2,Retouches photos,2026-03-02 14:00:00,2026-03-02 14:00:00,3,TERMINEE,2,3
-3,Repérage lieu,2026-04-09 11:00:00,None,1,PREVUE,3,6
-4,Installation studio,2026-01-19 09:00:00,2026-01-19 09:00:00,1,TERMINEE,4,1
-5,Brief client,2026-05-14 10:00:00,None,2,PREVUE,5,2
-6,Prise de vue produits,2026-03-04 15:00:00,None,4,EN_COURS,6,8
-7,Sélection photos,2026-03-26 10:00:00,2026-03-26 10:00:00,2,TERMINEE,7,7
-8,Montage vidéo,2026-02-11 09:00:00,None,5,EN_COURS,8,4
-9,Préparation album,2026-05-31 14:00:00,None,3,PREVUE,9,5
-10,Livraison photos,2026-03-11 16:00:00,2026-03-11 16:00:00,1,TERMINEE,10,3
+idActivite;libelleOperationnel;datePrevue;dateEffective;dureeEstimeeHeures;statut;idPrestation;idCollaborateur
+1;Préparation du matériel;2026-02-14 10:00:00;;2;PREVUE;1;1
+2;Retouches photos;2026-03-02 14:00:00;2026-03-02 14:00:00;3;TERMINEE;2;3
+3;Repérage lieu;2026-04-09 11:00:00;;1;PREVUE;3;6
+4;Installation studio;2026-01-19 09:00:00;2026-01-19 09:00:00;1;TERMINEE;4;1
+5;Brief client;2026-05-14 10:00:00;;2;PREVUE;5;2
+6;Prise de vue produits;2026-03-04 15:00:00;;4;EN_COURS;6;8
+7;Sélection photos;2026-03-26 10:00:00;2026-03-26 10:00:00;2;TERMINEE;7;7
+8;Montage vidéo;2026-02-11 09:00:00;;5;EN_COURS;8;4
+9;Préparation album;2026-05-31 14:00:00;;3;PREVUE;9;5
+10;Livraison photos;2026-03-11 16:00:00;2026-03-11 16:00:00;1;TERMINEE;10;3

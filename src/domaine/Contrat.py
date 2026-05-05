@@ -32,7 +32,6 @@ class Contrat:
         self.__les_devis = [] 
         self.__les_factures = [] 
         self.__les_prestations = [] 
-        #self.__les_clients = [] # --> faire les getters et les setters (à faire après avoir fais liens clients --> contrats)
 
         if numero_contrat is not None :
             self.__numero_contrat = numero_contrat
