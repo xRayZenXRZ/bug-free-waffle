@@ -37,17 +37,30 @@ class DAOContrat:
                 cursor.close()
 
     def delete_contrat(self, contrat):
+        sql_paiement = "DELETE FROM Paiement WHERE numeroFacture IN (SELECT numeroFacture FROM Facture WHERE numeroContrat = %s)"
+        sql_activite="DELETE FROM Activite WHERE idPrestation IN (SELECT idPrestation FROM Prestation WHERE numeroContrat=%s)"
+        sql_prestation="DELETE FROM Prestation WHERE numeroContrat=%s"
+        sql_facture = "DELETE FROM Facture WHERE numeroContrat = %s"
         sql_devis = "DELETE FROM Devis WHERE numeroContrat=%s"
         sql_contrat = "DELETE FROM Contrat WHERE numeroContrat = %s"
+
 
         values = (contrat.get_numero_contrat(),)
         try:
             connection = DAOSession.get_connexion()
             cursor = connection.cursor()
-            cursor.execute(sql_devis, values)
+            
+            cursor.execute(sql_paiement, values)
+            cursor.execute(sql_activite, values)
+            cursor.execute(sql_prestation, values)
+            cursor.execute(sql_facture, values)
+            cursor.execute(sql_devis, values)            
             cursor.execute(sql_contrat, values)
-
+            
+            connection.commit() 
+            print("Succès total !")
             return True
+        
         except Error as e:
             print("\n<--------------------------------------->")
             print(f"Erreur lors de la suppression du Contrat : {e}")
