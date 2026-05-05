@@ -63,7 +63,7 @@ class MainWindow(tk.Frame):
 
         ttk.Button(
             content,
-            text="📄 Gérer les prestation et activites",
+            text="📄 Gérer les contrats",
             command=lambda: self.on_gestion_prestation_activite()
         ).pack(pady=10, ipadx=20, ipady=5)
 
