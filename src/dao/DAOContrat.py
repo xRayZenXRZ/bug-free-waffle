@@ -37,14 +37,16 @@ class DAOContrat:
                 cursor.close()
 
     def delete_contrat(self, contrat):
-        sql_devis="DELETE FROM Devis WHERE numeroContrat=%s"
+        sql_devis = "DELETE FROM Devis WHERE numeroContrat=%s"
         sql_contrat = "DELETE FROM Contrat WHERE numeroContrat = %s"
+
         values = (contrat.get_numero_contrat(),)
         try:
             connection = DAOSession.get_connexion()
             cursor = connection.cursor()
             cursor.execute(sql_devis, values)
             cursor.execute(sql_contrat, values)
+
             return True
         except Error as e:
             print("\n<--------------------------------------->")

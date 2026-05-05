@@ -1,5 +1,9 @@
 import tkinter as tk
 from tkinter import ttk
+<<<<<<< HEAD
+=======
+from Interface_Tkinter.exportation import exportation_clients_csv
+>>>>>>> main
 from dao.DAOClient import DAOClient
 import tkinter.messagebox
 
@@ -37,6 +41,11 @@ class GestionClient(tk.Frame):
         ttk.Button(frame_gauche, text="➕ Ajouter client",   command=self.ajouter_client).pack(pady=5, fill='x')
         ttk.Button(frame_gauche, text="👁️ Voir les clients", command=self.afficher_clients).pack(pady=5, fill='x')
         ttk.Button(frame_gauche, text="✏️ Modifier client",  command=self.modifier_client).pack(pady=5, fill='x')
+<<<<<<< HEAD
+=======
+        ttk.Button(frame_gauche, text="icon exportation",  command=self.exportation_client).pack(pady=5, fill='x')
+
+>>>>>>> main
         if utilisateur['role'] == 'ADMIN':
             ttk.Button(frame_gauche, text="🗑️ Supprimer client", command=self.supprimer_client).pack(pady=5, fill='x')
             
@@ -294,6 +303,24 @@ class GestionClient(tk.Frame):
 
     # ------------------------------------------------------------------ #
 
+<<<<<<< HEAD
+=======
+    def exportation_client(self):
+        selection = self.tree.selection()
+        if not selection:
+            tk.messagebox.showwarning("Aucune sélection", "Veuillez sélectionner un client")
+            return
+
+        values = self.tree.item(selection[0])['values']
+        id_client = values[0]
+
+        from domaine.Client import Client
+        c = Client(id_client, "", "", "", "", "", "", "")
+        exportation_clients_csv(c)
+
+    # ------------------------------------------------------------------ #
+
+>>>>>>> main
     def on_double_click(self, event):
         selection = self.tree.selection()
         if selection:
@@ -301,4 +328,8 @@ class GestionClient(tk.Frame):
             tk.messagebox.showinfo(
                 "Détails",
                 f"Client sélectionné : {item['values']}"
+<<<<<<< HEAD
             )
+=======
+            )
+>>>>>>> main
