@@ -1,11 +1,6 @@
 from dao.DAOClient import DAOClient
-<<<<<<< HEAD
 from dao.DAODevis import DAODevis
 from domaine.Devis import Devis
-=======
-
-invalid_type = "Invalid type !"
->>>>>>> 6fe10fa5ff6b8e26b6e3f701207ed2a97653e357
 
 class Client:
     leDAODevis = DAODevis.get_instance()
@@ -28,7 +23,6 @@ class Client:
         else:
             self.__id_client = Client.leDAOClient.insert_client(self)
 
-<<<<<<< HEAD
     #les methodes statiques : 
 
     @staticmethod
@@ -64,11 +58,6 @@ class Client:
             devis.set_id_client(None)
         else:
             raise Exception("Erreur_Devis_inexistant_dans_les_devis_du_client")
-=======
-    @staticmethod
-    def charger(id_client):
-        return Client.leDAOClient.find_client(id_client)
->>>>>>> 6fe10fa5ff6b8e26b6e3f701207ed2a97653e357
 
     # Getters
 

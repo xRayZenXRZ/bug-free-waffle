@@ -1,11 +1,8 @@
 from dao.DAOFacture import DAOFacture
-<<<<<<< HEAD
 from dao.DAOPaiement import DAOPaiement
 from datetime import datetime
 
 from domaine.Paiement import Paiement
-=======
->>>>>>> 6fe10fa5ff6b8e26b6e3f701207ed2a97653e357
 
 class Facture:
 

@@ -9,11 +9,6 @@ def main():
     from domaine.Paiement import Paiement
     from domaine.Collaborateur import Collaborateur
     from domaine.Prestation import Prestation
-<<<<<<< HEAD
-=======
-    from domaine.Utilisateur import Utilisateur
-
->>>>>>> 6fe10fa5ff6b8e26b6e3f701207ed2a97653e357
     from dao.DAOSession import DAOSession
 
     # Ouvrir la session DAO

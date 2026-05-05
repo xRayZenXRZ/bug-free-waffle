@@ -1,12 +1,8 @@
-<<<<<<< HEAD
 from dao.DAOCollaborateur import DAOCollaborateur
 from dao.DAODevis import DAODevis
 from datetime import datetime
 
 from domaine.Collaborateur import Collaborateur
-=======
-from dao.DAODevis import DAODevis
->>>>>>> 6fe10fa5ff6b8e26b6e3f701207ed2a97653e357
 
 class Devis:
 

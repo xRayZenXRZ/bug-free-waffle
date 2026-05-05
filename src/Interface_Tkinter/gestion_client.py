@@ -306,6 +306,7 @@ class GestionClient(tk.Frame):
         values = self.tree.item(selection[0])['values']
         id_client = values[0]
 
+
         from domaine.Client import Client
         c = Client(id_client, "", "", "", "", "", "", "")
         exportation_clients_csv(c)
