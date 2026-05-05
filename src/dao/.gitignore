@@ -1,0 +1,5 @@
+#cache
+__pycache__
+
+#mac dep
+.DS_Store
