@@ -8,6 +8,7 @@ from datetime import date
 from tkcalendar import DateEntry
 from dao.DAOContrat import DAOContrat
 
+
 class GestionDevis(tk.Frame):
     def __init__(self, parent, utilisateur, on_back=None):
         super().__init__(parent)
@@ -37,24 +38,33 @@ class GestionDevis(tk.Frame):
         frame_gauche = ttk.Frame(main_frame)
         frame_gauche.pack(side='left', fill='both', padx=10)
 
-        ttk.Label(frame_gauche, text="Actions :", font=('Arial', 14, 'bold')).pack(pady=10)
-        ttk.Button(frame_gauche, text="➕ Créer un devis",    command=self.ajouter_devis).pack(pady=5, fill='x')
-        ttk.Button(frame_gauche, text="👁️ Voir les devis",   command=self.afficher_devis).pack(pady=5, fill='x')
-        ttk.Button(frame_gauche, text="✏️ Modifier statut",  command=self.modifier_statut).pack(pady=5, fill='x')
+        ttk.Label(frame_gauche, text="Actions :", font=(
+            'Arial', 14, 'bold')).pack(pady=10)
+        ttk.Button(frame_gauche, text="➕ Créer un devis",
+                   command=self.ajouter_devis).pack(pady=5, fill='x')
+        ttk.Button(frame_gauche, text="👁️ Voir les devis",
+                   command=self.afficher_devis).pack(pady=5, fill='x')
+        ttk.Button(frame_gauche, text="✏️ Modifier statut",
+                   command=self.modifier_statut).pack(pady=5, fill='x')
         if utilisateur['role'] == 'ADMIN':
-            ttk.Button(frame_gauche, text="🗑️ Supprimer devis", command=self.supprimer_devis).pack(pady=5, fill='x')
+            ttk.Button(frame_gauche, text="🗑️ Supprimer devis",
+                       command=self.supprimer_devis).pack(pady=5, fill='x')
 
         if on_back:
             ttk.Label(frame_gauche, text="").pack(expand=True)
-            ttk.Button(frame_gauche, text="🏠 Accueil", command=on_back).pack(pady=5, fill='x', side='bottom')
+            ttk.Button(frame_gauche, text="🏠 Accueil", command=on_back).pack(
+                pady=5, fill='x', side='bottom')
 
         # COLONNE DROITE : Tableau
         frame_droite = ttk.Frame(main_frame)
         frame_droite.pack(side='right', fill='both', expand=True, padx=10)
-        ttk.Label(frame_droite, text="Liste des devis :", font=('Arial', 12, 'bold')).pack(pady=5)
+        ttk.Label(frame_droite, text="Liste des devis :",
+                  font=('Arial', 12, 'bold')).pack(pady=5)
 
-        colonnes = ('Numéro', 'Date émission', 'Date validité', 'Description', 'Montant', 'Statut', 'Client', 'Contrat')
-        self.tree = ttk.Treeview(frame_droite, columns=colonnes, show='headings', height=15)
+        colonnes = ('Numéro', 'Date émission', 'Date validité',
+                    'Description', 'Montant', 'Statut', 'Client', 'Contrat')
+        self.tree = ttk.Treeview(
+            frame_droite, columns=colonnes, show='headings', height=15)
 
         for col in colonnes:
             self.tree.heading(col, text=col)
@@ -68,15 +78,14 @@ class GestionDevis(tk.Frame):
         self.tree.column('Client',        width=60,  anchor='center')
         self.tree.column('Contrat',       width=110, anchor='center')
 
-        # Scrollbar horizontale
-        scrollbar_x = ttk.Scrollbar(frame_droite, orient='horizontal', command=self.tree.xview)
+        scrollbar_x = ttk.Scrollbar(
+            frame_droite, orient='horizontal', command=self.tree.xview)
         scrollbar_x.pack(side='bottom', fill='x')
-
-        # Scrollbar verticale
-        scrollbar = ttk.Scrollbar(frame_droite, orient='vertical', command=self.tree.yview)
+        scrollbar = ttk.Scrollbar(
+            frame_droite, orient='vertical', command=self.tree.yview)
         scrollbar.pack(side='right', fill='y')
-
-        self.tree.configure(yscrollcommand=scrollbar.set, xscrollcommand=scrollbar_x.set)
+        self.tree.configure(yscrollcommand=scrollbar.set,
+                            xscrollcommand=scrollbar_x.set)
         self.tree.pack(fill='both', expand=True)
 
         self.tree.bind('<Double-1>', self.on_double_click)
@@ -113,94 +122,261 @@ class GestionDevis(tk.Frame):
         popup = tk.Toplevel(self)
         self._popup_ajout = popup
         popup.title("Créer un devis")
-        popup.geometry("480x520")
+        popup.geometry("480x500")
         popup.resizable(False, False)
         popup.transient(self)
         popup.grab_set()
 
-
-        # Générer le numéro automatiquement
         def generer_numero():
             annee = date.today().year
             devis_liste = DAODevis.get_instance().select_devis()
-            # Trouver le dernier numéro de l'année en cours
             numeros = [
                 d.get_numero_devis() for d in devis_liste
                 if d.get_numero_devis() and str(annee) in d.get_numero_devis()
             ]
             if numeros:
-                dernier = max(numeros)  # ex: DEV-2026-009
+                dernier = max(numeros)
                 numero_seq = int(dernier.split('-')[-1]) + 1
             else:
                 numero_seq = 1
-            return f"DEV-{annee}-{numero_seq:03d}"  # ← format DEV-2026-001
+            return f"DEV-{annee}-{numero_seq:03d}"
 
         numero_auto = generer_numero()
-        
-        ttk.Label(popup, text="Créer un nouveau devis", font=('Arial', 14, 'bold')).pack(pady=15)
+
+        ttk.Label(popup, text="Créer un nouveau devis",
+                  font=('Arial', 14, 'bold')).pack(pady=15)
 
         form_frame = ttk.Frame(popup)
         form_frame.pack(padx=20, pady=10, fill='both', expand=True)
 
-        # Numéro devis
-        ttk.Label(form_frame, text="Numéro devis :").grid(row=0, column=0, sticky='w', pady=5)
-        ttk.Label(form_frame, text=numero_auto, foreground='blue').grid(row=0, column=1, sticky='w', pady=5, padx=5)
+        ttk.Label(form_frame, text="Numéro devis :").grid(
+            row=0, column=0, sticky='w', pady=5)
+        ttk.Label(form_frame, text=numero_auto, foreground='blue').grid(
+            row=0, column=1, sticky='w', pady=5, padx=5)
 
-        # Client
-        ttk.Label(form_frame, text="ID Client :").grid(row=1, column=0, sticky='w', pady=5)
-        entry_client = ttk.Entry(form_frame, width=30)
-        entry_client.grid(row=1, column=1, pady=5, padx=5)
+        ttk.Label(form_frame, text="Client :").grid(
+            row=1, column=0, sticky='w', pady=5)
+        client_var = tk.StringVar(value="Aucun client sélectionné")
+        ttk.Label(form_frame, textvariable=client_var, foreground='blue').grid(
+            row=1, column=1, sticky='w', pady=5, padx=5)
+        client_selectionne = {'id': None}
 
-        # Description
-        ttk.Label(form_frame, text="Description :").grid(row=2, column=0, sticky='w', pady=5)
+        def choisir_client():
+            popup_client = tk.Toplevel(popup)
+            popup_client.title("Choisir un client")
+            popup_client.geometry("600x300")
+            popup_client.transient(popup)
+            popup_client.grab_set()
+
+            ttk.Label(popup_client, text="Sélectionnez un client :",
+                      font=('Arial', 12, 'bold')).pack(pady=10)
+
+            cols = ('ID', 'Type', 'Nom', 'Prénom',
+                    'Raison Sociale', 'Email', 'Statut')
+            tree_client = ttk.Treeview(
+                popup_client, columns=cols, show='headings', height=8)
+            for col in cols:
+                tree_client.heading(col, text=col)
+            tree_client.column('ID',            width=40,  anchor='center')
+            tree_client.column('Type',          width=90,  anchor='center')
+            tree_client.column('Nom',           width=100, anchor='center')
+            tree_client.column('Prénom',        width=100, anchor='center')
+            tree_client.column('Raison Sociale', width=130, anchor='center')
+            tree_client.column('Email',         width=150, anchor='center')
+            tree_client.column('Statut',        width=80,  anchor='center')
+            tree_client.pack(fill='both', expand=True, padx=10)
+
+            clients = DAOClient.get_instance().select_client()
+            for c in clients:
+                tree_client.insert('', 'end', values=(
+                    c.get_id_client(),
+                    'ENTREPRISE' if c.get_raison_sociale() else 'PARTICULIER',
+                    c.get_nom() or '',
+                    c.get_prenom() or '',
+                    c.get_raison_sociale() or '',
+                    c.get_courriel(),
+                    c.get_status_client()
+                ))
+
+            def confirmer():
+                sel = tree_client.selection()
+                if not sel:
+                    tk.messagebox.showwarning(
+                        "Aucune sélection", "Veuillez sélectionner un client")
+                    return
+                valeurs = tree_client.item(sel[0])['values']
+                client_selectionne['id'] = valeurs[0]
+                nom_affiche = valeurs[2] or valeurs[4]
+                client_var.set(f"{valeurs[0]} - {nom_affiche}")
+                popup_client.destroy()
+
+            ttk.Button(popup_client, text="✓ Choisir",
+                       command=confirmer).pack(pady=10)
+
+        ttk.Button(form_frame, text="👤 Choisir un client",
+                   command=choisir_client).grid(row=1, column=2, padx=5)
+
+        ttk.Label(form_frame, text="Description :").grid(
+            row=2, column=0, sticky='w', pady=5)
         entry_desc = ttk.Entry(form_frame, width=30)
         entry_desc.grid(row=2, column=1, pady=5, padx=5)
 
-        # Quantité
-        ttk.Label(form_frame, text="Quantité :").grid(row=3, column=0, sticky='w', pady=5)
+        ttk.Label(form_frame, text="Quantité :").grid(
+            row=3, column=0, sticky='w', pady=5)
         entry_qte = ttk.Entry(form_frame, width=30)
         entry_qte.insert(0, "1")
         entry_qte.grid(row=3, column=1, pady=5, padx=5)
 
-        # Détails coûts
-        ttk.Label(form_frame, text="Détails coûts :").grid(row=4, column=0, sticky='w', pady=5)
+        ttk.Label(form_frame, text="Détails coûts :").grid(
+            row=4, column=0, sticky='w', pady=5)
         entry_couts = ttk.Entry(form_frame, width=30)
         entry_couts.grid(row=4, column=1, pady=5, padx=5)
 
-        # Montant
-        ttk.Label(form_frame, text="Montant (€) :").grid(row=5, column=0, sticky='w', pady=5)
+        ttk.Label(form_frame, text="Montant (€) :").grid(
+            row=5, column=0, sticky='w', pady=5)
         entry_montant = ttk.Entry(form_frame, width=30)
         entry_montant.grid(row=5, column=1, pady=5, padx=5)
 
-        # Remplacez les Entry de date par :
-        ttk.Label(form_frame, text="Date émission :").grid(row=6, column=0, sticky='w', pady=5)
-        entry_emission = DateEntry(form_frame, width=28, date_pattern='yyyy-mm-dd')
+        ttk.Label(form_frame, text="Date émission :").grid(
+            row=6, column=0, sticky='w', pady=5)
+        entry_emission = DateEntry(
+            form_frame, width=28, date_pattern='yyyy-mm-dd')
         entry_emission.grid(row=6, column=1, pady=5, padx=5)
 
-        ttk.Label(form_frame, text="Date validité :").grid(row=7, column=0, sticky='w', pady=5)
-        entry_validite = DateEntry(form_frame, width=28, date_pattern='yyyy-mm-dd')
+        ttk.Label(form_frame, text="Date validité :").grid(
+            row=7, column=0, sticky='w', pady=5)
+        entry_validite = DateEntry(
+            form_frame, width=28, date_pattern='yyyy-mm-dd')
         entry_validite.grid(row=7, column=1, pady=5, padx=5)
-        
-        ttk.Label(form_frame, text="Contrat :").grid(row=8, column=0, sticky='w', pady=5)
 
-        contrat_var = tk.StringVar(value="Aucun contrat sélectionné")
-        lbl_contrat = ttk.Label(form_frame, textvariable=contrat_var, foreground='blue')
-        lbl_contrat.grid(row=8, column=1, sticky='w', pady=5, padx=5)
+        btn_frame = ttk.Frame(popup)
+        btn_frame.pack(pady=15)
 
-        contrat_selectionne = {'numero': None}  # ← stocke le choix
+        def valider():
+            numero = numero_auto
+            if not client_selectionne['id']:
+                tk.messagebox.showwarning(
+                    "Client manquant", "Veuillez sélectionner un client")
+                return
+            id_client = client_selectionne['id']
+            desc = entry_desc.get().strip()
+            qte = entry_qte.get().strip()
+            couts = entry_couts.get().strip()
+            montant = entry_montant.get().strip()
+            emission = entry_emission.get_date()
+            validite = entry_validite.get_date()
 
-        def choisir_contrat():
+            if emission < date.today():
+                tk.messagebox.showwarning(
+                    "Date invalide", "La date d'émission ne peut pas être dans le passé")
+                return
+            if validite <= emission:
+                tk.messagebox.showwarning(
+                    "Date invalide", "La date de validité doit être après la date d'émission")
+                return
+
+            try:
+                montant_f = float(montant)
+                qte_i = int(qte)
+                id_client_i = int(id_client)
+            except ValueError:
+                tk.messagebox.showwarning(
+                    "Valeur invalide", "Montant, quantité et ID client doivent être numériques")
+                return
+
+            nouveau = Devis(numero, str(emission), str(
+                validite), desc, qte_i, couts, montant_f, 'EN_ATTENTE', None, id_client_i, None)
+            cle = DAODevis.get_instance().insert_devis(nouveau)
+
+            if cle != -1:
+                tk.messagebox.showinfo("Succès", "Devis créé avec succès !")
+                popup.destroy()
+                self.afficher_devis()
+            else:
+                tk.messagebox.showerror(
+                    "Erreur", "Impossible de créer le devis")
+
+        ttk.Button(btn_frame, text="✓ Valider",
+                   command=valider).pack(side='left', padx=5)
+        ttk.Button(btn_frame, text="✗ Annuler",
+                   command=popup.destroy).pack(side='left', padx=5)
+
+    # ------------------------------------------------------------------ #
+
+    def modifier_statut(self):
+        selection = self.tree.selection()
+        if not selection:
+            tk.messagebox.showwarning(
+                "Aucune sélection", "Veuillez sélectionner un devis")
+            return
+
+        values = self.tree.item(selection[0])['values']
+
+        popup = tk.Toplevel(self)
+        popup.title("Modifier le statut")
+        popup.geometry("320x180")
+        popup.resizable(False, False)
+        popup.transient(self)
+        popup.grab_set()
+
+        ttk.Label(popup, text=f"Devis : {values[0]}", font=(
+            'Arial', 12, 'bold')).pack(pady=15)
+
+        form_frame = ttk.Frame(popup)
+        form_frame.pack(padx=20, pady=10)
+
+        ttk.Label(form_frame, text="Statut :").grid(
+            row=0, column=0, sticky='w', pady=5)
+        combo_statut = ttk.Combobox(form_frame, width=28, state='readonly')
+        combo_statut['values'] = ('EN_ATTENTE', 'ACCEPTE', 'REFUSE', 'EXPIRE')
+        combo_statut.set(values[5])
+        combo_statut.grid(row=0, column=1, pady=5, padx=5)
+
+        btn_frame = ttk.Frame(popup)
+        btn_frame.pack(pady=15)
+
+        def _sauvegarder(numero_contrat, date_acceptation, nouveau_statut):
+            modifie = Devis(
+                values[0],
+                str(values[1]),
+                str(values[2]),
+                str(values[3]),
+                1,
+                "",
+                float(str(values[4]).replace(' €', '')),
+                nouveau_statut,
+                date_acceptation,
+                int(values[6]),
+                numero_contrat
+            )
+            succes = DAODevis.get_instance().update_devis(modifie)
+            if succes:
+                tk.messagebox.showinfo(
+                    "Succès", f"Statut du devis {values[0]} mis à jour !")
+                popup.destroy()
+                self.afficher_devis()
+            else:
+                tk.messagebox.showerror(
+                    "Erreur", "Impossible de modifier le statut")
+
+        def _choisir_et_lier_contrat(date_acceptation):
             popup_contrat = tk.Toplevel(popup)
             popup_contrat.title("Choisir un contrat")
-            popup_contrat.geometry("600x300")
+            popup_contrat.geometry("600x370")
             popup_contrat.transient(popup)
             popup_contrat.grab_set()
 
-            ttk.Label(popup_contrat, text="Sélectionnez un contrat :", font=('Arial', 12, 'bold')).pack(pady=10)
+            popup_contrat.protocol("WM_DELETE_WINDOW", lambda: tk.messagebox.showwarning(
+                "Obligatoire", "Vous devez sélectionner ou créer un contrat pour accepter ce devis."
+            ))
 
-            # Treeview des contrats
-            cols = ('Numéro', 'Date début', 'Durée', 'Périodicité', 'Montant', 'Client')
-            tree_contrat = ttk.Treeview(popup_contrat, columns=cols, show='headings', height=8)
+            ttk.Label(popup_contrat, text="Sélectionnez un contrat :",
+                      font=('Arial', 12, 'bold')).pack(pady=10)
+
+            cols = ('Numéro', 'Date début', 'Durée',
+                    'Périodicité', 'Montant', 'Client')
+            tree_contrat = ttk.Treeview(
+                popup_contrat, columns=cols, show='headings', height=8)
             for col in cols:
                 tree_contrat.heading(col, text=col)
             tree_contrat.column('Numéro',      width=110, anchor='center')
@@ -211,148 +387,241 @@ class GestionDevis(tk.Frame):
             tree_contrat.column('Client',      width=60,  anchor='center')
             tree_contrat.pack(fill='both', expand=True, padx=10)
 
-            contrats = DAOContrat.get_instance().select_contrat()
-            for c in contrats:
-                tree_contrat.insert('', 'end', values=(
-                    c.get_numero_contrat(),
-                    c.get_date_debut(),
-                    c.get_duree(),
-                    c.get_periodicite(),
-                    f"{c.get_montant_global()} €",
-                    c.get_id_client()
-                ))
+            def charger_contrats():
+                tree_contrat.delete(*tree_contrat.get_children())
+                contrats = DAOContrat.get_instance().select_contrat()
+                for c in contrats:
+                    tree_contrat.insert('', 'end', values=(
+                        c.get_numero_contrat(),
+                        c.get_date_debut(),
+                        c.get_duree(),
+                        c.get_periodicite(),
+                        f"{c.get_montant_global()} €",
+                        c.get_id_client()
+                    ))
+
+            charger_contrats()
+
+            def creer_contrat():
+                popup_creer = tk.Toplevel(popup_contrat)
+                popup_creer.title("Créer un contrat")
+                popup_creer.geometry("480x420")
+                popup_creer.resizable(False, False)
+                popup_creer.transient(popup_contrat)
+                popup_creer.grab_set()
+
+                ttk.Label(popup_creer, text="Nouveau contrat",
+                          font=('Arial', 14, 'bold')).pack(pady=15)
+
+                form = ttk.Frame(popup_creer)
+                form.pack(padx=20, pady=10, fill='both', expand=True)
+
+                annee = date.today().year
+                contrats = DAOContrat.get_instance().select_contrat()
+                numeros = [c.get_numero_contrat() for c in contrats if str(
+                    annee) in c.get_numero_contrat()]
+                numero_seq = int(max(numeros).split(
+                    '-')[-1]) + 1 if numeros else 1
+                numero_contrat_auto = f"CONT-{annee}-{numero_seq:03d}"
+
+                ttk.Label(form, text="Numéro :").grid(
+                    row=0, column=0, sticky='w', pady=5)
+                ttk.Label(form, text=numero_contrat_auto, foreground='blue').grid(
+                    row=0, column=1, sticky='w', pady=5, padx=5)
+
+                # Client — sélection via popup
+                ttk.Label(form, text="Client :").grid(
+                    row=1, column=0, sticky='w', pady=5)
+                client_var_contrat = tk.StringVar(
+                    value="Aucun client sélectionné")
+                ttk.Label(form, textvariable=client_var_contrat, foreground='blue').grid(
+                    row=1, column=1, sticky='w', pady=5, padx=5)
+                client_selectionne_contrat = {'id': None}
+
+                def choisir_client_contrat():
+                    popup_client = tk.Toplevel(popup_creer)
+                    popup_client.title("Choisir un client")
+                    popup_client.geometry("600x300")
+                    popup_client.transient(popup_creer)
+                    popup_client.grab_set()
+
+                    ttk.Label(popup_client, text="Sélectionnez un client :", font=(
+                        'Arial', 12, 'bold')).pack(pady=10)
+
+                    cols = ('ID', 'Type', 'Nom', 'Prénom',
+                            'Raison Sociale', 'Email', 'Statut')
+                    tree_client = ttk.Treeview(
+                        popup_client, columns=cols, show='headings', height=8)
+                    for col in cols:
+                        tree_client.heading(col, text=col)
+                    tree_client.column(
+                        'ID',             width=40,  anchor='center')
+                    tree_client.column(
+                        'Type',           width=90,  anchor='center')
+                    tree_client.column(
+                        'Nom',            width=100, anchor='center')
+                    tree_client.column(
+                        'Prénom',         width=100, anchor='center')
+                    tree_client.column(
+                        'Raison Sociale', width=130, anchor='center')
+                    tree_client.column(
+                        'Email',          width=150, anchor='center')
+                    tree_client.column(
+                        'Statut',         width=80,  anchor='center')
+                    tree_client.pack(fill='both', expand=True, padx=10)
+
+                    clients = DAOClient.get_instance().select_client()
+                    for c in clients:
+                        tree_client.insert('', 'end', values=(
+                            c.get_id_client(),
+                            'ENTREPRISE' if c.get_raison_sociale() else 'PARTICULIER',
+                            c.get_nom() or '',
+                            c.get_prenom() or '',
+                            c.get_raison_sociale() or '',
+                            c.get_courriel(),
+                            c.get_status_client()
+                        ))
+
+                    def confirmer():
+                        sel = tree_client.selection()
+                        if not sel:
+                            tk.messagebox.showwarning(
+                                "Aucune sélection", "Veuillez sélectionner un client")
+                            return
+                        valeurs = tree_client.item(sel[0])['values']
+                        client_selectionne_contrat['id'] = valeurs[0]
+                        nom_affiche = valeurs[2] or valeurs[4]
+                        client_var_contrat.set(f"{valeurs[0]} - {nom_affiche}")
+                        popup_client.destroy()
+
+                    ttk.Button(popup_client, text="✓ Choisir",
+                               command=confirmer).pack(pady=10)
+
+                ttk.Button(form, text="👤 Choisir un client", command=choisir_client_contrat).grid(
+                    row=1, column=2, padx=5)
+
+                ttk.Label(form, text="Date début :").grid(
+                    row=2, column=0, sticky='w', pady=5)
+                entry_debut = DateEntry(
+                    form, width=28, date_pattern='yyyy-mm-dd')
+                entry_debut.grid(row=2, column=1, pady=5, padx=5)
+
+                ttk.Label(form, text="Durée :").grid(
+                    row=3, column=0, sticky='w', pady=5)
+                entry_duree = ttk.Entry(form, width=30)
+                entry_duree.grid(row=3, column=1, pady=5, padx=5)
+
+                ttk.Label(form, text="Nb productions :").grid(
+                    row=4, column=0, sticky='w', pady=5)
+                entry_nb = ttk.Entry(form, width=30)
+                entry_nb.grid(row=4, column=1, pady=5, padx=5)
+
+                ttk.Label(form, text="Périodicité :").grid(
+                    row=5, column=0, sticky='w', pady=5)
+                combo_periode = ttk.Combobox(form, width=28, state='readonly')
+                combo_periode['values'] = (
+                    'HEBDOMADAIRE', 'MENSUELLE', 'ANNUELLE')
+                combo_periode.current(1)
+                combo_periode.grid(row=5, column=1, pady=5, padx=5)
+
+                ttk.Label(form, text="Montant global (€) :").grid(
+                    row=6, column=0, sticky='w', pady=5)
+                entry_montant = ttk.Entry(form, width=30)
+                entry_montant.grid(row=6, column=1, pady=5, padx=5)
+
+                ttk.Label(form, text="Conditions paiement :").grid(
+                    row=7, column=0, sticky='w', pady=5)
+                entry_conditions = ttk.Entry(form, width=30)
+                entry_conditions.grid(row=7, column=1, pady=5, padx=5)
+
+                btn_frame_creer = ttk.Frame(popup_creer)
+                btn_frame_creer.pack(pady=15)
+
+                def valider_contrat():
+                    if not client_selectionne_contrat['id']:
+                        tk.messagebox.showwarning(
+                            "Client manquant", "Veuillez sélectionner un client")
+                        return
+
+                    duree = entry_duree.get().strip()
+                    nb = entry_nb.get().strip()
+                    montant = entry_montant.get().strip()
+                    conditions = entry_conditions.get().strip()
+                    debut = str(entry_debut.get_date())
+
+                    if not duree or not nb or not montant or not conditions:
+                        tk.messagebox.showwarning(
+                            "Champs manquants", "Veuillez remplir tous les champs")
+                        return
+                    try:
+                        nb_i = int(nb)
+                        montant_f = float(montant)
+                    except ValueError:
+                        tk.messagebox.showwarning(
+                            "Valeur invalide", "Nb productions et montant doivent être numériques")
+                        return
+
+                    from domaine.Contrat import Contrat
+                    nouveau = Contrat(numero_contrat_auto, debut, duree, nb_i,
+                                      combo_periode.get(), montant_f, conditions,
+                                      # ← id du client choisi
+                                      client_selectionne_contrat['id'])
+                    cle = DAOContrat.get_instance().insert_contrat(nouveau)
+
+                    if cle != -1:
+                        tk.messagebox.showinfo(
+                            "Succès", f"Contrat {numero_contrat_auto} créé !")
+                        popup_creer.destroy()
+                        charger_contrats()
+                    else:
+                        tk.messagebox.showerror(
+                            "Erreur", "Impossible de créer le contrat")
+
+                ttk.Button(btn_frame_creer, text="✓ Valider",
+                           command=valider_contrat).pack(side='left', padx=5)
+                ttk.Button(btn_frame_creer, text="✗ Annuler",
+                           command=popup_creer.destroy).pack(side='left', padx=5)
 
             def confirmer():
-                selection = tree_contrat.selection()
-                if not selection:
-                    tk.messagebox.showwarning("Aucune sélection", "Veuillez sélectionner un contrat")
+                sel = tree_contrat.selection()
+                if not sel:
+                    tk.messagebox.showwarning(
+                        "Aucune sélection", "Veuillez sélectionner un contrat")
                     return
-                valeurs = tree_contrat.item(selection[0])['values']
-                contrat_selectionne['numero'] = valeurs[0]
-                contrat_var.set(valeurs[0])  # ← met à jour le label
+                numero_contrat = tree_contrat.item(sel[0])['values'][0]
                 popup_contrat.destroy()
+                _sauvegarder(numero_contrat, date_acceptation, 'ACCEPTE')
 
-            ttk.Button(popup_contrat, text="✓ Choisir", command=confirmer).pack(pady=10)
-
-        ttk.Button(form_frame, text="📋 Choisir un contrat", command=choisir_contrat).grid(row=2, column=2, padx=5)
-
-        btn_frame = ttk.Frame(popup)
-        btn_frame.pack(pady=15)
-
-        def valider():
-            numero = numero_auto
-            id_client = entry_client.get().strip()
-            desc     = entry_desc.get().strip()
-            qte      = entry_qte.get().strip()
-            couts    = entry_couts.get().strip()
-            montant  = entry_montant.get().strip()
-            emission = entry_emission.get_date()
-            validite = entry_validite.get_date()
-            numero_contrat = contrat_selectionne['numero']  # None si pas sélectionné
-
-            if validite <= emission:
-                tk.messagebox.showwarning("Date invalide", "La date de validité doit être après la date d'émission")
-                return
-
-            if emission < date.today():
-                tk.messagebox.showwarning("Date invalide", "La date d'émission ne peut pas être dans le passé")
-                return
-            statut = 'EN_ATTENTE'
-
-            if not numero or not id_client or not desc or not montant or not emission or not validite:
-                tk.messagebox.showwarning("Champs manquants", "Veuillez remplir tous les champs obligatoires")
-                return
-
-            try:
-                montant_f = float(montant)
-                qte_i = int(qte)
-                id_client_i = int(id_client)
-            except ValueError:
-                tk.messagebox.showwarning("Valeur invalide", "Montant, quantité et ID client doivent être numériques")
-                return
-
-
-            nouveau = Devis(numero, str(entry_emission.get_date()), str(entry_validite.get_date()), desc, qte_i, couts, montant_f, statut, None, id_client_i, numero_contrat)
-            cle = DAODevis.get_instance().insert_devis(nouveau)
-
-            if cle != -1:
-                tk.messagebox.showinfo("Succès", "Devis créé avec succès !")
-                popup.destroy()
-                self.afficher_devis()
-            else:
-                tk.messagebox.showerror("Erreur", "Impossible de créer le devis")
-
-        ttk.Button(btn_frame, text="✓ Valider",  command=valider).pack(side='left', padx=5)
-        ttk.Button(btn_frame, text="✗ Annuler", command=popup.destroy).pack(side='left', padx=5)
-
-    # ------------------------------------------------------------------ #
-
-    def modifier_statut(self):
-        selection = self.tree.selection()
-        if not selection:
-            tk.messagebox.showwarning("Aucune sélection", "Veuillez sélectionner un devis")
-            return
-
-        values = self.tree.item(selection[0])['values']
-        # values : (Numéro, Date émission, Date validité, Description, Montant, Statut, Client, Contrat)
-
-        popup = tk.Toplevel(self)
-        popup.title("Modifier le statut")
-        popup.geometry("320x180")
-        popup.resizable(False, False)
-        popup.transient(self)
-        popup.grab_set()
-
-        ttk.Label(popup, text=f"Devis : {values[0]}", font=('Arial', 12, 'bold')).pack(pady=15)
-
-        form_frame = ttk.Frame(popup)
-        form_frame.pack(padx=20, pady=10)
-
-        ttk.Label(form_frame, text="Statut :").grid(row=0, column=0, sticky='w', pady=5)
-        combo_statut = ttk.Combobox(form_frame, width=28, state='readonly')
-        combo_statut['values'] = ('EN_ATTENTE', 'ACCEPTE', 'REFUSE', 'EXPIRE')
-        combo_statut.set(values[5])
-        combo_statut.grid(row=0, column=1, pady=5, padx=5)
-
-        btn_frame = ttk.Frame(popup)
-        btn_frame.pack(pady=15)
+            btn_frame_contrat = ttk.Frame(popup_contrat)
+            btn_frame_contrat.pack(pady=10)
+            ttk.Button(btn_frame_contrat, text="✓ Choisir ce contrat",
+                       command=confirmer).pack(side='left', padx=5)
+            ttk.Button(btn_frame_contrat, text="➕ Créer un contrat",
+                       command=creer_contrat).pack(side='left', padx=5)
 
         def valider():
-
             nouveau_statut = combo_statut.get()
-            # Date d'acceptation automatique si statut ACCEPTE
-            date_acceptation = str(date.today()) if nouveau_statut == 'ACCEPTE' else None
+            date_acceptation = str(
+                date.today()) if nouveau_statut == 'ACCEPTE' else None
 
-            modifie = Devis(
-                values[0],
-                str(values[1]),
-                str(values[2]),
-                str(values[3]),
-                1,
-                "",
-                float(str(values[4]).replace(' €', '')),
-                nouveau_statut,
-                date_acceptation,  # ← automatique
-                int(values[6]),
-                values[7] or None
-            )
-            succes = DAODevis.get_instance().update_devis(modifie)
-            if succes:
-                tk.messagebox.showinfo("Succès", f"Statut du devis {values[0]} mis à jour !")
-                popup.destroy()
-                self.afficher_devis()
-            else:
-                tk.messagebox.showerror("Erreur", "Impossible de modifier le statut")
+            if nouveau_statut == 'ACCEPTE':
+                _choisir_et_lier_contrat(date_acceptation)
+                return
 
-        ttk.Button(btn_frame, text="✓ Valider",  command=valider).pack(side='left', padx=5)
-        ttk.Button(btn_frame, text="✗ Annuler", command=popup.destroy).pack(side='left', padx=5)
+            _sauvegarder(values[7] or None, date_acceptation, nouveau_statut)
+
+        ttk.Button(btn_frame, text="✓ Valider",
+                   command=valider).pack(side='left', padx=5)
+        ttk.Button(btn_frame, text="✗ Annuler",
+                   command=popup.destroy).pack(side='left', padx=5)
 
     # ------------------------------------------------------------------ #
 
     def supprimer_devis(self):
         selection = self.tree.selection()
         if not selection:
-            tk.messagebox.showwarning("Aucune sélection", "Veuillez sélectionner un devis")
+            tk.messagebox.showwarning(
+                "Aucune sélection", "Veuillez sélectionner un devis")
             return
 
         values = self.tree.item(selection[0])['values']
@@ -362,13 +631,15 @@ class GestionDevis(tk.Frame):
             "Confirmation", f"Voulez-vous vraiment supprimer le devis « {numero} » ?")
 
         if reponse:
-            d = Devis(numero, None, None, None, None, None, None, None, None, None, None)
+            d = Devis(numero, None, None, None, None,
+                      None, None, None, None, None, None)
             succes = DAODevis.get_instance().delete_devis(d)
             if succes:
                 self.tree.delete(selection[0])
                 tk.messagebox.showinfo("Succès", "Devis supprimé")
             else:
-                tk.messagebox.showerror("Erreur", "Impossible de supprimer le devis")
+                tk.messagebox.showerror(
+                    "Erreur", "Impossible de supprimer le devis")
 
     # ------------------------------------------------------------------ #
 
