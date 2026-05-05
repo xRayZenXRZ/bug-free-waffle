@@ -138,7 +138,7 @@ def exportation_activite_csv(activite=None):
     print(f"Le fichier {fichier_csv} a été créé avec succès.")
 
 
-def exportation_collaborateur_csv(collaborateur=None):  # ← corrigé 'collaboratuer' → 'collaborateur'
+def exportation_collaborateur_csv(collaborateur=None): 
     collaborateurs = Collaborateur.leDAOCollaborateur.select_collaborateur(collaborateur)
     fichier_csv = "src/Interface_Tkinter/exportation/collaborateur/collaborateurs.csv"
 
