@@ -11,12 +11,12 @@ import pandas as pd
 import csv
 
 
-def importation_clients_csv():
+def exportation_clients_csv():
 
     clients = Client.leDAOClient.select_client()
 
-    fichier_texte = "src/Interface_Tkinter/importation/client/clients.txt"
-    fichier_csv = "src/Interface_Tkinter/importation/client/clients.csv"
+    fichier_texte = "src/Interface_Tkinter/exportation/client/clients.txt"
+    fichier_csv = "src/Interface_Tkinter/exportation/client/clients.csv"
     
     with open(fichier_texte, "w", encoding="utf=8") as client_file : 
         client_file.write("idClient;type_client;nom;prenom;raisonSociale;adressePostale;telephone;email;statut")
@@ -41,12 +41,12 @@ def importation_clients_csv():
 
     print(f"Le fichier {fichier_csv} a été créé avec succès.")
 
-def importation_prestations_csv():
+def exportation_prestations_csv():
     
     prestations = Prestation.leDAOPrestation.select_prestation()
 
-    fichier_texte = "src/Interface_Tkinter/importation/prestation/prestations.txt"
-    fichier_csv = "src/Interface_Tkinter/importation/prestation/prestations.csv"
+    fichier_texte = "src/Interface_Tkinter/exportation/prestation/prestations.txt"
+    fichier_csv = "src/Interface_Tkinter/exportation/prestation/prestations.csv"
 
     with open(fichier_texte, "w", encoding="utf=8") as prestation_file : 
         prestation_file.write("idPrestation;datePrevue;dateEffective;lieu;type;nbPhotosPrevues;nbVideosPrevues;numeroContrat")
@@ -67,12 +67,12 @@ def importation_prestations_csv():
 
     print(f"Le fichier {fichier_csv} a été créé avec succès.")
 
-def importations_factures_csv():
+def exportations_factures_csv():
 
     factures = Facture.leDAOFacture.select_facture()
 
-    fichier_texte = "src/Interface_Tkinter/importation/facture/factures.txt"
-    fichier_csv = "src/Interface_Tkinter/importation/facture/factures.csv"
+    fichier_texte = "src/Interface_Tkinter/exportation/facture/factures.txt"
+    fichier_csv = "src/Interface_Tkinter/exportation/facture/factures.csv"
 
     with open(fichier_texte, "w", encoding="utf=8") as facture_file : 
         facture_file.write("numeroFacture;dateEmission;montantTotal;etat;numeroContrat")
@@ -93,12 +93,12 @@ def importations_factures_csv():
 
     print(f"Le fichier {fichier_csv} a été créé avec succès.")
 
-def importation_contrat_csv():
+def exportation_contrat_csv():
 
     contrats = Contrat.leDAOContrat.select_contrat()
 
-    fichier_texte = "src/Interface_Tkinter/importation/contrat/contrats.txt"
-    fichier_csv = "src/Interface_Tkinter/importation/contrat/contrats.csv"
+    fichier_texte = "src/Interface_Tkinter/exportation/contrat/contrats.txt"
+    fichier_csv = "src/Interface_Tkinter/exportation/contrat/contrats.csv"
 
     with open(fichier_texte, "w", encoding="utf=8") as contrat_file : 
         contrat_file.write("numeroContrat;dateDebut;duree;nbProductionsTotales;periodicite;montantGlobal;conditionsPaiement;idClient")
@@ -119,12 +119,12 @@ def importation_contrat_csv():
 
     print(f"Le fichier {fichier_csv} a été créé avec succès.")
 
-def importation_devis_csv():
+def exportation_devis_csv():
 
     devis = Devis.leDAODevis.select_devis()
 
-    fichier_texte = "src/Interface_Tkinter/importation/devis/devis.txt"
-    fichier_csv = "src/Interface_Tkinter/importation/devis/devis.csv"
+    fichier_texte = "src/Interface_Tkinter/exportation/devis/devis.txt"
+    fichier_csv = "src/Interface_Tkinter/exportation/devis/devis.csv"
 
     with open(fichier_texte, "w", encoding="utf=8") as devis_file : 
         devis_file.write("numeroDevis;dateEmission;dateValidite;descriptionPrestation;quantitePrevue;detailsCouts;montantTotalEstime;statut;dateAcceptation;idClient;numeroContrat")
@@ -145,12 +145,12 @@ def importation_devis_csv():
 
     print(f"Le fichier {fichier_csv} a été créé avec succès.")
 
-def importation_paiement_csv():
+def exportation_paiement_csv():
 
     paiements = Paiement.leDAOPaiement.select_paiement()
 
-    fichier_texte = "src/Interface_Tkinter/importation/paiement/paiements.txt"
-    fichier_csv = "src/Interface_Tkinter/importation/paiement/paiements.csv"
+    fichier_texte = "src/Interface_Tkinter/exportation/paiement/paiements.txt"
+    fichier_csv = "src/Interface_Tkinter/exportation/paiement/paiements.csv"
 
     with open(fichier_texte, "w", encoding="utf=8") as paiement_file : 
         paiement_file.write("idPaiement;datePaiement;montantPaye;numeroFacture")
@@ -171,12 +171,12 @@ def importation_paiement_csv():
 
     print(f"Le fichier {fichier_csv} a été créé avec succès.")
 
-def importation_activite_csv():
+def exportation_activite_csv():
 
     activites = Activite.leDAOActivite.select_activite()
 
-    fichier_texte = "src/Interface_Tkinter/importation/activite/activites.txt"
-    fichier_csv = "src/Interface_Tkinter/importation/activite/activites.csv"
+    fichier_texte = "src/Interface_Tkinter/exportation/activite/activites.txt"
+    fichier_csv = "src/Interface_Tkinter/exportation/activite/activites.csv"
 
     with open(fichier_texte, "w", encoding="utf=8") as activite_file : 
         activite_file.write("idActivite;libelleOperationnel;datePrevue;dateEffective;dureeEstimeeHeures;statut;idPrestation;idCollaborateur")
@@ -197,12 +197,12 @@ def importation_activite_csv():
 
     print(f"Le fichier {fichier_csv} a été créé avec succès.")
 
-def imporatation_collaborateur_csv():
+def exportation_collaborateur_csv():
 
     collaborateurs = Collaborateur.leDAOCollaborateur.select_collaborateur()
 
-    fichier_texte = "src/Interface_Tkinter/importation/collaborateur/collaborateurs.txt"
-    fichier_csv = "src/Interface_Tkinter/importation/collaborateur/collaborateurs.csv"
+    fichier_texte = "src/Interface_Tkinter/exportation/collaborateur/collaborateurs.txt"
+    fichier_csv = "src/Interface_Tkinter/exportation/collaborateur/collaborateurs.csv"
 
     with open(fichier_texte, "w", encoding="utf=8") as collaborateur_file : 
         collaborateur_file.write("idCollaborateur;nom;prenom;poste;telephonePro;numeroDevis;idUtilisateur")
@@ -224,26 +224,26 @@ def imporatation_collaborateur_csv():
     print(f"Le fichier {fichier_csv} a été créé avec succès.")
 
 
-def importation_all_csv():
-    imporatation_collaborateur_csv()
-    importation_clients_csv()
-    importation_activite_csv()
-    importation_contrat_csv()
-    importation_devis_csv()
-    importation_paiement_csv()
-    importations_factures_csv()
-    importation_prestations_csv()
+def exportation_all_csv():
+    exportation_collaborateur_csv()
+    exportation_clients_csv()
+    exportation_activite_csv()
+    exportation_contrat_csv()
+    exportation_devis_csv()
+    exportation_paiement_csv()
+    exportations_factures_csv()
+    exportation_prestations_csv()
 
-def importation_combined_csv():
+def exportation_combined_csv():
 
-    clients       = pd.read_csv(f"src/Interface_Tkinter/importation/client/clients.csv",             sep=",", encoding="utf-8")
-    contrats      = pd.read_csv(f"src/Interface_Tkinter/importation/contrat/contrats.csv",           sep=",", encoding="utf-8")
-    devis         = pd.read_csv(f"src/Interface_Tkinter/importation/devis/devis.csv",                sep=",", encoding="utf-8")
-    prestations   = pd.read_csv(f"src/Interface_Tkinter/importation/prestation/prestations.csv",     sep=",", encoding="utf-8")
-    factures      = pd.read_csv(f"src/Interface_Tkinter/importation/facture/factures.csv",           sep=",", encoding="utf-8")
-    paiements     = pd.read_csv(f"src/Interface_Tkinter/importation/paiement/paiements.csv",         sep=",", encoding="utf-8")
-    activites     = pd.read_csv(f"src/Interface_Tkinter/importation/activite/activites.csv",         sep=",", encoding="utf-8")
-    collaborateurs = pd.read_csv(f"src/Interface_Tkinter/importation/collaborateur/collaborateurs.csv", sep=",", encoding="utf-8")
+    clients       = pd.read_csv(f"src/Interface_Tkinter/exportation/client/clients.csv",             sep=",", encoding="utf-8")
+    contrats      = pd.read_csv(f"src/Interface_Tkinter/exportation/contrat/contrats.csv",           sep=",", encoding="utf-8")
+    devis         = pd.read_csv(f"src/Interface_Tkinter/exportation/devis/devis.csv",                sep=",", encoding="utf-8")
+    prestations   = pd.read_csv(f"src/Interface_Tkinter/exportation/prestation/prestations.csv",     sep=",", encoding="utf-8")
+    factures      = pd.read_csv(f"src/Interface_Tkinter/exportation/facture/factures.csv",           sep=",", encoding="utf-8")
+    paiements     = pd.read_csv(f"src/Interface_Tkinter/exportation/paiement/paiements.csv",         sep=",", encoding="utf-8")
+    activites     = pd.read_csv(f"src/Interface_Tkinter/exportation/activite/activites.csv",         sep=",", encoding="utf-8")
+    collaborateurs = pd.read_csv(f"src/Interface_Tkinter/exportation/collaborateur/collaborateurs.csv", sep=",", encoding="utf-8")
 
     # Vue contrats (contrat + client)
     contrats_clients = contrats.merge(clients[["idClient", "nom", "prenom", "raisonSociale", "email", "telephone"]], on="idClient", how="left")
@@ -287,7 +287,7 @@ def importation_combined_csv():
 
     #export
 
-    dossier_sortie = "src/Interface_Tkinter/importation/combined"
+    dossier_sortie = "src/Interface_Tkinter/exportation/combined"
 
     contrats_clients.to_csv(f"{dossier_sortie}/contrats_clients.csv", index=False, sep=";", encoding="utf-8")
     print(f"Le fichier {dossier_sortie}/contrats_clients.csv a été créé avec succès.")
@@ -308,5 +308,5 @@ def importation_combined_csv():
     print(f"Le fichier {dossier_sortie}/devis_full.csv a été créé avec succès.")
 
 if __name__ == "__main__" :
-    importation_all_csv()
-    importation_combined_csv()
+    exportation_all_csv()
+    exportation_combined_csv()
