@@ -1,5 +1,9 @@
 from dao.DAOActivite import DAOActivite
+<<<<<<< HEAD
 from datetime import datetime
+=======
+import datetime
+>>>>>>> 6fe10fa5ff6b8e26b6e3f701207ed2a97653e357
 
 class Activite:
 

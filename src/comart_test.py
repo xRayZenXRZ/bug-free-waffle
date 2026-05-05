@@ -9,6 +9,11 @@ def main():
     from domaine.Paiement import Paiement
     from domaine.Collaborateur import Collaborateur
     from domaine.Prestation import Prestation
+<<<<<<< HEAD
+=======
+    from domaine.Utilisateur import Utilisateur
+
+>>>>>>> 6fe10fa5ff6b8e26b6e3f701207ed2a97653e357
     from dao.DAOSession import DAOSession
 
     # Ouvrir la session DAO
@@ -29,6 +34,8 @@ def main():
     #prestation_1 = Prestation(date_prevue="2026-02-15 14:00:00", date_effective=None, lieu="Paris", type_prestation="MARIAGE", nb_photos_prevues=100, nb_videos_prevues=5, numero_contrat=contrat_1.get_numero_contrat())
 
     #activite_1 = Activite(libelle_operationnel="Préparation du matériel", date_prevues="2026-02-14 10:00:00", date_effective=None, duree_estimee=2, responsable="Jean Dupont", statut="PREVUE", id_prestation=prestation_1.get_id_prestation())
+
+    Utilisateur_1 = Utilisateur(email="root@gmail.com", motDePasse="root", typeUtilisateur="ADMIN", client=None)
 
     DAOSession.close()
 

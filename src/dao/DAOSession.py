@@ -1,45 +1,50 @@
 import mysql.connector
-from mysql.connector import Error 
+from mysql.connector import Error
 
 class DAOSession:
-    
+
     # Propriétés statiques
     HOST = "localhost"
-    LOGIN = "root"
-    MDP = None #password a definir 
-    DB="test_comart"
+    DB = "test_comart"
     PORT = 3306
     connection = None
 
     @staticmethod
-    def creer_connection():
+    def creer_connection(typeConnexion="CLIENT"):
         try:
+            # Un seul user MySQL pour l'instant
+            user = "root"
+            password = "ton_mot_de_passe_root"  # celui de XAMPP, souvent vide ""
+
             DAOSession.connection = mysql.connector.connect(
                 host=DAOSession.HOST,
-                user=DAOSession.LOGIN,
-                password=DAOSession.MDP,
+                user=user,
+                password=password,
                 database=DAOSession.DB,
                 port=DAOSession.PORT
             )
             if DAOSession.connection.is_connected():
-                print("Connexion à la base de données réussie")
-            else:
-                print("Erreur de connexion à la base")
+                print(f"Connexion réussie en mode {typeConnexion}")
+
         except Error as e:
-            print(f"Erreur durant la connexion à la base de données: {e}")
+            print(f"Erreur de connexion : {e}")
 
     @staticmethod
-    def get_connexion():
-        if DAOSession.connection is None:
-            DAOSession.creer_connection()
+    def get_connexion(typeConnexion="CLIENT"):
+        if DAOSession.connection is None or not DAOSession.connection.is_connected():
+            DAOSession.creer_connection(typeConnexion)
         return DAOSession.connection
-   
-    def open():
-        DAOSession.get_connexion().start_transaction()
 
-   
+    @staticmethod
+    def open(typeConnexion="CLIENT"):
+        DAOSession.get_connexion(typeConnexion)
+        print(f"Transaction démarrée avec le type de connexion: {typeConnexion}")
+
+
+        
+    @staticmethod
     def close():
-        DAOSession.get_connexion().commit()
-        DAOSession.get_connexion().close()
-        DAOSession.connection = None
-        print("Fermeture de la connexion à la base de données")
+        if DAOSession.connection is not None and DAOSession.connection.is_connected():
+            DAOSession.connection.commit()
+            DAOSession.connection.close()
+            DAOSession.connection = None

@@ -20,7 +20,7 @@ class DAOFacture:
             connection = DAOSession.get_connexion()
             cursor = connection.cursor()
             cursor.execute(sql, values)
-            connection.commit()
+            print("Facture inséré avec succès")
             cle = facture.get_numero_facture()
             return cle
         except Error as e:

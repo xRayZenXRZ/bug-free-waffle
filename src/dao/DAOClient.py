@@ -19,6 +19,7 @@ class DAOClient:
         try:
             connection = DAOSession.get_connexion()
             cursor = connection.cursor()
+<<<<<<< HEAD
             
             sql = """
                 INSERT INTO Client (nom, prenom, raisonSociale, adressePostale, telephone, email, statut)
@@ -34,6 +35,10 @@ class DAOClient:
                 client.get_status_client()
             ))
             connection.commit()
+=======
+            cursor.execute(sql, values)
+            print("Client inséré avec succès")
+>>>>>>> 6fe10fa5ff6b8e26b6e3f701207ed2a97653e357
             cle = cursor.lastrowid
             cursor.close()
             return (True, cle)

@@ -20,7 +20,6 @@ class DAOContrat:
             connection = DAOSession.get_connexion()
             cursor = connection.cursor()
             cursor.execute(sql, values)
-            connection.commit()
             print("Contrat inséré avec succès !")
             cle = contrat.get_numero_contrat()
             return cle

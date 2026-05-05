@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
+<<<<<<< HEAD
 from dao.DAOUtilisateur import DAOUtilisateur
 import tkinter.messagebox
 
@@ -8,6 +9,15 @@ class GestionUtilisateur(tk.Frame):
     def __init__(self, parent, utilisateur, on_back=None):
         super().__init__(parent)
         self.pack(fill="both", expand=True)
+=======
+
+
+class GestionUtilisateur(tk.Frame):
+    def __init__(self, parent, utilisateur):
+        super().__init__(parent)
+        self.pack(fill="both", expand=True)
+
+>>>>>>> 6fe10fa5ff6b8e26b6e3f701207ed2a97653e357
         self.utilisateur = utilisateur
 
         # Header avec infos utilisateur
@@ -16,8 +26,13 @@ class GestionUtilisateur(tk.Frame):
 
         ttk.Label(
             header,
+<<<<<<< HEAD
             text=f"Gestion des Utilisateurs - {utilisateur['prenom']} {utilisateur['nom']}",
             font=('Arial', 18, 'bold')
+=======
+            text=f"Bienvenue {utilisateur['prenom']} {utilisateur['nom']} !",
+            font=('Arial', 20, 'bold')
+>>>>>>> 6fe10fa5ff6b8e26b6e3f701207ed2a97653e357
         ).pack()
 
         ttk.Label(
@@ -27,6 +42,7 @@ class GestionUtilisateur(tk.Frame):
             foreground='blue'
         ).pack()
 
+<<<<<<< HEAD
         # Frame principale avec 2 colonnes
         main_frame = ttk.Frame(self)
         main_frame.pack(fill='both', expand=True, padx=20, pady=10)
@@ -389,3 +405,33 @@ class GestionUtilisateur(tk.Frame):
                 "Détails",
                 f"Utilisateur sélectionné : {item['values']}"
             )
+=======
+        # Zone de contenu
+        content = ttk.Frame(self)
+        content.pack(fill='both', expand=True, padx=50, pady=20)
+
+        ttk.Label(
+            content,
+            text="Que souhaitez-vous faire ?",
+            font=('Arial', 14)
+        ).pack(pady=30)
+
+        # Boutons selon le rôle
+        ttk.Button(
+            content,
+            text="Ajouter utilisateurs",
+            command=lambda: print("Ajouter utilisateurs")
+        ).pack(pady=10, ipadx=20, ipady=5)
+
+        ttk.Button(
+            content,
+            text="👤 Voir les utilisateurs",
+            command=lambda: print("Voir clients")
+        ).pack(pady=10, ipadx=20, ipady=5)
+
+        ttk.Button(
+            content,
+            text="supprimer un utilisateur",
+            command=lambda: print("supprimer un utilisateur")
+        ).pack(pady=10, ipadx=20, ipady=5)
+>>>>>>> 6fe10fa5ff6b8e26b6e3f701207ed2a97653e357

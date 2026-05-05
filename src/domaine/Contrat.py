@@ -1,9 +1,12 @@
 from dao.DAOContrat import DAOContrat
 from dao.DAOClient import DAOClient
+<<<<<<< HEAD
 from dao.DAODevis import DAODevis
 from dao.DAOFacture import DAOFacture
 from dao.DAOPrestation import DAOPrestation
 from domaine.Prestation import Prestation
+=======
+>>>>>>> 6fe10fa5ff6b8e26b6e3f701207ed2a97653e357
 from domaine.Client import Client
 from domaine.Devis import Devis
 from domaine.Facture import Facture

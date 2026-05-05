@@ -20,6 +20,7 @@ class DAOPaiement:
             connection = DAOSession.get_connexion()
             cursor = connection.cursor()
             cursor.execute(sql, values)
+            print("paiement inséré avec succès")
             cle = cursor.lastrowid
             return cle
         except Error as e:
