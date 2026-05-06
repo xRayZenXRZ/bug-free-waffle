@@ -14,8 +14,6 @@ class DAOClient:
         return DAOClient.unique_instance
 
     def insert_client(self, client):
-        traceback.print_stack()
-        print("Appel insert_client")
         try:
             connection = DAOSession.get_connexion()
             cursor = connection.cursor()
