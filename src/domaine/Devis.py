@@ -41,7 +41,7 @@ class Devis:
 
     @staticmethod
     def supprimer(un_devis):
-        pass
+        return Devis.leDAODevis.delete_devis(un_devis)
 
     # Getters
 

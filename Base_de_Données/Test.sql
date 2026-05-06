@@ -59,7 +59,7 @@ CREATE TABLE Devis (
     idClient            INT,
     numeroContrat       VARCHAR(50),
     FOREIGN KEY (idClient)       REFERENCES Client(idClient),
-    FOREIGN KEY (numeroContrat)  REFERENCES Contrat(numeroContrat),
+    FOREIGN KEY (numeroContrat)  REFERENCES Contrat(numeroContrat) ON DELETE CASCADE,
 
     CONSTRAINT chk_devis_dates CHECK (
         dateValidite IS NULL OR dateValidite >= dateEmission
@@ -80,7 +80,7 @@ CREATE TABLE Collaborateur (
     numeroDevis     VARCHAR(50),
     idUtilisateur   INT UNIQUE,
     FOREIGN KEY (idUtilisateur) REFERENCES Utilisateur(idUtilisateur),
-    FOREIGN KEY (numeroDevis)   REFERENCES Devis(numeroDevis)
+    FOREIGN KEY (numeroDevis)   REFERENCES Devis(numeroDevis) ON DELETE CASCADE
 );
 
 CREATE TABLE Prestation (
@@ -92,7 +92,7 @@ CREATE TABLE Prestation (
     nbPhotosPrevues INT,
     nbVideosPrevues INT,
     numeroContrat   VARCHAR(50),
-    FOREIGN KEY (numeroContrat) REFERENCES Contrat(numeroContrat),
+    FOREIGN KEY (numeroContrat) REFERENCES Contrat(numeroContrat) ON DELETE CASCADE,
     CONSTRAINT date_check CHECK (dateEffective IS NULL OR dateEffective >= datePrevue)
 );
 
@@ -106,7 +106,7 @@ CREATE TABLE Activite (
     idCollaborateur     INT,
     idPrestation        INT,
     FOREIGN KEY (idCollaborateur) REFERENCES Collaborateur(idCollaborateur),
-    FOREIGN KEY (idPrestation)    REFERENCES Prestation(idPrestation)
+    FOREIGN KEY (idPrestation)    REFERENCES Prestation(idPrestation) ON DELETE CASCADE
 );
 
 CREATE TABLE Facture (
@@ -115,7 +115,7 @@ CREATE TABLE Facture (
     montantTotal    DECIMAL(10,2),
     etat            ENUM('EN_ATTENTE', 'PAYEE', 'PARTIELLEMENT_PAYEE'),
     numeroContrat   VARCHAR(50),
-    FOREIGN KEY (numeroContrat) REFERENCES Contrat(numeroContrat)
+    FOREIGN KEY (numeroContrat) REFERENCES Contrat(numeroContrat) ON DELETE CASCADE
 );
 
 CREATE TABLE Paiement (
@@ -123,7 +123,7 @@ CREATE TABLE Paiement (
     datePaiement    DATE            NOT NULL,
     montantPaye     NUMERIC(14,2)   NOT NULL CHECK (montantPaye >= 0),
     numeroFacture   VARCHAR(50)     NOT NULL,
-    FOREIGN KEY (numeroFacture) REFERENCES Facture(numeroFacture)
+    FOREIGN KEY (numeroFacture) REFERENCES Facture(numeroFacture) ON DELETE CASCADE
 );
 
 -- INSERT INTO 
