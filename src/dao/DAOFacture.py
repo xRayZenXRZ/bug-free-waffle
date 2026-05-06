@@ -13,8 +13,8 @@ class DAOFacture:
         return DAOFacture.unique_instance
 
     def insert_facture(self, facture):
-        sql = "INSERT INTO Facture (numeroFacture ,dateEmission, montatTotal, etat, numeroContrat) VALUES (%s ,%s, %s, %s, %s)"
-        values = (facture.get_date_emission(), facture.get_montant_total(),
+        sql = "INSERT INTO Facture (numeroFacture, dateEmission, montantTotal, etat, numeroContrat) VALUES (%s, %s, %s, %s, %s)"
+        values = (facture.get_numero_facture(), facture.get_date_emission(), facture.get_montant_total(),
                   facture.get_etat(), facture.get_numero_contrat())
         try:
             connection = DAOSession.get_connexion()
@@ -42,6 +42,7 @@ class DAOFacture:
             connection = DAOSession.get_connexion()
             cursor = connection.cursor()
             cursor.execute(sql, values)
+            connection.commit()
             return True
         except Error as e:
             print("\n<--------------------------------------->")
@@ -84,6 +85,7 @@ class DAOFacture:
             connection = DAOSession.get_connexion()
             cursor = connection.cursor()
             cursor.execute(sql, values)
+            connection.commit()
             return True
         except Error as e:
             print("\n<--------------------------------------->")
@@ -124,7 +126,7 @@ class DAOFacture:
                     conditions.append("dateEmission = %s")
                     values.append(critere_date_emission)
                 if critere_montant_total is not None:
-                    conditions.append("montatTotal = %s")
+                    conditions.append("montantTotal = %s")
                     values.append(critere_montant_total)
                 if critere_etat is not None:
                     conditions.append("etat = %s")
