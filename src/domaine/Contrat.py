@@ -85,7 +85,7 @@ class Contrat:
     def enlever_devis(self, devis: Devis):
         devis2 = None
         for d in self.__les_devis:
-            if d.get_numero_devis() == devis.get_numero_contrat():
+            if d.get_numero_devis() == devis.get_numero_devis(): 
                 devis2 = d
                 break
         if devis2 is not None:
@@ -98,12 +98,12 @@ class Contrat:
     def enlever_prestation(self, prestation: Prestation):
         prestation2 = None
         for p in self.__les_prestations:
-            if p.get_numero_prestation() == prestation.get_numero_prestation():
+            if p.get_id_prestation() == prestation.get_id_prestation():
                 prestation2 = p
                 break
         if prestation2 is not None:
             self.__les_prestations.remove(prestation2)
-            prestation.set_numero_prestation(None)
+            prestation.set_id_prestation(None)
         else:
             raise Exception(
                 "Erreur_Prestation_inexistante_dans_les_prestations_du_contrat")
