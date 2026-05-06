@@ -463,8 +463,9 @@ class GestionDevis(tk.Frame):
 
                 ttk.Label(form, text="Montant global (€) :").grid(
                     row=6, column=0, sticky='w', pady=5)
-                entry_montant = ttk.Entry(form, width=30)
-                entry_montant.grid(row=6, column=1, pady=5, padx=5)
+                '''entry_montant.grid(row=6, column=1, pady=5, padx=5)'''
+                ttk.Label(form, text="0", foreground='blue').grid(
+                    row=6, column=1, sticky='w', pady=5)
 
                 ttk.Label(form, text="Conditions paiement :").grid(
                     row=7, column=0, sticky='w', pady=5)
@@ -478,11 +479,11 @@ class GestionDevis(tk.Frame):
 
                     duree = entry_duree.get().strip()
                     nb = entry_nb.get().strip()
-                    montant = entry_montant.get().strip()
+                    montant = 0
                     conditions = entry_conditions.get().strip()
                     debut = str(entry_debut.get_date())
 
-                    if not duree or not nb or not montant or not conditions:
+                    if not duree or not nb or not conditions:
                         tk.messagebox.showwarning(
                             "Champs manquants", "Veuillez remplir tous les champs")
                         return
