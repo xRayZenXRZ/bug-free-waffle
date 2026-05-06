@@ -4,7 +4,7 @@ import Interface_Tkinter.exportation
 
 
 class MainWindow(tk.Frame):
-    def __init__(self, parent, utilisateur, on_gestion_users_callback, on_gestion_client_callback, on_gestion_devis_callback, on_gestion_contrat_callback, on_gestion_prestation_callback):
+    def __init__(self, parent, utilisateur, on_gestion_users_callback, on_gestion_client_callback, on_gestion_devis_callback, on_gestion_contrat_callback, on_gestion_prestation_callback, on_gestion_facture_callback):
 
         super().__init__(parent)
         self.pack(fill="both", expand=True)
@@ -15,6 +15,8 @@ class MainWindow(tk.Frame):
         self.on_gestion_devis = on_gestion_devis_callback
         self.on_gestion_contrat = on_gestion_contrat_callback
         self.on_gestion_prestation_activite = on_gestion_prestation_callback
+        self.on_gestion_facture = on_gestion_facture_callback
+
 
         # Header avec infos utilisateur
         header = ttk.Frame(self)
@@ -74,9 +76,15 @@ class MainWindow(tk.Frame):
             text="📄 Gérer les prestation et activites",
             command=lambda: self.on_gestion_prestation_activite()
         ).pack(pady=10, ipadx=20, ipady=5)
+        
+        ttk.Button(
+            content,
+            text="📄 Gérer les factures",
+            command=lambda: self.on_gestion_facture()
+        ).pack(pady=10, ipadx=20, ipady=5)
 
         ttk.Button(
             content,
             text="icon Exportation",
-            command=Interface_Tkinter.exportation.exportation_combined_csv()
+            command=Interface_Tkinter.exportation.exportation_combined_csv
         ).pack(pady=10, ipadx=20, ipady=5)
