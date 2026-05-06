@@ -37,7 +37,7 @@ class Facture:
         if un_facture.get_les_paiements() : 
             raise Exception("Erreur_suppression_facture_avec_paiements")
         else :
-            Facture.leDAOFacture.delete_facture(un_facture)
+            return Facture.leDAOFacture.delete_facture(un_facture)
     
     def ajouter_paiement(self, paiement : Paiement ):
         if paiement.get_numero_facture() is None : 
