@@ -2,11 +2,11 @@
 --  Base : comart
 
 
-DROP DATABASE IF EXISTS comart;
-CREATE DATABASE IF NOT EXISTS comart
+DROP DATABASE IF EXISTS test_comart;
+CREATE DATABASE IF NOT EXISTS test_comart
     CHARACTER SET utf8mb4
     COLLATE utf8mb4_unicode_ci;
-USE comart;
+USE test_comart;
 
 
 --  1. TABLES

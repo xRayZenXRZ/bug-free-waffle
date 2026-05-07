@@ -1,7 +1,7 @@
 --  Com'Art – Requêtes SELECT utilisées dans les DAOs
 --  Ce script recense toutes les requêtes de type SELECT, présentes dans les classes DAO du projet.
 
-USE comart;
+USE test_comart;
 
 
 
