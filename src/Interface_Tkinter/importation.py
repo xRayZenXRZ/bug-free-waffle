@@ -35,7 +35,7 @@ def clean_database():
     DAOSession.clean_database()
 
 
-def importation_clients_csv(filename="src/Interface_Tkinter/exportation/client/clients.csv"):
+def importation_clients_csv(filename="src/Interface_Tkinter/data/client/clients.csv"):
     dao = DAOClient.get_instance()
     count = 0
     with open(filename, "r", encoding="utf-8") as f:
@@ -55,7 +55,7 @@ def importation_clients_csv(filename="src/Interface_Tkinter/exportation/client/c
     print(f"Clients importés : {count}")
 
 
-def importation_collaborateurs_csv(filename="src/Interface_Tkinter/exportation/collaborateur/collaborateurs.csv"):
+def importation_collaborateurs_csv(filename="src/Interface_Tkinter/data/collaborateur/collaborateurs.csv"):
     dao = DAOCollaborateur.get_instance()
     count = 0
     with open(filename, "r", encoding="utf-8") as f:
@@ -74,7 +74,7 @@ def importation_collaborateurs_csv(filename="src/Interface_Tkinter/exportation/c
     print(f"Collaborateurs importés : {count}")
 
 
-def importation_contrats_csv(filename="src/Interface_Tkinter/exportation/contrat/contrats.csv"):
+def importation_contrats_csv(filename="src/Interface_Tkinter/data/contrat/contrats.csv"):
     dao = DAOContrat.get_instance()
     count = 0
     with open(filename, "r", encoding="utf-8") as f:
@@ -94,7 +94,7 @@ def importation_contrats_csv(filename="src/Interface_Tkinter/exportation/contrat
     print(f"Contrats importés : {count}")
 
 
-def importation_devis_csv(filename="src/Interface_Tkinter/exportation/devis/devis.csv"):
+def importation_devis_csv(filename="src/Interface_Tkinter/data/devis/devis.csv"):
     dao = DAODevis.get_instance()
     count = 0
     with open(filename, "r", encoding="utf-8") as f:
@@ -117,7 +117,7 @@ def importation_devis_csv(filename="src/Interface_Tkinter/exportation/devis/devi
     print(f"Devis importés : {count}")
 
 
-def importation_prestations_csv(filename="src/Interface_Tkinter/exportation/prestation/prestations.csv"):
+def importation_prestations_csv(filename="src/Interface_Tkinter/data/prestation/prestations.csv"):
     dao = DAOPrestation.get_instance()
     count = 0
     with open(filename, "r", encoding="utf-8") as f:
@@ -137,7 +137,7 @@ def importation_prestations_csv(filename="src/Interface_Tkinter/exportation/pres
     print(f"Prestations importées : {count}")
 
 
-def importation_factures_csv(filename="src/Interface_Tkinter/exportation/facture/factures.csv"):
+def importation_factures_csv(filename="src/Interface_Tkinter/data/facture/factures.csv"):
     dao = DAOFacture.get_instance()
     count = 0
     with open(filename, "r", encoding="utf-8") as f:
@@ -154,7 +154,7 @@ def importation_factures_csv(filename="src/Interface_Tkinter/exportation/facture
     print(f"Factures importées : {count}")
 
 
-def importation_activites_csv(filename="src/Interface_Tkinter/exportation/activite/activites.csv"):
+def importation_activites_csv(filename="src/Interface_Tkinter/data/activite/activites.csv"):
     dao = DAOActivite.get_instance()
     count = 0
     with open(filename, "r", encoding="utf-8") as f:
@@ -174,7 +174,7 @@ def importation_activites_csv(filename="src/Interface_Tkinter/exportation/activi
     print(f"Activités importées : {count}")
 
 
-def importation_paiements_csv(filename="src/Interface_Tkinter/exportation/paiement/paiements.csv"):
+def importation_paiements_csv(filename="src/Interface_Tkinter/data/paiement/paiements.csv"):
     dao = DAOPaiement.get_instance()
     count = 0
     with open(filename, "r", encoding="utf-8") as f:
@@ -190,7 +190,7 @@ def importation_paiements_csv(filename="src/Interface_Tkinter/exportation/paieme
     print(f"Paiements importés : {count}")
 
 
-def importation_combined_csv(dossier="src/Interface_Tkinter/exportation"):
+def importation_combined_csv(dossier="src/Interface_Tkinter/data"):
     clean_database()
     importation_clients_csv(f"{dossier}/client/clients.csv")
     importation_contrats_csv(f"{dossier}/contrat/contrats.csv")
