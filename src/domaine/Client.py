@@ -84,6 +84,9 @@ class Client:
 
     def get_status_client(self):
         return self.__enum_status_client
+
+    def get_type_client(self):
+        return "ENTREPRISE" if self.__raison_sociale is not None else "PARTICULIER"
     
     def get_les_devis(self) : 
         return self.__les_devis

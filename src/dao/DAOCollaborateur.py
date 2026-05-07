@@ -14,26 +14,39 @@ class DAOCollaborateur:
         return DAOCollaborateur.unique_instance
 
     def insert_collaborateur(self, collaborateur):
-        traceback.print_stack()
-        print("Appel insert_collaborateur")
         try:
             connection = DAOSession.get_connexion()
             cursor = connection.cursor()
-
-            sql = """
-                INSERT INTO Collaborateur (nom, prenom, poste, telephonePro, numeroDevis, idUtilisateur)
-                VALUES (%s, %s, %s, %s, %s, %s)
-            """
-            cursor.execute(sql, (
-                collaborateur.get_nom(),
-                collaborateur.get_prenom(),
-                collaborateur.get_poste(),
-                collaborateur.get_telephone_pro(),
-                collaborateur.get_numero_devis(),
-                collaborateur.get_id_utilisateur(),
-            ))
+            id_val = collaborateur.get_id_collaborateur()
+            if id_val is not None:
+                sql = """
+                    INSERT INTO Collaborateur (idCollaborateur, nom, prenom, poste, telephonePro, numeroDevis, idUtilisateur)
+                    VALUES (%s, %s, %s, %s, %s, %s, %s)
+                """
+                cursor.execute(sql, (
+                    id_val,
+                    collaborateur.get_nom(),
+                    collaborateur.get_prenom(),
+                    collaborateur.get_poste(),
+                    collaborateur.get_telephone_pro(),
+                    collaborateur.get_numero_devis(),
+                    collaborateur.get_id_utilisateur(),
+                ))
+            else:
+                sql = """
+                    INSERT INTO Collaborateur (nom, prenom, poste, telephonePro, numeroDevis, idUtilisateur)
+                    VALUES (%s, %s, %s, %s, %s, %s)
+                """
+                cursor.execute(sql, (
+                    collaborateur.get_nom(),
+                    collaborateur.get_prenom(),
+                    collaborateur.get_poste(),
+                    collaborateur.get_telephone_pro(),
+                    collaborateur.get_numero_devis(),
+                    collaborateur.get_id_utilisateur(),
+                ))
             connection.commit()
-            cle = cursor.lastrowid
+            cle = id_val if id_val is not None else cursor.lastrowid
             cursor.close()
             return (True, cle)
         except Exception as e:

@@ -14,27 +14,43 @@ class DAOClient:
         return DAOClient.unique_instance
 
     def insert_client(self, client):
-        traceback.print_stack()
-        print("Appel insert_client")
         try:
             connection = DAOSession.get_connexion()
             cursor = connection.cursor()
-            
-            sql = """
-                INSERT INTO Client (nom, prenom, raisonSociale, adressePostale, telephone, email, statut)
-                VALUES (%s, %s, %s, %s, %s, %s, %s)
-            """
-            cursor.execute(sql, (
-                client.get_nom(),
-                client.get_prenom(),
-                client.get_raison_sociale(),
-                client.get_adresse(),
-                client.get_telephone(),
-                client.get_courriel(),
-                client.get_status_client()
-            ))
+            id_val = client.get_id_client()
+            if id_val is not None:
+                sql = """
+                    INSERT INTO Client (idClient, typeClient, nom, prenom, raisonSociale, adressePostale, telephone, email, statut)
+                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+                """
+                cursor.execute(sql, (
+                    id_val,
+                    client.get_type_client(),
+                    client.get_nom(),
+                    client.get_prenom(),
+                    client.get_raison_sociale(),
+                    client.get_adresse(),
+                    client.get_telephone(),
+                    client.get_courriel(),
+                    client.get_status_client()
+                ))
+            else:
+                sql = """
+                    INSERT INTO Client (typeClient, nom, prenom, raisonSociale, adressePostale, telephone, email, statut)
+                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+                """
+                cursor.execute(sql, (
+                    client.get_type_client(),
+                    client.get_nom(),
+                    client.get_prenom(),
+                    client.get_raison_sociale(),
+                    client.get_adresse(),
+                    client.get_telephone(),
+                    client.get_courriel(),
+                    client.get_status_client()
+                ))
             connection.commit()
-            cle = cursor.lastrowid
+            cle = id_val if id_val is not None else cursor.lastrowid
             cursor.close()
             return (True, cle)
         except Exception as e:

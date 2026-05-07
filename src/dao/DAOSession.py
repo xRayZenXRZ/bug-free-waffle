@@ -43,3 +43,15 @@ class DAOSession:
         DAOSession.get_connexion().close()
         DAOSession.connection = None
         print("Fermeture de la connexion à la base de données")
+
+    @staticmethod
+    def clean_database():
+        conn = DAOSession.get_connexion()
+        cur = conn.cursor()
+        for table in ["Activite", "Paiement", "Facture", "Prestation", "Collaborateur", "Devis", "Contrat", "Client"]:
+            cur.execute(f"DELETE FROM {table}")
+        for table in ["Activite", "Paiement", "Prestation", "Collaborateur", "Client"]:
+            cur.execute(f"ALTER TABLE {table} AUTO_INCREMENT = 1")
+        conn.commit()
+        cur.close()
+        print("Base de données nettoyée.")

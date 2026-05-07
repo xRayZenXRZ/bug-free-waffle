@@ -13,15 +13,19 @@ class DAOPaiement:
         return DAOPaiement.unique_instance
 
     def insert_paiement(self, paiement):
-        sql = "INSERT INTO Paiement (datePaiement, montantPaye, numeroFacture) VALUES (%s, %s, %s)"
-        values = (paiement.get_date(), paiement.get_montant(),
-                  paiement.get_numero_facture())
+        id_val = paiement.get_id_paiement()
+        if id_val is not None:
+            sql = "INSERT INTO Paiement (idPaiement, datePaiement, montantPaye, numeroFacture) VALUES (%s, %s, %s, %s)"
+            values = (id_val, paiement.get_date(), paiement.get_montant(), paiement.get_numero_facture())
+        else:
+            sql = "INSERT INTO Paiement (datePaiement, montantPaye, numeroFacture) VALUES (%s, %s, %s)"
+            values = (paiement.get_date(), paiement.get_montant(), paiement.get_numero_facture())
         try:
             connection = DAOSession.get_connexion()
             cursor = connection.cursor()
             cursor.execute(sql, values)
             connection.commit()
-            cle = cursor.lastrowid
+            cle = id_val if id_val is not None else cursor.lastrowid
             return cle
         except Error as e:
             print("\n<--------------------------------------->")

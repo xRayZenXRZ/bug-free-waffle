@@ -13,14 +13,21 @@ class DAOActivite:
         return DAOActivite.unique_instance
 
     def insert_activite(self, activite):
-        sql = "INSERT INTO Activite (libelleOperationnel, datePrevue, dateEffective, dureeEstimeeHeures, idCollaborateur, statut, idPrestation) VALUES (%s,%s,%s,%s,%s,%s,%s)"
-        values = (activite.get_libelle_operationnel(), activite.get_date_prevues(), activite.get_date_effective(
-        ), activite.get_duree_estimee(), activite.get_id_collaborateur(), activite.get_statut(), activite.get_id_prestation())
+        id_val = activite.get_id_activite()
+        if id_val is not None:
+            sql = "INSERT INTO Activite (idActivite, libelleOperationnel, datePrevue, dateEffective, dureeEstimeeHeures, idCollaborateur, statut, idPrestation) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)"
+            values = (id_val, activite.get_libelle_operationnel(), activite.get_date_prevues(), activite.get_date_effective(),
+                      activite.get_duree_estimee(), activite.get_id_collaborateur(), activite.get_statut(), activite.get_id_prestation())
+        else:
+            sql = "INSERT INTO Activite (libelleOperationnel, datePrevue, dateEffective, dureeEstimeeHeures, idCollaborateur, statut, idPrestation) VALUES (%s,%s,%s,%s,%s,%s,%s)"
+            values = (activite.get_libelle_operationnel(), activite.get_date_prevues(), activite.get_date_effective(),
+                      activite.get_duree_estimee(), activite.get_id_collaborateur(), activite.get_statut(), activite.get_id_prestation())
         try:
             connection = DAOSession.get_connexion()
             cursor = connection.cursor()
             cursor.execute(sql, values)
-            cle = cursor.lastrowid
+            connection.commit()
+            cle = id_val if id_val is not None else cursor.lastrowid
             return cle
         except Error as e:
             print("\n<--------------------------------------->")

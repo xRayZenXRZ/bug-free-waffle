@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 import Interface_Tkinter.exportation
+import Interface_Tkinter.importation
 
 
 class MainWindow(tk.Frame):
@@ -92,3 +93,10 @@ class MainWindow(tk.Frame):
             text="icon Exportation",
             command=Interface_Tkinter.exportation.exportation_combined_csv
         ).pack(pady=10, ipadx=20, ipady=5)
+
+        ttk.Button(
+            content,
+            text="icon Importation",
+            command=Interface_Tkinter.importation.importation_combined_csv
+        ).pack(pady=10, ipadx=20, ipady=5)
+        
