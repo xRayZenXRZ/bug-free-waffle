@@ -47,48 +47,48 @@ class MainWindow(tk.Frame):
         if utilisateur['role'] == 'ADMIN':
             ttk.Button(
                 content,
-                text="👥 Gérer les utilisateurs",
+                text="Gérer les utilisateurs",
                 command=lambda: self.on_gestion_users()
             ).pack(pady=10, ipadx=20, ipady=5)
 
         ttk.Button(
             content,
-            text="👤 Voir les clients",
+            text="Voir les clients",
             command=lambda: self.on_gestion_client()
         ).pack(pady=10, ipadx=20, ipady=5)
 
         ttk.Button(
             content,
-            text="📄 Gérer les devis",
+            text="Gérer les devis",
             command=lambda: self.on_gestion_devis()
         ).pack(pady=10, ipadx=20, ipady=5)
 
         ttk.Button(
             content,
-            text="📄 Gérer les contrats",
+            text="Gérer les contrats",
             command=lambda: self.on_gestion_contrat()
         ).pack(pady=10, ipadx=20, ipady=5)
 
         ttk.Button(
             content,
-            text="📄 Gérer les prestation et activites",
+            text="Gérer les prestation et activites",
             command=lambda: self.on_gestion_prestation_activite()
         ).pack(pady=10, ipadx=20, ipady=5)
         
         ttk.Button(
             content,
-            text="📄 Gérer les factures",
+            text="Gérer les factures",
             command=lambda: self.on_gestion_facture()
         ).pack(pady=10, ipadx=20, ipady=5)
 
         ttk.Button(
             content,
-            text="📄 Gérer les paiements",
+            text="Gérer les paiements",
             command=lambda: self.on_gestion_paiement()
         ).pack(pady=10, ipadx=20, ipady=5)
 
         ttk.Button(
             content,
-            text="icon Exportation",
+            text="Exportation",
             command=Interface_Tkinter.exportation.exportation_combined_csv
         ).pack(pady=10, ipadx=20, ipady=5)
