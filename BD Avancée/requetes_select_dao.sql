@@ -1,5 +1,4 @@
 --  Com'Art – Requêtes SELECT utilisées dans les DAOs
---  Ce script recense toutes les requêtes de type SELECT, présentes dans les classes DAO du projet.
 
 USE test_comart;
 
@@ -85,7 +84,7 @@ SELECT * FROM Contrat WHERE nbProductionsTotales = 12;
 
 SELECT * FROM Contrat WHERE periodicite = 'MENSUELLE';
 
-SELECT * FROM Contrat WHERE montantGlobal = 5000.00;
+SELECT * FROM Contrat WHERE montantGlobal = 1500.00;
 
 SELECT * FROM Contrat WHERE idClient = 1;
 
@@ -210,7 +209,7 @@ SELECT * FROM Facture WHERE etat = 'PAYEE';
 SELECT * FROM Facture WHERE numeroContrat = 'CONT-2026-001';
 
 -- combinaison
-SELECT * FROM Facture WHERE etat = 'EN_ATTENTE' AND numeroContrat = 'CONT-2026-002';
+SELECT * FROM Facture WHERE etat = 'PAYEE' AND numeroContrat = 'CONT-2026-002';
 
 
 
@@ -226,21 +225,21 @@ SELECT * FROM Paiement;
 -- select_paiement (critères dynamiques)
 SELECT * FROM Paiement WHERE idPaiement = 1;
 
-SELECT * FROM Paiement WHERE datePaiement = '2026-01-16';
+SELECT * FROM Paiement WHERE datePaiement = '2026-01-26';
 
 SELECT * FROM Paiement WHERE montantPaye = 1500.00;
 
-SELECT * FROM Paiement WHERE numeroFacture = 'FACT-2026-001';
+SELECT * FROM Paiement WHERE numeroFacture = 'FACT-2026-002';
 
 -- combinaison
-SELECT * FROM Paiement WHERE numeroFacture = 'FACT-2026-003' AND montantPaye = 1500.00;
+SELECT * FROM Paiement WHERE numeroFacture = 'FACT-2026-009' AND montantPaye = 1500.00;
 
 
 
 --  DAOUtilisateur  (src/dao/DAOUtilisateur.py)
 
 
--- authentifier : vérification identifiants (email + mot de passe)
+-- authentifier : vérification identifiants (email + mot de passe en clair)
 SELECT idUtilisateur, nom, prenom, email, role, statut
 FROM Utilisateur
 WHERE email = 'admin@comart.fr'
