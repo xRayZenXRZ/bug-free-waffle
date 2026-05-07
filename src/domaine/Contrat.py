@@ -17,6 +17,7 @@ class Contrat:
     leDAODevis = DAODevis.get_instance()
     leDAOFacture = DAOFacture.get_instance()
     leDAOPrestation = DAOPrestation.get_instance()
+    leDAOClient = DAOClient.get_instance()
 
     def __init__(self, numero_contrat: str = None, date_debut: str = None, duree: str = None, nb_productions_totales: int = None, periodicite: str = None, montant_global: float = None, condition_paiements: str = None, id_client: int = None):
 
@@ -31,6 +32,7 @@ class Contrat:
         self.__les_devis = []
         self.__les_factures = []
         self.__les_prestations = []
+        self.__les_clients = []
 
         if numero_contrat is not None:
             self.__numero_contrat = numero_contrat
@@ -45,16 +47,20 @@ class Contrat:
         un_devis = Devis("-1")
         une_facture = Facture("-1")
         une_prestation = Prestation(-1)
+        un_client = Client(-1)
 
         un_devis.set_numero_contrat(numero_contrat=numero_contrat)
         une_facture.set_numero_contrat(numero_contrat=numero_contrat)
         une_prestation.set_numero_contrat(numero_contrat=numero_contrat)
+        un_client.set_id_client(id_client=un_contrat.get_id_client())
 
         un_contrat.set_les_devis(Contrat.leDAODevis.select_devis(un_devis))
         un_contrat.set_les_factures(
             Contrat.leDAOFacture.select_facture(une_facture))
         un_contrat.set_les_prestations(
             Contrat.leDAOPrestation.select_prestation(une_prestation))
+        un_contrat.set_les_clients(
+            Contrat.leDAOClient.select_client(un_client))
         return un_contrat
 
     @staticmethod
@@ -81,6 +87,13 @@ class Contrat:
             prestation.set_numero_contrat(self.__numero_contrat)
         else:
             raise Exception("Erreur_prestation_a_deja_un_contrat")
+
+    def ajouter_client(self, client: Client):
+        if client.get_id_client() is None:
+            self.__les_clients.append(client)
+            client.set_id_client(self.__id_client)
+        else:
+            raise Exception("Erreur_client_a_deja_un_contrat")
 
     def enlever_devis(self, devis: Devis):
         devis2 = None
@@ -116,10 +129,23 @@ class Contrat:
                 break
         if facture2 is not None:
             self.__les_factures.remove(facture2)
-            facture.set_numero_facture(None)  # Si applicable
+            facture.set_numero_facture(None)
         else:
             raise Exception(
                 "Erreur_Facture_inexistante_dans_les_factures_du_contrat")
+
+    def enlever_client(self, client: Client):
+        client2 = None
+        for c in self.__les_clients:
+            if c.get_id_client() == client.get_id_client():
+                client2 = c
+                break
+        if client2 is not None:
+            self.__les_clients.remove(client2)
+            client.set_id_client(None)
+        else:
+            raise Exception(
+                "Erreur_Client_inexistant_dans_les_clients_du_contrat")
 
     # Getters
 
@@ -152,6 +178,9 @@ class Contrat:
 
     def get_les_prestations(self):
         return self.__les_prestations
+
+    def get_les_clients(self):
+        return self.__les_clients
 
     def get_id_client(self):
         return self.__id_client
@@ -229,6 +258,9 @@ class Contrat:
 
     def set_les_prestations(self, les_prestations):
         self.__les_prestations = les_prestations
+    
+    def set_les_clients(self, les_clients) :
+        self.__les_clients = les_clients
 
     def is_date(self, str_date: str) -> bool:
         format = "%Y-%m-%d"

@@ -52,7 +52,7 @@ class Prestation:
     def ajouter_activite(self, activite : Activite) :
         if activite.get_id_prestation() is None :
             self.__les_activites.append(activite)
-            activite.set_id_prestation(self.__numero_contrat)
+            activite.set_id_prestation(self.__id_prestation)
         else : 
             raise Exception("Erreur_activite_a_deja_un_prestation")
     

@@ -40,16 +40,15 @@ class DAOContrat:
 
         sql_contrat = "DELETE FROM Contrat WHERE numeroContrat = %s"
 
-
         values = (contrat.get_numero_contrat(),)
         try:
             connection = DAOSession.get_connexion()
-            cursor = connection.cursor()         
+            cursor = connection.cursor()
             cursor.execute(sql_contrat, values)
-            connection.commit() 
+            connection.commit()
             print("Succès total !")
             return True
-        
+
         except Error as e:
             print("\n<--------------------------------------->")
             print(f"Erreur lors de la suppression du Contrat : {e}")
@@ -83,13 +82,14 @@ class DAOContrat:
                 cursor.close()
 
     def update_contrat(self, contrat):
-        sql = "UPDATE Contrat SET dateDebut = %s, duree = %s, nbProductionsTotales = %s, periodicite = %s, montantGlobal = %s, conditionPaiement = %s, idClient = %s WHERE numeroContrat = %s"
+        sql = "UPDATE Contrat SET dateDebut = %s, duree = %s, nbProductionsTotales = %s, periodicite = %s, montantGlobal = %s, conditionsPaiement = %s, idClient = %s WHERE numeroContrat = %s"
         values = (contrat.get_date_debut(), contrat.get_duree(), contrat.get_nb_productions_totales(), contrat.get_periodicite(
         ), contrat.get_montant_global(), contrat.get_condition_paiements(), contrat.get_id_client(), contrat.get_numero_contrat())
         try:
             connection = DAOSession.get_connexion()
             cursor = connection.cursor()
             cursor.execute(sql, values)
+            connection.commit()
             return True
         except Error as e:
             print("\n<--------------------------------------->")
