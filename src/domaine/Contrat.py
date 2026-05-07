@@ -179,6 +179,9 @@ class Contrat:
     def get_les_prestations(self):
         return self.__les_prestations
 
+    def get_les_clients(self):
+        return self.__les_clients
+
     def get_id_client(self):
         return self.__id_client
 
@@ -255,6 +258,9 @@ class Contrat:
 
     def set_les_prestations(self, les_prestations):
         self.__les_prestations = les_prestations
+    
+    def set_les_clients(self, les_clients) :
+        self.__les_clients = les_clients
 
     def is_date(self, str_date: str) -> bool:
         format = "%Y-%m-%d"
