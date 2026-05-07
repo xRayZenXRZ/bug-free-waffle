@@ -89,6 +89,7 @@ class DAOContrat:
             connection = DAOSession.get_connexion()
             cursor = connection.cursor()
             cursor.execute(sql, values)
+            connection.commit()
             return True
         except Error as e:
             print("\n<--------------------------------------->")
