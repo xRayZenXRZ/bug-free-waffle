@@ -36,6 +36,7 @@ class Prestation:
         self.__numero_contrat = numero_contrat
 
         self.__les_activites = []
+        self.__id_prestation = None
 
         if id_prestation is not None:
             self.__id_prestation = id_prestation

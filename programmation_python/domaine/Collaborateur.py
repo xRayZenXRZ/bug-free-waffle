@@ -21,6 +21,7 @@ class Collaborateur:
         self.__id_utilisateur = id_utilisateur
 
         self.__les_activites = []
+        self.__id_collaborateur = None
 
         if id_collaborateur is not None :
             self.__id_collaborateur = id_collaborateur

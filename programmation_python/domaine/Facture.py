@@ -24,9 +24,11 @@ class Facture:
         self.__numero_contrat = numero_contrat
 
         self.__les_paiements = []
-        if numero_facture is not None : 
+        self.__numero_facture = None
+
+        if numero_facture is not None :
             self.__numero_facture = numero_facture
-        else : 
+        else :
             self.__numero_facture = Facture.leDAOFacture.insert_facture(self)
 
     #methode statiques : 

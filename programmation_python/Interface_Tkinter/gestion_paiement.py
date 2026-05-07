@@ -238,10 +238,9 @@ class GestionPaiement(tk.Frame):
                     f"Erreur ! Vous essayez d'enregistrer {montant_f} € mais il ne reste que {facture_selectionnee['reste_a_payer']} € à payer.")
                 return
 
-            nouveau = Paiement(-1, str(date_paiement), montant_f, num_facture)
-            
-            succes = DAOPaiement.get_instance().insert_paiement(nouveau)
-            if succes and succes != -1:
+            nouveau = Paiement(None, str(date_paiement), montant_f, num_facture)
+
+            if nouveau.get_id_paiement() and nouveau.get_id_paiement() != -1:
                 tk.messagebox.showinfo("Succès", "Paiement enregistré avec succès !")
                 popup.destroy()
                 self.afficher_paiements()

@@ -14,6 +14,7 @@ class Paiement:
         self.__date = date
         self.__montant = montant
         self.__numero_Facture = numero_Facture
+        self.__id_paiement = None
 
         if id_paiement is not None:
             self.__id_paiement = id_paiement

@@ -301,17 +301,8 @@ class GestionClient(tk.Frame):
 
 
     def exportation_client(self):
-        selection = self.tree.selection()
-        if not selection:
-            tk.messagebox.showwarning("Aucune sélection", "Veuillez sélectionner un client")
-            return
-
-        values = self.tree.item(selection[0])['values']
-        id_client = values[0]
-
-        from domaine.Client import Client
-        c = Client(id_client, "", "", "", "", "", "", "")
-        exportation_clients_csv(c)
+        exportation_clients_csv()
+        tk.messagebox.showinfo("Exportation", "Clients exportés avec succès !")
 
     # ------------------------------------------------------------------ #
 

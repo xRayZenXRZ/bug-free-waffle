@@ -210,10 +210,12 @@ def importation_paiements_csv(filename=None):
 
 
 def importation_combined_csv(dossier=None):
+    from Interface_Tkinter.exportation import exportation_all_csv
     if dossier is None:
         dossier = DATA_DIR
     else:
         dossier = Path(dossier)
+    exportation_all_csv()
     clean_database()
     importation_clients_csv(dossier / "client" / "clients.csv")
     importation_contrats_csv(dossier / "contrat" / "contrats.csv")

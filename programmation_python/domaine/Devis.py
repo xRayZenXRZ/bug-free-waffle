@@ -31,10 +31,11 @@ class Devis:
         self.__numero_contrat = numero_contrat
 
         self.__les_colloborateurs = []
+        self.__numero_devis = None
 
-        if numero_devis is not None : 
+        if numero_devis is not None :
             self.__numero_devis = numero_devis
-        else : 
+        else :
             self.__numero_devis = Devis.leDAODevis.insert_devis(self)
 
     #method statiques : 

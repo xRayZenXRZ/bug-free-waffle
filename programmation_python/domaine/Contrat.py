@@ -40,6 +40,7 @@ class Contrat:
         self.__les_factures = []
         self.__les_prestations = []
         self.__les_clients = []
+        self.__numero_contrat = None
 
         if numero_contrat is not None:
             self.__numero_contrat = numero_contrat

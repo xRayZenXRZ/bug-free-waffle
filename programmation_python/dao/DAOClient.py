@@ -52,10 +52,11 @@ class DAOClient:
             connection.commit()
             cle = id_val if id_val is not None else cursor.lastrowid
             cursor.close()
-            return (True, cle)
+            return cle
         except Exception as e:
             print(f"Erreur lors de la création du Client : {e}")
-            return (False, str(e))
+            connection.rollback()
+            return -1
 
     def delete_client(self, client):
         sql = "DELETE FROM Client WHERE idClient = %s"

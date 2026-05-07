@@ -24,7 +24,8 @@ class Client:
         self.__courriel = courriel
         self.__enum_status_client = enum_status_client
 
-        self.__les_devis = [] 
+        self.__les_devis = []
+        self.__id_client = None
 
         if id_client is not None:
             self.__id_client = id_client

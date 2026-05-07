@@ -269,12 +269,12 @@ class GestionFacture(tk.Frame):
     # ------------------------------------------------------------------ #
 
     def generer_factures_manquantes(self):
-        import re
         from dao.DAOContrat import DAOContrat
-        
+
         contrats = DAOContrat.get_instance().select_contrat()
         factures_existantes = DAOFacture.get_instance().select_facture()
-        
+        numeros_contrats_avec_facture = {f.get_numero_contrat() for f in factures_existantes}
+
         annee = date.today().year
         numeros = [f.get_numero_facture() for f in factures_existantes if f.get_numero_facture() and str(annee) in f.get_numero_facture()]
         if numeros:
@@ -284,29 +284,19 @@ class GestionFacture(tk.Frame):
                 dernier = 0
         else:
             dernier = 0
-            
+
         nouvelles = 0
-        
+
         for c in contrats:
             num_c = c.get_numero_contrat()
-            existantes = sum(1 for f in factures_existantes if f.get_numero_contrat() == num_c)
-            
-            texte_cond = str(c.get_condition_paiements() or "1")
-            match = re.search(r'\d+', texte_cond)
-            nb_attendues = int(match.group()) if match else 1
-            if nb_attendues <= 0: nb_attendues = 1
-            
-            a_creer = nb_attendues - existantes
-            if a_creer > 0:
-                montant_par_facture = int(c.get_montant_global() // nb_attendues)
-                debut = c.get_date_debut()
-                
-                for _ in range(a_creer):
-                    dernier += 1
-                    num_facture = f"FACT-{annee}-{dernier:03d}"
-                    nouvelle = Facture(num_facture, debut, montant_par_facture, 'EN_ATTENTE', num_c)
-                    DAOFacture.get_instance().insert_facture(nouvelle)
-                    nouvelles += 1
+            if num_c in numeros_contrats_avec_facture:
+                continue
+
+            dernier += 1
+            num_facture = f"FACT-{annee}-{dernier:03d}"
+            nouvelle = Facture(num_facture, c.get_date_debut(), int(c.get_montant_global()), 'EN_ATTENTE', num_c)
+            DAOFacture.get_instance().insert_facture(nouvelle)
+            nouvelles += 1
                     
         if nouvelles > 0:
             tk.messagebox.showinfo("Succès", f"{nouvelles} nouvelle(s) facture(s) générée(s) avec succès !")

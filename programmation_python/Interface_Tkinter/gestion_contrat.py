@@ -371,7 +371,7 @@ class GestionContrat(tk.Frame):
 
         ttk.Label(form, text="Type :").grid(row=2, column=0, sticky='w', pady=5)
         combo_type = ttk.Combobox(form, width=28, state='readonly')
-        combo_type['values'] = ('PHOTO', 'VIDEO', 'MIXTE')
+        combo_type['values'] = ('COMM_REGULIERE', 'MARIAGE', 'EVENT_PRO', 'AUTRE')
         combo_type.current(0)
         combo_type.grid(row=2, column=1, pady=5, padx=5)
 
@@ -546,7 +546,7 @@ class GestionContrat(tk.Frame):
 
         ttk.Label(form, text="Statut :").grid(row=4, column=0, sticky='w', pady=5)
         combo_statut = ttk.Combobox(form, width=28, state='readonly')
-        combo_statut['values'] = ('PLANIFIE', 'EN_COURS', 'TERMINE', 'ANNULE')
+        combo_statut['values'] = ('PREVUE', 'EN_COURS', 'TERMINEE')
         combo_statut.current(0)
         combo_statut.grid(row=4, column=1, pady=5, padx=5)
 

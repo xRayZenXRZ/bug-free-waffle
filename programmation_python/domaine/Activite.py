@@ -22,6 +22,7 @@ class Activite:
         self.__id_collaborateur = id_collaborateur
         self.__statut = statut
         self.__id_prestation = id_prestation
+        self.__id_activite = None
 
         if id_activite is not None:
             self.__id_activite = id_activite
