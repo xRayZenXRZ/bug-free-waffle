@@ -1,13 +1,13 @@
 {
     "python.envFile": "${workspaceFolder}/.env",
     "terminal.integrated.env.osx": {
-        "PYTHONPATH": "${workspaceFolder}/src"
+        "PYTHONPATH": "${workspaceFolder}/programmation_python"
     },
     "terminal.integrated.env.windows": {
-        "PYTHONPATH": "${workspaceFolder}/src"
+        "PYTHONPATH": "${workspaceFolder}/programmation_python"
     },
     "python.analysis.extraPaths": [
-        "${workspaceFolder}/src"
+        "${workspaceFolder}/programmation_python"
     ],
     "python.analysis.packageIndexDepths": [
         {

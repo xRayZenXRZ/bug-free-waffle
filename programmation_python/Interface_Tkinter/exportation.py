@@ -15,7 +15,7 @@ from domaine.Prestation import Prestation
 
 def exportation_clients_csv(client=None):
     clients = Client.leDAOClient.select_client(client)
-    fichier_csv = "src/Interface_Tkinter/data/client/clients.csv"
+    fichier_csv = "programmation_python/Interface_Tkinter/data/client/clients.csv"
 
     with open(fichier_csv, "w", newline="", encoding="utf-8") as f:
         writer = csv.writer(f, delimiter=";")
@@ -34,7 +34,7 @@ def exportation_clients_csv(client=None):
 
 def exportation_prestations_csv(prestation=None):
     prestations = Prestation.leDAOPrestation.select_prestation(prestation)
-    fichier_csv = "src/Interface_Tkinter/data/prestation/prestations.csv"
+    fichier_csv = "programmation_python/Interface_Tkinter/data/prestation/prestations.csv"
 
     with open(fichier_csv, "w", newline="", encoding="utf-8") as f:
         writer = csv.writer(f, delimiter=";")
@@ -52,7 +52,7 @@ def exportation_prestations_csv(prestation=None):
 
 def exportations_factures_csv(facture=None):
     factures = Facture.leDAOFacture.select_facture(facture)
-    fichier_csv = "src/Interface_Tkinter/data/facture/factures.csv"
+    fichier_csv = "programmation_python/Interface_Tkinter/data/facture/factures.csv"
 
     with open(fichier_csv, "w", newline="", encoding="utf-8") as f:
         writer = csv.writer(f, delimiter=";")
@@ -68,7 +68,7 @@ def exportations_factures_csv(facture=None):
 
 def exportation_contrat_csv(contrat=None):
     contrats = Contrat.leDAOContrat.select_contrat(contrat)
-    fichier_csv = "src/Interface_Tkinter/data/contrat/contrats.csv"
+    fichier_csv = "programmation_python/Interface_Tkinter/data/contrat/contrats.csv"
 
     with open(fichier_csv, "w", newline="", encoding="utf-8") as f:
         writer = csv.writer(f, delimiter=";")
@@ -86,7 +86,7 @@ def exportation_contrat_csv(contrat=None):
 
 def exportation_devis_csv(devis=None):
     liste_devis = Devis.leDAODevis.select_devis(devis)  # ← nom différent du paramètre
-    fichier_csv = "src/Interface_Tkinter/data/devis/devis.csv"
+    fichier_csv = "programmation_python/Interface_Tkinter/data/devis/devis.csv"
 
     with open(fichier_csv, "w", newline="", encoding="utf-8") as f:
         writer = csv.writer(f, delimiter=";")
@@ -106,7 +106,7 @@ def exportation_devis_csv(devis=None):
 
 def exportation_paiement_csv(paiement=None):
     paiements = Paiement.leDAOPaiement.select_paiement(paiement)
-    fichier_csv = "src/Interface_Tkinter/data/paiement/paiements.csv"
+    fichier_csv = "programmation_python/Interface_Tkinter/data/paiement/paiements.csv"
 
     with open(fichier_csv, "w", newline="", encoding="utf-8") as f:
         writer = csv.writer(f, delimiter=";")
@@ -122,7 +122,7 @@ def exportation_paiement_csv(paiement=None):
 
 def exportation_activite_csv(activite=None):
     activites = Activite.leDAOActivite.select_activite(activite)
-    fichier_csv = "src/Interface_Tkinter/data/activite/activites.csv"
+    fichier_csv = "programmation_python/Interface_Tkinter/data/activite/activites.csv"
 
     with open(fichier_csv, "w", newline="", encoding="utf-8") as f:
         writer = csv.writer(f, delimiter=";")
@@ -140,7 +140,7 @@ def exportation_activite_csv(activite=None):
 
 def exportation_collaborateur_csv(collaborateur=None): 
     collaborateurs = Collaborateur.leDAOCollaborateur.select_collaborateur(collaborateur)
-    fichier_csv = "src/Interface_Tkinter/data/collaborateur/collaborateurs.csv"
+    fichier_csv = "programmation_python/Interface_Tkinter/data/collaborateur/collaborateurs.csv"
 
     with open(fichier_csv, "w", newline="", encoding="utf-8") as f:
         writer = csv.writer(f, delimiter=";")
@@ -171,7 +171,7 @@ def exportation_all_csv():
 #  Vues combinées
 
 def exportation_combined_csv():
-    dossier = "src/Interface_Tkinter/data"
+    dossier = "programmation_python/Interface_Tkinter/data"
 
     clients        = pd.read_csv(f"{dossier}/client/clients.csv",             sep=";", encoding="utf-8")
     contrats       = pd.read_csv(f"{dossier}/contrat/contrats.csv",           sep=";", encoding="utf-8")
@@ -253,13 +253,13 @@ def exportation_combined_csv():
 
 
 def exportation_contrats_clients_combined_csv(id_client: int = None):
-    chemin = "src/Interface_Tkinter/data/combined/contrats_clients.csv"
+    chemin = "programmation_python/Interface_Tkinter/data/combined/contrats_clients.csv"
     contrats_clients = pd.read_csv(chemin, sep=";", encoding="utf-8")
 
     if id_client is not None:
         contrats_clients = contrats_clients[contrats_clients["idClient"] == int(id_client)]
 
-    output_path = "src/Interface_Tkinter/data/combined/byclient/contrats_clients.csv"
+    output_path = "programmation_python/Interface_Tkinter/data/combined/byclient/contrats_clients.csv"
     contrats_clients.to_csv(output_path, index=False, sep=";", encoding="utf-8")
     print(f"Le fichier {output_path} via id_client a été créé avec succès.")
 

@@ -4,7 +4,7 @@ USE test_comart;
 
 
 
---  DAOClient  (src/dao/DAOClient.py)
+--  DAOClient  (programmation_python/dao/DAOClient.py)
 
 
 -- find_client : 
@@ -35,7 +35,7 @@ SELECT * FROM Client WHERE nom = 'Martin' AND statut = 'CLIENT';
 
 
 
---  DAOCollaborateur  (src/dao/DAOCollaborateur.py)
+--  DAOCollaborateur  (programmation_python/dao/DAOCollaborateur.py)
 
 
 -- find_collaborateur : 
@@ -64,7 +64,7 @@ SELECT * FROM Collaborateur WHERE nom = 'Dubois' AND poste = 'Responsable Vidéo
 
 
 
---  DAOContrat  (src/dao/DAOContrat.py)
+--  DAOContrat  (programmation_python/dao/DAOContrat.py)
 
 
 -- find_contrat : 
@@ -93,7 +93,7 @@ SELECT * FROM Contrat WHERE periodicite = 'MENSUELLE' AND idClient = 2;
 
 
 
---  DAODevis  (src/dao/DAODevis.py)
+--  DAODevis  (programmation_python/dao/DAODevis.py)
 
 
 -- find_devis : 
@@ -126,7 +126,7 @@ SELECT * FROM Devis WHERE statut = 'ACCEPTE' AND idClient = 2;
 
 
 
---  DAOPrestation  (src/dao/DAOPrestation.py)
+--  DAOPrestation  (programmation_python/dao/DAOPrestation.py)
 
 
 -- find_prestation : 
@@ -157,7 +157,7 @@ SELECT * FROM Prestation WHERE type = 'MARIAGE' AND numeroContrat = 'CONT-2026-0
 
 
 
---  DAOActivite  (src/dao/DAOActivite.py)
+--  DAOActivite  (programmation_python/dao/DAOActivite.py)
 
 
 -- find_activite : 
@@ -188,7 +188,7 @@ SELECT * FROM Activite WHERE statut = 'EN_COURS' AND idCollaborateur = 8;
 
 
 
---  DAOFacture  (src/dao/DAOFacture.py)
+--  DAOFacture  (programmation_python/dao/DAOFacture.py)
 
 
 -- find_facture : 
@@ -213,7 +213,7 @@ SELECT * FROM Facture WHERE etat = 'PAYEE' AND numeroContrat = 'CONT-2026-002';
 
 
 
---  DAOPaiement  (src/dao/DAOPaiement.py)
+--  DAOPaiement  (programmation_python/dao/DAOPaiement.py)
 
 
 -- find_paiement : 
@@ -236,7 +236,7 @@ SELECT * FROM Paiement WHERE numeroFacture = 'FACT-2026-009' AND montantPaye = 1
 
 
 
---  DAOUtilisateur  (src/dao/DAOUtilisateur.py)
+--  DAOUtilisateur  (programmation_python/dao/DAOUtilisateur.py)
 
 
 -- authentifier : vérification identifiants (email + mot de passe en clair)
