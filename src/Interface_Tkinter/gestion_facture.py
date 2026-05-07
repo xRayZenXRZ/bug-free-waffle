@@ -61,7 +61,7 @@ class GestionFacture(tk.Frame):
         ttk.Label(frame_droite, text="Liste des factures :",
                   font=('Arial', 12, 'bold')).pack(pady=5)
 
-        colonnes = ('Numéro Facture', 'Date Émission', 'Montant Total', 'État', 'Numéro Contrat')
+        colonnes = ('Numéro Facture', 'Date Émission', 'Montant Total', 'État', 'Numéro Contrat', 'Montant Restant')
         self.tree = ttk.Treeview(
             frame_droite, columns=colonnes, show='headings', height=15)
 
@@ -73,6 +73,7 @@ class GestionFacture(tk.Frame):
         self.tree.column('Montant Total', width=100, anchor='center')
         self.tree.column('État', width=100, anchor='center')
         self.tree.column('Numéro Contrat', width=120, anchor='center')
+        self.tree.column('Montant Restant', width=120, anchor='center')
 
         scrollbar_x = ttk.Scrollbar(
             frame_droite, orient='horizontal', command=self.tree.xview)
@@ -95,13 +96,36 @@ class GestionFacture(tk.Frame):
 
         facture_liste = DAOFacture.get_instance().select_facture()
 
+        from dao.DAOContrat import DAOContrat
+        from dao.DAOPaiement import DAOPaiement
+
+        # Tous les contrats et paiements
+        tous_contrats = {c.get_numero_contrat(): c for c in DAOContrat.get_instance().select_contrat()}
+        tous_paiements = DAOPaiement.get_instance().select_paiement()
+
+        # Lier chaque facture à son contrat (for each)
+        facture_vers_contrat = {f.get_numero_facture(): f.get_numero_contrat() for f in facture_liste}
+
+        # Calculer du total
+        paiements_par_contrat = {}
+        for p in tous_paiements:
+            num_c = facture_vers_contrat.get(p.get_numero_facture())
+            if num_c:
+                paiements_par_contrat[num_c] = paiements_par_contrat.get(num_c, 0) + p.get_montant()
+
         for f in facture_liste:
+            num_c = f.get_numero_contrat()
+            montant_contrat = tous_contrats[num_c].get_montant_global() if num_c in tous_contrats else 0
+            total_paye = paiements_par_contrat.get(num_c, 0)
+            montant_restant = montant_contrat - total_paye
+
             self.tree.insert('', 'end', values=(
                 f.get_numero_facture(),
                 f.get_date_emission(),
                 f"{f.get_montant_total()} €",
                 f.get_etat(),
                 f.get_numero_contrat(),
+                f"{montant_restant:.2f} €"
             ))
         print(f"{len(facture_liste)} facture(s) affichée(s)")
         
@@ -170,13 +194,13 @@ class GestionFacture(tk.Frame):
             nouvel_etat = combo_etat.get()
             
             try:
-                # On retire le symbole " €" pour récupérer le montant en float
+                #On retire le symbole "€" pour récupérer le montant en float
                 montant_str = str(values[2]).replace(' €', '')
                 montant = float(montant_str)
             except ValueError:
                 montant = 0.0
                 
-            # Reconstruction de la Facture avec ses nouvelles valeurs
+            #Reconstruction de la Facture avec ses nouvelles valeurs
             modifie = Facture(
                 numero_facture,
                 str(values[1]),
@@ -330,7 +354,7 @@ class GestionFacture(tk.Frame):
             montant_str = entry_montant.get().strip()
             etat = combo_etat.get()
 
-            # 1. Vérifier qu'un contrat a bien été sélectionné
+            #Vérifier qu'un contrat a bien été sélectionné
             if not num_contrat:
                 tk.messagebox.showwarning(
                     "Champs manquants", "Veuillez sélectionner un contrat")
@@ -352,7 +376,7 @@ class GestionFacture(tk.Frame):
             
             succes = DAOFacture.get_instance().insert_facture(nouveau)
             
-            # 2. Sécuriser la vérification du retour du DAO
+            #Sécuriser la vérification du retour du DAO
             if succes and succes != -1:
                 tk.messagebox.showinfo("Succès", "Facture créée avec succès !")
                 popup.destroy()
@@ -376,5 +400,6 @@ class GestionFacture(tk.Frame):
                 f"Date d'émission    : {values[1]}\n"
                 f"Montant Total    : {values[2]}\n"
                 f"État    : {values[3]}\n"
-                f"Numéro Contrat    : {values[4]}"
+                f"Numéro Contrat    : {values[4]}\n"
+                f"Montant Restant    : {values[5]}"
             ))
