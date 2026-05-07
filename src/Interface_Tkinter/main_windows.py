@@ -4,7 +4,7 @@ import Interface_Tkinter.exportation
 
 
 class MainWindow(tk.Frame):
-    def __init__(self, parent, utilisateur, on_gestion_users_callback, on_gestion_client_callback, on_gestion_devis_callback, on_gestion_contrat_callback, on_gestion_prestation_callback, on_gestion_facture_callback):
+    def __init__(self, parent, utilisateur, on_gestion_users_callback, on_gestion_client_callback, on_gestion_devis_callback, on_gestion_contrat_callback, on_gestion_prestation_callback, on_gestion_facture_callback, on_gestion_paiement_callback):
 
         super().__init__(parent)
         self.pack(fill="both", expand=True)
@@ -16,9 +16,9 @@ class MainWindow(tk.Frame):
         self.on_gestion_contrat = on_gestion_contrat_callback
         self.on_gestion_prestation_activite = on_gestion_prestation_callback
         self.on_gestion_facture = on_gestion_facture_callback
+        self.on_gestion_paiement = on_gestion_paiement_callback
 
 
-        # Header avec infos utilisateur
         header = ttk.Frame(self)
         header.pack(fill='x', pady=10)
 
@@ -35,7 +35,6 @@ class MainWindow(tk.Frame):
             foreground='blue'
         ).pack()
 
-        # Zone de contenu
         content = ttk.Frame(self)
         content.pack(fill='both', expand=True, padx=50, pady=20)
 
@@ -45,7 +44,6 @@ class MainWindow(tk.Frame):
             font=('Arial', 14)
         ).pack(pady=30)
 
-        # Boutons selon le rôle
         if utilisateur['role'] == 'ADMIN':
             ttk.Button(
                 content,
@@ -81,6 +79,12 @@ class MainWindow(tk.Frame):
             content,
             text="📄 Gérer les factures",
             command=lambda: self.on_gestion_facture()
+        ).pack(pady=10, ipadx=20, ipady=5)
+
+        ttk.Button(
+            content,
+            text="📄 Gérer les paiements",
+            command=lambda: self.on_gestion_paiement()
         ).pack(pady=10, ipadx=20, ipady=5)
 
         ttk.Button(

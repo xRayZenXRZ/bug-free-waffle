@@ -7,6 +7,7 @@ from Interface_Tkinter.gestion_devis import GestionDevis
 from Interface_Tkinter.gestion_contrat import GestionContrat
 from Interface_Tkinter.gestion_prestations_devis import GestionPrestationActivite
 from Interface_Tkinter.gestion_facture import GestionFacture
+from Interface_Tkinter.gestion_paiement import GestionPaiement
 
 class App:
     def __init__(self, root):
@@ -36,7 +37,7 @@ class App:
 
         # Afficher main window
         MainWindow(self.container, utilisateur,
-                   self.afficher_gestion_utilisateurs,self.afficher_gestion_clients,self.afficher_gestion_devis, self.afficher_gestion_contrat,self.afficher_gestion_prestations_activites, self.afficher_gestion_factures)
+                   self.afficher_gestion_utilisateurs,self.afficher_gestion_clients,self.afficher_gestion_devis, self.afficher_gestion_contrat,self.afficher_gestion_prestations_activites, self.afficher_gestion_factures, self.afficher_gestion_paiements)
 
     def afficher_gestion_utilisateurs(self):
         # Nettoyer le container
@@ -86,6 +87,13 @@ class App:
         #Afficher la page de gestion
         GestionFacture(self.container,self.utilisateur_connecte,on_back=lambda:self.afficher_main_window(self.utilisateur_connecte))
         
+    def afficher_gestion_paiements(self):
+        # Nettoyer le container
+        for widget in self.container.winfo_children():
+            widget.destroy()
+            
+        #Afficher la page de gestion
+        GestionPaiement(self.container,self.utilisateur_connecte,on_back=lambda:self.afficher_main_window(self.utilisateur_connecte))
         
         
         
