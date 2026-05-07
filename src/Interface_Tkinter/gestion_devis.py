@@ -40,19 +40,19 @@ class GestionDevis(tk.Frame):
 
         ttk.Label(frame_gauche, text="Actions :", font=(
             'Arial', 14, 'bold')).pack(pady=10)
-        ttk.Button(frame_gauche, text="➕ Créer un devis",
+        ttk.Button(frame_gauche, text="Créer un devis",
                    command=self.ajouter_devis).pack(pady=5, fill='x')
-        ttk.Button(frame_gauche, text="👁️ Voir les devis",
+        ttk.Button(frame_gauche, text="Voir les devis",
                    command=self.afficher_devis).pack(pady=5, fill='x')
-        ttk.Button(frame_gauche, text="✏️ Modifier statut",
+        ttk.Button(frame_gauche, text="Modifier statut",
                    command=self.modifier_statut).pack(pady=5, fill='x')
         if utilisateur['role'] == 'ADMIN':
-            ttk.Button(frame_gauche, text="🗑️ Supprimer devis",
+            ttk.Button(frame_gauche, text="Supprimer devis",
                        command=self.supprimer_devis).pack(pady=5, fill='x')
 
         if on_back:
             ttk.Label(frame_gauche, text="").pack(expand=True)
-            ttk.Button(frame_gauche, text="🏠 Accueil", command=on_back).pack(
+            ttk.Button(frame_gauche, text="Accueil", command=on_back).pack(
                 pady=5, fill='x', side='bottom')
 
         # COLONNE DROITE : Tableau
@@ -210,10 +210,10 @@ class GestionDevis(tk.Frame):
                 client_var.set(f"{valeurs[0]} - {nom_affiche}")
                 popup_client.destroy()
 
-            ttk.Button(popup_client, text="✓ Choisir",
+            ttk.Button(popup_client, text="Choisir",
                        command=confirmer).pack(pady=10)
 
-        ttk.Button(form_frame, text="👤 Choisir un client",
+        ttk.Button(form_frame, text="Choisir un client",
                    command=choisir_client).grid(row=1, column=2, padx=5)
 
         ttk.Label(form_frame, text="Description :").grid(
@@ -296,9 +296,9 @@ class GestionDevis(tk.Frame):
                 tk.messagebox.showerror(
                     "Erreur", "Impossible de créer le devis")
 
-        ttk.Button(btn_frame, text="✓ Valider",
+        ttk.Button(btn_frame, text="Valider",
                    command=valider).pack(side='left', padx=5)
-        ttk.Button(btn_frame, text="✗ Annuler",
+        ttk.Button(btn_frame, text="Annuler",
                    command=popup.destroy).pack(side='left', padx=5)
 
     # ------------------------------------------------------------------ #
@@ -515,9 +515,9 @@ class GestionDevis(tk.Frame):
                         tk.messagebox.showerror(
                             "Erreur", "Impossible de créer le contrat")
 
-                ttk.Button(btn_frame_creer, text="✓ Valider",
+                ttk.Button(btn_frame_creer, text="Valider",
                            command=valider_contrat).pack(side='left', padx=5)
-                ttk.Button(btn_frame_creer, text="✗ Annuler",
+                ttk.Button(btn_frame_creer, text="Annuler",
                            command=popup_creer.destroy).pack(side='left', padx=5)
 
             def confirmer():
@@ -532,9 +532,9 @@ class GestionDevis(tk.Frame):
 
             btn_frame_contrat = ttk.Frame(popup_contrat)
             btn_frame_contrat.pack(pady=10)
-            ttk.Button(btn_frame_contrat, text="✓ Choisir ce contrat",
+            ttk.Button(btn_frame_contrat, text="Choisir ce contrat",
                        command=confirmer).pack(side='left', padx=5)
-            ttk.Button(btn_frame_contrat, text="➕ Créer un contrat",
+            ttk.Button(btn_frame_contrat, text="Créer un contrat",
                        command=creer_contrat).pack(side='left', padx=5)
 
         def valider():
@@ -548,9 +548,9 @@ class GestionDevis(tk.Frame):
 
             _sauvegarder(values[7] or None, date_acceptation, nouveau_statut)
 
-        ttk.Button(btn_frame, text="✓ Valider",
+        ttk.Button(btn_frame, text="Valider",
                    command=valider).pack(side='left', padx=5)
-        ttk.Button(btn_frame, text="✗ Annuler",
+        ttk.Button(btn_frame, text="Annuler",
                    command=popup.destroy).pack(side='left', padx=5)
 
     # ------------------------------------------------------------------ #

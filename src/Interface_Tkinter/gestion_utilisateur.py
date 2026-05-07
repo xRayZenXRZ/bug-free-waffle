@@ -43,31 +43,31 @@ class GestionUtilisateur(tk.Frame):
 
         ttk.Button(
             frame_gauche,
-            text="➕ Ajouter utilisateur",
+            text="Ajouter utilisateur",
             command=self.ajouter_utilisateurs
         ).pack(pady=5, fill='x')
 
         ttk.Button(
             frame_gauche,
-            text="👁️ Voir les utilisateurs",
+            text="Voir les utilisateurs",
             command=self.afficher_utilisateurs
         ).pack(pady=5, fill='x')
 
         ttk.Button(
             frame_gauche,
-            text="🗑️ Supprimer utilisateur",
+            text="Supprimer utilisateur",
             command=self.supprimer_utilisateur
         ).pack(pady=5, fill='x')
 
         ttk.Button(
             frame_gauche,
-            text="❌ Désactiver compte utilisateur",
+            text="Désactiver compte utilisateur",
             command=self.desactiver_utilisateur
         ).pack(pady=5, fill='x')
 
         ttk.Button(
             frame_gauche,
-            text="✅ Activer compte utilisateur",
+            text="Activer compte utilisateur",
             command=self.activer_utilisateur
         ).pack(pady=5, fill='x')
         
@@ -75,7 +75,7 @@ class GestionUtilisateur(tk.Frame):
             ttk.Label(frame_gauche, text="").pack(expand=True)
             ttk.Button(
                 frame_gauche,
-                text="🏠 Accueil",
+                text="Accueil",
                 command=on_back
             ).pack(pady=5, fill='x', side='bottom')
 
@@ -239,9 +239,9 @@ class GestionUtilisateur(tk.Frame):
             popup.destroy()
 
         # Boutons Valider et Annuler
-        ttk.Button(btn_frame, text="✓ Valider",
+        ttk.Button(btn_frame, text="Valider",
                    command=valider).pack(side='left', padx=5)
-        ttk.Button(btn_frame, text="✗ Annuler",
+        ttk.Button(btn_frame, text="Annuler",
                    command=annuler).pack(side='left', padx=5)
 
         # Focus sur le premier champ
