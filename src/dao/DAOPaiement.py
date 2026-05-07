@@ -15,11 +15,12 @@ class DAOPaiement:
     def insert_paiement(self, paiement):
         sql = "INSERT INTO Paiement (datePaiement, montantPaye, numeroFacture) VALUES (%s, %s, %s)"
         values = (paiement.get_date(), paiement.get_montant(),
-                  paiement.get_numero_Facture())
+                  paiement.get_numero_facture())
         try:
             connection = DAOSession.get_connexion()
             cursor = connection.cursor()
             cursor.execute(sql, values)
+            connection.commit()
             cle = cursor.lastrowid
             return cle
         except Error as e:
@@ -41,6 +42,7 @@ class DAOPaiement:
             connection = DAOSession.get_connexion()
             cursor = connection.cursor()
             cursor.execute(sql, values)
+            connection.commit()
             return True
         except Error as e:
             print("\n<--------------------------------------->")
@@ -82,6 +84,7 @@ class DAOPaiement:
             connection = DAOSession.get_connexion()
             cursor = connection.cursor()
             cursor.execute(sql, values)
+            connection.commit()
             return True
         except Error as e:
             print("\n<--------------------------------------->")
