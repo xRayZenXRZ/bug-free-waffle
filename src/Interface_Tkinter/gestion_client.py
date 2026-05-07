@@ -35,20 +35,20 @@ class GestionClient(tk.Frame):
         frame_gauche.pack(side='left', fill='both', padx=10)
         
         ttk.Label(frame_gauche, text="Actions :", font=('Arial', 14, 'bold')).pack(pady=10)
-        ttk.Button(frame_gauche, text="➕ Ajouter client",   command=self.ajouter_client).pack(pady=5, fill='x')
-        ttk.Button(frame_gauche, text="👁️ Voir les clients", command=self.afficher_clients).pack(pady=5, fill='x')
-        ttk.Button(frame_gauche, text="✏️ Modifier client",  command=self.modifier_client).pack(pady=5, fill='x')
-        ttk.Button(frame_gauche, text="icon exportation",  command=self.exportation_client).pack(pady=5, fill='x')
+        ttk.Button(frame_gauche, text="Ajouter client",   command=self.ajouter_client).pack(pady=5, fill='x')
+        ttk.Button(frame_gauche, text="Voir les clients", command=self.afficher_clients).pack(pady=5, fill='x')
+        ttk.Button(frame_gauche, text="Modifier client",  command=self.modifier_client).pack(pady=5, fill='x')
+        ttk.Button(frame_gauche, text="Exportation",  command=self.exportation_client).pack(pady=5, fill='x')
 
 
         if utilisateur['role'] == 'ADMIN':
-            ttk.Button(frame_gauche, text="🗑️ Supprimer client", command=self.supprimer_client).pack(pady=5, fill='x')
+            ttk.Button(frame_gauche, text="Supprimer client", command=self.supprimer_client).pack(pady=5, fill='x')
             
         if on_back:
             ttk.Label(frame_gauche, text="").pack(expand=True)
             ttk.Button(
                 frame_gauche,
-                text="🏠 Accueil",
+                text="Accueil",
                 command=on_back
             ).pack(pady=5, fill='x', side='bottom')
 
@@ -213,8 +213,8 @@ class GestionClient(tk.Frame):
             else:
                 tk.messagebox.showerror("Erreur", "Impossible de créer le client")
 
-        ttk.Button(btn_frame, text="✓ Valider",  command=valider).pack(side='left', padx=5)
-        ttk.Button(btn_frame, text="✗ Annuler", command=popup.destroy).pack(side='left', padx=5)
+        ttk.Button(btn_frame, text="Valider",  command=valider).pack(side='left', padx=5)
+        ttk.Button(btn_frame, text="Annuler", command=popup.destroy).pack(side='left', padx=5)
 
     # ------------------------------------------------------------------ #
 
@@ -268,8 +268,8 @@ class GestionClient(tk.Frame):
             else:
                 tk.messagebox.showerror("Erreur", "Impossible de modifier le statut")
 
-        ttk.Button(btn_frame, text="✓ Valider",  command=valider).pack(side='left', padx=5)
-        ttk.Button(btn_frame, text="✗ Annuler", command=popup.destroy).pack(side='left', padx=5)
+        ttk.Button(btn_frame, text="Valider",  command=valider).pack(side='left', padx=5)
+        ttk.Button(btn_frame, text="Annuler", command=popup.destroy).pack(side='left', padx=5)
 
     # ------------------------------------------------------------------ #
 

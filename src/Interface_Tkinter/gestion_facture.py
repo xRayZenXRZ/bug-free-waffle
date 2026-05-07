@@ -3,7 +3,6 @@ from tkinter import ttk
 from dao.DAOFacture import DAOFacture
 from domaine.Facture import Facture
 from datetime import date
-from tkcalendar import DateEntry
 
 
 class GestionFacture(tk.Frame):
@@ -12,7 +11,6 @@ class GestionFacture(tk.Frame):
         self.pack(fill="both", expand=True)
         self.utilisateur = utilisateur
 
-        # Header
         header = ttk.Frame(self)
         header.pack(fill='x', pady=10)
         ttk.Label(
@@ -38,21 +36,23 @@ class GestionFacture(tk.Frame):
         ttk.Label(frame_gauche, text="Actions :", font=(
             'Arial', 14, 'bold')).pack(pady=10)
 
-        ttk.Button(frame_gauche, text="👁️ Voir les factures",
+        ttk.Button(frame_gauche, text="Voir les factures",
                    command=self.afficher_facture).pack(pady=5, fill='x')
         
-        ttk.Button(frame_gauche, text="➕ Créer une facture",
-                   command=self.faire_facture).pack(pady=5, fill='x')
-        
-        ttk.Button(frame_gauche, text="✏️ Modifier état",
+        ttk.Button(frame_gauche, text="Modifier état",
                    command=self.changer_etat_facture).pack(pady=5, fill='x')
+        
+        ttk.Button(frame_gauche, text="Actualiser les factures",
+                   command=self.generer_factures_manquantes).pack(pady=5, fill='x')
        
         if utilisateur['role'] == 'ADMIN':
-            ttk.Button(frame_gauche, text="🗑️ Supprimer facture",
+            ttk.Button(frame_gauche, text="Supprimer facture",
                        command=self.supprimer_facture).pack(pady=5, fill='x')
+            ttk.Button(frame_gauche, text="Supprimer toutes les factures",
+                       command=self.supprimer_toutes_factures).pack(pady=5, fill='x')
         if on_back:
             ttk.Label(frame_gauche, text="").pack(expand=True)
-            ttk.Button(frame_gauche, text="🏠 Accueil", command=on_back).pack(
+            ttk.Button(frame_gauche, text="Accueil", command=on_back).pack(
                 pady=5, fill='x', side='bottom')
 
         # COLONNE DROITE : Tableau
@@ -96,36 +96,43 @@ class GestionFacture(tk.Frame):
 
         facture_liste = DAOFacture.get_instance().select_facture()
 
-        from dao.DAOContrat import DAOContrat
         from dao.DAOPaiement import DAOPaiement
 
-        # Tous les contrats et paiements
-        tous_contrats = {c.get_numero_contrat(): c for c in DAOContrat.get_instance().select_contrat()}
         tous_paiements = DAOPaiement.get_instance().select_paiement()
 
-        # Lier chaque facture à son contrat (for each)
-        facture_vers_contrat = {f.get_numero_facture(): f.get_numero_contrat() for f in facture_liste}
-
-        # Calculer du total
-        paiements_par_contrat = {}
+        # Calculer le total payer par facture
+        paiements_par_facture = {}
         for p in tous_paiements:
-            num_c = facture_vers_contrat.get(p.get_numero_facture())
-            if num_c:
-                paiements_par_contrat[num_c] = paiements_par_contrat.get(num_c, 0) + p.get_montant()
+            num_f = p.get_numero_facture()
+            if num_f:
+                paiements_par_facture[num_f] = paiements_par_facture.get(num_f, 0) + p.get_montant()
 
         for f in facture_liste:
-            num_c = f.get_numero_contrat()
-            montant_contrat = tous_contrats[num_c].get_montant_global() if num_c in tous_contrats else 0
-            total_paye = paiements_par_contrat.get(num_c, 0)
-            montant_restant = montant_contrat - total_paye
+            num_f = f.get_numero_facture()
+            total_paye = paiements_par_facture.get(num_f, 0)
+            
+            # Montant restant = Montant total de la facture - paiements, 0 minimum
+            montant_restant = max(0, f.get_montant_total() - total_paye)
+            
+            # On détermine l'état en fonction du montant restant
+            if montant_restant == 0:
+                etat_logique = "PAYEE"
+            elif montant_restant < f.get_montant_total():
+                etat_logique = "PARTIELLEMENT_PAYEE"
+            else:
+                etat_logique = "EN_ATTENTE"
+                
+            # On met à jour l'état si nécessaire
+            if f.get_etat() not in ["ANNULEE", "EN_RETARD"] and f.get_etat() != etat_logique:
+                f.set_etat(etat_logique)
 
             self.tree.insert('', 'end', values=(
                 f.get_numero_facture(),
                 f.get_date_emission(),
-                f"{f.get_montant_total()} €",
+                f"{int(f.get_montant_total())} €",
                 f.get_etat(),
                 f.get_numero_contrat(),
-                f"{montant_restant:.2f} €"
+                f"{int(montant_restant)} €"
             ))
         print(f"{len(facture_liste)} facture(s) affichée(s)")
         
@@ -156,6 +163,26 @@ class GestionFacture(tk.Frame):
 
     # ------------------------------------------------------------------ #
     
+    def supprimer_toutes_factures(self):
+        reponse = tk.messagebox.askyesno(
+            "Avertissement critique", "Voulez-vous vraiment supprimer TOUTES les factures ?\n\nCette action est irréversible.")
+
+        if reponse:
+            factures = DAOFacture.get_instance().select_facture()
+            erreurs = 0
+            for f in factures:
+                succes = DAOFacture.get_instance().delete_facture(f)
+                if not succes:
+                    erreurs += 1
+            
+            self.afficher_facture()
+            if erreurs == 0:
+                tk.messagebox.showinfo("Succès", "Toutes les factures ont été supprimées.")
+            else:
+                tk.messagebox.showwarning("Erreur partielle", f"{erreurs} facture(s) n'ont pas pu être supprimée(s).")
+
+    # ------------------------------------------------------------------ #
+    
     def changer_etat_facture(self):
         selection = self.tree.selection()
         if not selection:
@@ -183,7 +210,7 @@ class GestionFacture(tk.Frame):
         ttk.Label(form_frame, text="État :").grid(
             row=0, column=0, sticky='w', pady=5)
         combo_etat = ttk.Combobox(form_frame, width=28, state='readonly')
-        combo_etat['values'] = ('EN_ATTENTE', 'PAYEE', 'ANNULEE', 'EN_RETARD')
+        combo_etat['values'] = ('EN_ATTENTE', 'PAYEE', 'PARTIELLEMENT_PAYEE', 'ANNULEE', 'EN_RETARD')
         combo_etat.set(etat_actuel)
         combo_etat.grid(row=0, column=1, pady=5, padx=5)
 
@@ -194,13 +221,11 @@ class GestionFacture(tk.Frame):
             nouvel_etat = combo_etat.get()
             
             try:
-                #On retire le symbole "€" pour récupérer le montant en float
                 montant_str = str(values[2]).replace(' €', '')
                 montant = float(montant_str)
             except ValueError:
                 montant = 0.0
                 
-            #Reconstruction de la Facture avec ses nouvelles valeurs
             modifie = Facture(
                 numero_facture,
                 str(values[1]),
@@ -219,174 +244,9 @@ class GestionFacture(tk.Frame):
                 tk.messagebox.showerror(
                     "Erreur", "Impossible de modifier l'état de la facture")
 
-        ttk.Button(btn_frame, text="✓ Valider",
+        ttk.Button(btn_frame, text="Valider",
                    command=valider).pack(side='left', padx=5)
-        ttk.Button(btn_frame, text="✗ Annuler",
-                   command=popup.destroy).pack(side='left', padx=5)
-
-    # ------------------------------------------------------------------ #
-
-    def faire_facture(self):
-        if hasattr(self, '_popup_ajout') and self._popup_ajout and self._popup_ajout.winfo_exists():
-            self._popup_ajout.focus()
-            return
-
-        popup = tk.Toplevel(self)
-        self._popup_ajout = popup
-        popup.title("Créer une facture")
-        popup.geometry("480x400")
-        popup.resizable(False, False)
-        popup.transient(self)
-        popup.grab_set()
-
-        def generer_numero():
-            annee = date.today().year
-            facture_liste = DAOFacture.get_instance().select_facture()
-            numeros = [
-                f.get_numero_facture() for f in facture_liste
-                if f.get_numero_facture() and str(annee) in f.get_numero_facture()
-            ]
-            if numeros:
-                dernier = max(numeros)
-                try:
-                    numero_seq = int(dernier.split('-')[-1]) + 1
-                except ValueError:
-                    numero_seq = 1
-            else:
-                numero_seq = 1
-            return f"FACT-{annee}-{numero_seq:03d}"
-
-        numero_auto = generer_numero()
-
-        ttk.Label(popup, text="Créer une nouvelle facture",
-                  font=('Arial', 14, 'bold')).pack(pady=15)
-
-        form_frame = ttk.Frame(popup)
-        form_frame.pack(padx=20, pady=10, fill='both', expand=True)
-
-        ttk.Label(form_frame, text="Numéro facture :").grid(
-            row=0, column=0, sticky='w', pady=5)
-        ttk.Label(form_frame, text=numero_auto, foreground='blue').grid(
-            row=0, column=1, sticky='w', pady=5, padx=5)
-
-        ttk.Label(form_frame, text="Contrat :").grid(
-            row=1, column=0, sticky='w', pady=5)
-        contrat_var = tk.StringVar(value="Aucun contrat sélectionné")
-        ttk.Label(form_frame, textvariable=contrat_var, foreground='blue').grid(
-            row=1, column=1, sticky='w', pady=5, padx=5)
-        contrat_selectionne = {'numero': None}
-
-        def choisir_contrat():
-            from dao.DAOContrat import DAOContrat
-            popup_contrat = tk.Toplevel(popup)
-            popup_contrat.title("Choisir un contrat")
-            popup_contrat.geometry("600x300")
-            popup_contrat.transient(popup)
-            popup_contrat.grab_set()
-
-            ttk.Label(popup_contrat, text="Sélectionnez un contrat :",
-                      font=('Arial', 12, 'bold')).pack(pady=10)
-
-            cols = ('Numéro', 'Date début', 'Durée', 'Montant', 'Client ID')
-            tree_contrat = ttk.Treeview(
-                popup_contrat, columns=cols, show='headings', height=8)
-            for col in cols:
-                tree_contrat.heading(col, text=col)
-            tree_contrat.column('Numéro', width=110, anchor='center')
-            tree_contrat.column('Date début', width=90, anchor='center')
-            tree_contrat.column('Durée', width=70, anchor='center')
-            tree_contrat.column('Montant', width=80, anchor='center')
-            tree_contrat.column('Client ID', width=60, anchor='center')
-            tree_contrat.pack(fill='both', expand=True, padx=10)
-
-            contrats = DAOContrat.get_instance().select_contrat()
-            for c in contrats:
-                tree_contrat.insert('', 'end', values=(
-                    c.get_numero_contrat(),
-                    c.get_date_debut(),
-                    c.get_duree(),
-                    f"{c.get_montant_global()} €",
-                    c.get_id_client()
-                ))
-
-            def confirmer():
-                sel = tree_contrat.selection()
-                if not sel:
-                    tk.messagebox.showwarning(
-                        "Aucune sélection", "Veuillez sélectionner un contrat")
-                    return
-                valeurs = tree_contrat.item(sel[0])['values']
-                contrat_selectionne['numero'] = valeurs[0]
-                contrat_var.set(f"{valeurs[0]}")
-                popup_contrat.destroy()
-
-            ttk.Button(popup_contrat, text="✓ Choisir",
-                       command=confirmer).pack(pady=10)
-
-        ttk.Button(form_frame, text="📄 Choisir",
-                   command=choisir_contrat).grid(row=1, column=2, padx=5)
-
-        ttk.Label(form_frame, text="Date émission :").grid(
-            row=2, column=0, sticky='w', pady=5)
-        entry_emission = DateEntry(
-            form_frame, width=28, date_pattern='yyyy-mm-dd')
-        entry_emission.grid(row=2, column=1, pady=5, padx=5)
-
-        ttk.Label(form_frame, text="Montant Total (€) :").grid(
-            row=3, column=0, sticky='w', pady=5)
-        entry_montant = ttk.Entry(form_frame, width=30)
-        entry_montant.grid(row=3, column=1, pady=5, padx=5)
-
-        ttk.Label(form_frame, text="État :").grid(
-            row=4, column=0, sticky='w', pady=5)
-        combo_etat = ttk.Combobox(form_frame, width=28, state='readonly')
-        combo_etat['values'] = ('EN_ATTENTE', 'PAYEE')
-        combo_etat.current(0)
-        combo_etat.grid(row=4, column=1, pady=5, padx=5)
-
-        btn_frame = ttk.Frame(popup)
-        btn_frame.pack(pady=15)
-
-        def valider():
-            numero = numero_auto
-            num_contrat = contrat_selectionne['numero']
-            emission = entry_emission.get_date()
-            montant_str = entry_montant.get().strip()
-            etat = combo_etat.get()
-
-            #Vérifier qu'un contrat a bien été sélectionné
-            if not num_contrat:
-                tk.messagebox.showwarning(
-                    "Champs manquants", "Veuillez sélectionner un contrat")
-                return
-
-            if not montant_str:
-                tk.messagebox.showwarning(
-                    "Champs manquants", "Veuillez saisir un montant")
-                return
-
-            try:
-                montant_f = float(montant_str)
-            except ValueError:
-                tk.messagebox.showwarning(
-                    "Valeur invalide", "Le montant doit être numérique")
-                return
-
-            nouveau = Facture(numero, str(emission), montant_f, etat, num_contrat)
-            
-            succes = DAOFacture.get_instance().insert_facture(nouveau)
-            
-            #Sécuriser la vérification du retour du DAO
-            if succes and succes != -1:
-                tk.messagebox.showinfo("Succès", "Facture créée avec succès !")
-                popup.destroy()
-                self.afficher_facture()
-            else:
-                tk.messagebox.showerror("Erreur", "Impossible de créer la facture")
-
-        ttk.Button(btn_frame, text="✓ Valider",
-                   command=valider).pack(side='left', padx=5)
-        ttk.Button(btn_frame, text="✗ Annuler",
+        ttk.Button(btn_frame, text="Annuler",
                    command=popup.destroy).pack(side='left', padx=5)
 
     # ------------------------------------------------------------------ #
@@ -403,3 +263,51 @@ class GestionFacture(tk.Frame):
                 f"Numéro Contrat    : {values[4]}\n"
                 f"Montant Restant    : {values[5]}"
             ))
+
+    # ------------------------------------------------------------------ #
+
+    def generer_factures_manquantes(self):
+        import re
+        from dao.DAOContrat import DAOContrat
+        
+        contrats = DAOContrat.get_instance().select_contrat()
+        factures_existantes = DAOFacture.get_instance().select_facture()
+        
+        annee = date.today().year
+        numeros = [f.get_numero_facture() for f in factures_existantes if f.get_numero_facture() and str(annee) in f.get_numero_facture()]
+        if numeros:
+            try:
+                dernier = int(max(numeros).split('-')[-1])
+            except ValueError:
+                dernier = 0
+        else:
+            dernier = 0
+            
+        nouvelles = 0
+        
+        for c in contrats:
+            num_c = c.get_numero_contrat()
+            existantes = sum(1 for f in factures_existantes if f.get_numero_contrat() == num_c)
+            
+            texte_cond = str(c.get_condition_paiements() or "1")
+            match = re.search(r'\d+', texte_cond)
+            nb_attendues = int(match.group()) if match else 1
+            if nb_attendues <= 0: nb_attendues = 1
+            
+            a_creer = nb_attendues - existantes
+            if a_creer > 0:
+                montant_par_facture = int(c.get_montant_global() // nb_attendues)
+                debut = c.get_date_debut()
+                
+                for _ in range(a_creer):
+                    dernier += 1
+                    num_facture = f"FACT-{annee}-{dernier:03d}"
+                    nouvelle = Facture(num_facture, debut, montant_par_facture, 'EN_ATTENTE', num_c)
+                    DAOFacture.get_instance().insert_facture(nouvelle)
+                    nouvelles += 1
+                    
+        if nouvelles > 0:
+            tk.messagebox.showinfo("Succès", f"{nouvelles} nouvelle(s) facture(s) générée(s) avec succès !")
+            self.afficher_facture()
+        else:
+            tk.messagebox.showinfo("Information", "Toutes les factures sont déjà à jour pour les contrats existants.")

@@ -80,7 +80,7 @@ class GestionPrestationActivite(tk.Frame):
             ttk.Label(frame, text="").pack(expand=True)
             ttk.Button(
                 frame,
-                text="🏠 Accueil",
+                text="Accueil",
                 command=on_back
             ).pack(pady=5, fill='x', side='bottom')
 
