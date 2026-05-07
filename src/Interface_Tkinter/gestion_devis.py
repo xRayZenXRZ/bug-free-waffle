@@ -351,6 +351,12 @@ class GestionDevis(tk.Frame):
             )
             succes = DAODevis.get_instance().update_devis(modifie)
             if succes:
+                if numero_contrat:
+                    montant_devis = float(str(values[4]).replace(' €', ''))
+                    contrat = DAOContrat.get_instance().find_contrat(numero_contrat)
+                    nouveau_montant = float(
+                        contrat.get_montant_global()) + montant_devis
+                    contrat.set_montant_global(nouveau_montant)
                 tk.messagebox.showinfo(
                     "Succès", f"Statut du devis {values[0]} mis à jour !")
                 popup.destroy()

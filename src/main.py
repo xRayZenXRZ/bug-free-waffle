@@ -5,7 +5,7 @@ import tkinter as tk
 from Interface_Tkinter.gestion_utilisateur import GestionUtilisateur
 from Interface_Tkinter.gestion_devis import GestionDevis
 from Interface_Tkinter.gestion_contrat import GestionContrat
-from Interface_Tkinter.gestion_prestations_devis import GestionPrestationActivite
+from Interface_Tkinter.gestion_prestations_activiter import GestionPrestationActivite
 from Interface_Tkinter.gestion_facture import GestionFacture
 from Interface_Tkinter.gestion_paiement import GestionPaiement
 
