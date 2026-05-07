@@ -42,18 +42,18 @@ class GestionContrat(tk.Frame):
         frame_gauche.pack(side='left', fill='both', padx=10)
 
         ttk.Label(frame_gauche, text="Actions :", font=('Arial', 14, 'bold')).pack(pady=10)
-        ttk.Button(frame_gauche, text="➕ Créer un contrat",
+        ttk.Button(frame_gauche, text="Créer un contrat",
                    command=self.ajouter_contrat).pack(pady=5, fill='x')
-        ttk.Button(frame_gauche, text="👁️ Voir les contrats",
+        ttk.Button(frame_gauche, text="Voir les contrats",
                    command=self.afficher_contrat).pack(pady=5, fill='x')
-        ttk.Button(frame_gauche, text="🗓 Gérer prestations",
+        ttk.Button(frame_gauche, text="Gérer prestations",
                    command=self._ouvrir_prestations_contrat_selectionne).pack(pady=5, fill='x')
         if utilisateur['role'] == 'ADMIN':
-            ttk.Button(frame_gauche, text="🗑️ Supprimer contrat",
+            ttk.Button(frame_gauche, text="Supprimer contrat",
                        command=self.supprimer_contrat).pack(pady=5, fill='x')
         if on_back:
             ttk.Label(frame_gauche, text="").pack(expand=True)
-            ttk.Button(frame_gauche, text="🏠 Accueil", command=on_back).pack(
+            ttk.Button(frame_gauche, text="Accueil", command=on_back).pack(
                 pady=5, fill='x', side='bottom')
 
         # COLONNE DROITE : Tableau
@@ -195,9 +195,9 @@ class GestionContrat(tk.Frame):
                 client_var.set(f"{valeurs[0]} - {nom_affiche}")
                 popup_client.destroy()
 
-            ttk.Button(popup_client, text="✓ Choisir", command=confirmer_client).pack(pady=10)
+            ttk.Button(popup_client, text="Choisir", command=confirmer_client).pack(pady=10)
 
-        ttk.Button(form, text="👤 Choisir", command=choisir_client).grid(row=1, column=2, padx=5)
+        ttk.Button(form, text="Choisir", command=choisir_client).grid(row=1, column=2, padx=5)
 
         # Date début
         ttk.Label(form, text="Date début :").grid(row=2, column=0, sticky='w', pady=5)
@@ -335,12 +335,12 @@ class GestionContrat(tk.Frame):
             id_prestation = tree.item(sel[0])['values'][0]
             self._popup_gerer_activites(id_prestation, popup)
 
-        ttk.Button(btn_frame, text="➕ Ajouter une prestation",
+        ttk.Button(btn_frame, text="Ajouter une prestation",
                    command=lambda: self._popup_ajouter_prestation(numero_contrat, rafraichir_prestations, popup)
                    ).pack(side='left', padx=5)
-        ttk.Button(btn_frame, text="🗓 Gérer les activités",
+        ttk.Button(btn_frame, text="Gérer les activités",
                    command=gerer_activites).pack(side='left', padx=5)
-        ttk.Button(btn_frame, text="✓ Terminer",
+        ttk.Button(btn_frame, text="Terminer",
                    command=popup.destroy).pack(side='left', padx=5)
 
     # ------------------------------------------------------------------ #
@@ -463,10 +463,10 @@ class GestionContrat(tk.Frame):
         btn_frame = ttk.Frame(popup)
         btn_frame.pack(pady=10)
 
-        ttk.Button(btn_frame, text="➕ Ajouter une activité",
+        ttk.Button(btn_frame, text="Ajouter une activité",
                    command=lambda: self._popup_ajouter_activite(id_prestation, rafraichir_activites, popup)
                    ).pack(side='left', padx=5)
-        ttk.Button(btn_frame, text="✓ Terminer",
+        ttk.Button(btn_frame, text="Terminer",
                    command=popup.destroy).pack(side='left', padx=5)
 
     # ------------------------------------------------------------------ #
@@ -538,9 +538,9 @@ class GestionContrat(tk.Frame):
                 collab_var.set(f"{valeurs[0]} - {valeurs[1]} {valeurs[2]}")
                 popup_c.destroy()
 
-            ttk.Button(popup_c, text="✓ Choisir", command=confirmer_collab).pack(pady=10)
+            ttk.Button(popup_c, text="Choisir", command=confirmer_collab).pack(pady=10)
 
-        ttk.Button(form, text="👤 Choisir", command=choisir_collaborateur).grid(row=3, column=2, padx=5)
+        ttk.Button(form, text="Choisir", command=choisir_collaborateur).grid(row=3, column=2, padx=5)
 
         ttk.Label(form, text="Statut :").grid(row=4, column=0, sticky='w', pady=5)
         combo_statut = ttk.Combobox(form, width=28, state='readonly')
@@ -584,8 +584,8 @@ class GestionContrat(tk.Frame):
             else:
                 messagebox.showerror("Erreur", "Impossible d'ajouter l'activité")
 
-        ttk.Button(btn_frame, text="✓ Valider", command=valider).pack(side='left', padx=5)
-        ttk.Button(btn_frame, text="✗ Annuler", command=popup.destroy).pack(side='left', padx=5)
+        ttk.Button(btn_frame, text="Valider", command=valider).pack(side='left', padx=5)
+        ttk.Button(btn_frame, text="Annuler", command=popup.destroy).pack(side='left', padx=5)
 
     # ------------------------------------------------------------------ #
 
