@@ -1,4 +1,5 @@
 import csv
+from pathlib import Path
 from dao.DAOSession import DAOSession
 from dao.DAOClient import DAOClient
 from dao.DAOCollaborateur import DAOCollaborateur
@@ -16,6 +17,8 @@ from domaine.Prestation import Prestation
 from domaine.Facture import Facture
 from domaine.Activite import Activite
 from domaine.Paiement import Paiement
+
+DATA_DIR = Path(__file__).parent.parent / "data"
 
 
 def _val(s):
@@ -35,7 +38,9 @@ def clean_database():
     DAOSession.clean_database()
 
 
-def importation_clients_csv(filename="programmation_python/Interface_Tkinter/data/client/clients.csv"):
+def importation_clients_csv(filename=None):
+    if filename is None:
+        filename = DATA_DIR / "client" / "clients.csv"
     dao = DAOClient.get_instance()
     count = 0
     with open(filename, "r", encoding="utf-8") as f:
@@ -55,7 +60,9 @@ def importation_clients_csv(filename="programmation_python/Interface_Tkinter/dat
     print(f"Clients importés : {count}")
 
 
-def importation_collaborateurs_csv(filename="programmation_python/Interface_Tkinter/data/collaborateur/collaborateurs.csv"):
+def importation_collaborateurs_csv(filename=None):
+    if filename is None:
+        filename = DATA_DIR / "collaborateur" / "collaborateurs.csv"
     dao = DAOCollaborateur.get_instance()
     count = 0
     with open(filename, "r", encoding="utf-8") as f:
@@ -74,7 +81,9 @@ def importation_collaborateurs_csv(filename="programmation_python/Interface_Tkin
     print(f"Collaborateurs importés : {count}")
 
 
-def importation_contrats_csv(filename="programmation_python/Interface_Tkinter/data/contrat/contrats.csv"):
+def importation_contrats_csv(filename=None):
+    if filename is None:
+        filename = DATA_DIR / "contrat" / "contrats.csv"
     dao = DAOContrat.get_instance()
     count = 0
     with open(filename, "r", encoding="utf-8") as f:
@@ -94,7 +103,9 @@ def importation_contrats_csv(filename="programmation_python/Interface_Tkinter/da
     print(f"Contrats importés : {count}")
 
 
-def importation_devis_csv(filename="programmation_python/Interface_Tkinter/data/devis/devis.csv"):
+def importation_devis_csv(filename=None):
+    if filename is None:
+        filename = DATA_DIR / "devis" / "devis.csv"
     dao = DAODevis.get_instance()
     count = 0
     with open(filename, "r", encoding="utf-8") as f:
@@ -117,7 +128,9 @@ def importation_devis_csv(filename="programmation_python/Interface_Tkinter/data/
     print(f"Devis importés : {count}")
 
 
-def importation_prestations_csv(filename="programmation_python/Interface_Tkinter/data/prestation/prestations.csv"):
+def importation_prestations_csv(filename=None):
+    if filename is None:
+        filename = DATA_DIR / "prestation" / "prestations.csv"
     dao = DAOPrestation.get_instance()
     count = 0
     with open(filename, "r", encoding="utf-8") as f:
@@ -137,7 +150,9 @@ def importation_prestations_csv(filename="programmation_python/Interface_Tkinter
     print(f"Prestations importées : {count}")
 
 
-def importation_factures_csv(filename="programmation_python/Interface_Tkinter/data/facture/factures.csv"):
+def importation_factures_csv(filename=None):
+    if filename is None:
+        filename = DATA_DIR / "facture" / "factures.csv"
     dao = DAOFacture.get_instance()
     count = 0
     with open(filename, "r", encoding="utf-8") as f:
@@ -154,7 +169,9 @@ def importation_factures_csv(filename="programmation_python/Interface_Tkinter/da
     print(f"Factures importées : {count}")
 
 
-def importation_activites_csv(filename="programmation_python/Interface_Tkinter/data/activite/activites.csv"):
+def importation_activites_csv(filename=None):
+    if filename is None:
+        filename = DATA_DIR / "activite" / "activites.csv"
     dao = DAOActivite.get_instance()
     count = 0
     with open(filename, "r", encoding="utf-8") as f:
@@ -174,7 +191,9 @@ def importation_activites_csv(filename="programmation_python/Interface_Tkinter/d
     print(f"Activités importées : {count}")
 
 
-def importation_paiements_csv(filename="programmation_python/Interface_Tkinter/data/paiement/paiements.csv"):
+def importation_paiements_csv(filename=None):
+    if filename is None:
+        filename = DATA_DIR / "paiement" / "paiements.csv"
     dao = DAOPaiement.get_instance()
     count = 0
     with open(filename, "r", encoding="utf-8") as f:
@@ -190,13 +209,17 @@ def importation_paiements_csv(filename="programmation_python/Interface_Tkinter/d
     print(f"Paiements importés : {count}")
 
 
-def importation_combined_csv(dossier="programmation_python/Interface_Tkinter/data"):
+def importation_combined_csv(dossier=None):
+    if dossier is None:
+        dossier = DATA_DIR
+    else:
+        dossier = Path(dossier)
     clean_database()
-    importation_clients_csv(f"{dossier}/client/clients.csv")
-    importation_contrats_csv(f"{dossier}/contrat/contrats.csv")
-    importation_devis_csv(f"{dossier}/devis/devis.csv")
-    importation_collaborateurs_csv(f"{dossier}/collaborateur/collaborateurs.csv")
-    importation_prestations_csv(f"{dossier}/prestation/prestations.csv")
-    importation_factures_csv(f"{dossier}/facture/factures.csv")
-    importation_activites_csv(f"{dossier}/activite/activites.csv")
-    importation_paiements_csv(f"{dossier}/paiement/paiements.csv")
+    importation_clients_csv(dossier / "client" / "clients.csv")
+    importation_contrats_csv(dossier / "contrat" / "contrats.csv")
+    importation_devis_csv(dossier / "devis" / "devis.csv")
+    importation_collaborateurs_csv(dossier / "collaborateur" / "collaborateurs.csv")
+    importation_prestations_csv(dossier / "prestation" / "prestations.csv")
+    importation_factures_csv(dossier / "facture" / "factures.csv")
+    importation_activites_csv(dossier / "activite" / "activites.csv")
+    importation_paiements_csv(dossier / "paiement" / "paiements.csv")

@@ -1,3 +1,5 @@
+"""Fenêtre principale de l'application avec la barre de navigation par onglets (ttk.Notebook)."""
+
 import tkinter as tk
 from tkinter import ttk
 import Interface_Tkinter.exportation

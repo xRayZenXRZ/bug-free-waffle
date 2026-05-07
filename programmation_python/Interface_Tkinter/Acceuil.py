@@ -1,3 +1,5 @@
+"""Écran de connexion de l'application — premier point d'interaction avec l'utilisateur."""
+
 from dao.DAOUtilisateur import DAOUtilisateur
 import tkinter.messagebox as mb
 from tkinter import ttk

@@ -1,3 +1,5 @@
+"""Onglet de gestion des contrats — création à partir d'un devis accepté et suivi des prestations."""
+
 import tkinter as tk
 from tkinter import ttk, messagebox
 from dao.DAOContrat import DAOContrat

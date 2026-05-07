@@ -1,10 +1,18 @@
+"""Classe métier représentant une prestation planifiée dans le cadre d'un contrat."""
+
 from dao.DAOActivite import DAOActivite
 from dao.DAOPrestation import DAOPrestation
 from datetime import datetime
 
 from domaine.Activite import Activite
 
+
 class Prestation:
+    """Mission photographique ou vidéo liée à un contrat.
+
+    Types possibles : COMM_REGULIERE, MARIAGE, EVENT_PRO, AUTRE.
+    Chaque prestation se décompose en plusieurs activités opérationnelles.
+    """
 
     leDAOPrestation = DAOPrestation.get_instance()
     leDAOActivite = DAOActivite.get_instance()

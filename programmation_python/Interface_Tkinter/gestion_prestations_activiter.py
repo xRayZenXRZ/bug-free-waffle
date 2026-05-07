@@ -1,3 +1,5 @@
+"""Onglet de gestion des prestations et activités — planification et suivi d'avancement."""
+
 import tkinter as tk
 from tkinter import ttk
 

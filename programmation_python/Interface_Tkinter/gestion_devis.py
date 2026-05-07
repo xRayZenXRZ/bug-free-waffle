@@ -1,3 +1,5 @@
+"""Onglet de gestion des devis — création, consultation et changement de statut."""
+
 from domaine.Contrat import Contrat
 import tkinter as tk
 from tkinter import ttk

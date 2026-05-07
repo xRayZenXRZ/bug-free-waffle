@@ -1,0 +1,19 @@
+# Comptes utilisateurs de test — Com'Art
+# Ces comptes sont insérés par le script SQL (BD_Avancée/creation_alimentation.sql)
+# Les mots de passe sont stockés en SHA-256 en base de données.
+#
+# Format : idUtilisateur | nom | prenom | email | motDePasse (clair) | role | statut
+# -----------------------------------------------------------------------
+# 1  | Dupont    | Jean      | admin@comart.fr              | Admin1234   | ADMIN         | ACTIF
+# 2  | Lecomte   | Nathalie  | n.lecomte@comart.fr          | Compta2026  | ADMIN         | ACTIF
+# 3  | Martin    | Sophie    | s.martin@comart.fr           | Photo2026   | COLLABORATEUR | ACTIF
+# 4  | Dubois    | Pierre    | p.dubois@comart.fr           | Video2026   | COLLABORATEUR | ACTIF
+# 5  | Leroy     | Claire    | c.leroy@comart.fr            | Retouche26  | COLLABORATEUR | ACTIF
+# 6  | Bernard   | Thomas    | t.bernard@comart.fr          | Commercial6 | COLLABORATEUR | ACTIF
+# 7  | Moreau    | Elodie    | e.moreau@comart.fr           | Chef2026    | COLLABORATEUR | ACTIF
+# 8  | Fontaine  | Luc       | l.fontaine@comart.fr         | Plateau26   | COLLABORATEUR | ACTIF
+# 9  | Girard    | Camille   | c.girard@comart.fr           | Social2026  | COLLABORATEUR | ACTIF
+# 10 | Roux      | Antoine   | a.roux@comart.fr             | Junior2026  | COLLABORATEUR | ACTIF
+#
+# Note : les idUtilisateur 3–10 correspondent aux collaborateurs dans collaborateurs.csv
+#        (colonne idUtilisateur).

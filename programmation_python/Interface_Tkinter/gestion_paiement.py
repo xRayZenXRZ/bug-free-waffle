@@ -1,3 +1,5 @@
+"""Onglet de gestion des paiements — enregistrement des versements liés aux factures."""
+
 import tkinter as tk
 from tkinter import ttk
 from dao.DAOPaiement import DAOPaiement

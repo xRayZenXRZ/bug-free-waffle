@@ -1,8 +1,16 @@
+"""Classe métier représentant un client de l'agence Com'Art (particulier ou entreprise)."""
+
 from dao.DAOClient import DAOClient
 from dao.DAODevis import DAODevis
 from domaine.Devis import Devis
 
+
 class Client:
+    """Client de l'agence — particulier (nom/prénom) ou entreprise (raison sociale).
+
+    Statuts possibles : PROSPECT, CLIENT, ANCIEN.
+    Un client peut avoir plusieurs devis associés.
+    """
     leDAODevis = DAODevis.get_instance()
     leDAOClient = DAOClient.get_instance()
 

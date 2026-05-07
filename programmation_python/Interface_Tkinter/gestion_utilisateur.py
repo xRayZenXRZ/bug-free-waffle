@@ -1,3 +1,5 @@
+"""Gestion des comptes collaborateurs — réservée aux utilisateurs de rôle ADMIN."""
+
 import tkinter as tk
 from tkinter import ttk
 from dao.DAOUtilisateur import DAOUtilisateur

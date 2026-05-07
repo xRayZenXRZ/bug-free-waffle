@@ -1,3 +1,5 @@
+"""Classe métier représentant un compte utilisateur de l'application."""
+
 from dao.DAOUtilisateur import DAOUtilisateur
 from datetime import datetime
 
@@ -6,6 +8,11 @@ STATUTS_VALIDES = {"ACTIF", "INACTIF"}
 
 
 class Utilisateur:
+    """Compte de connexion d'un collaborateur. Rôles : ADMIN ou COLLABORATEUR.
+
+    Les mots de passe sont stockés hashés (SHA-256) en base de données.
+    Un ADMIN peut créer, modifier et désactiver des comptes.
+    """
 
     leDAOUtilisateur = DAOUtilisateur.get_instance()
 

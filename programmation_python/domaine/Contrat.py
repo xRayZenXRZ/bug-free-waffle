@@ -1,3 +1,5 @@
+"""Classe métier représentant un contrat signé entre Com'Art et un client."""
+
 from dao.DAOContrat import DAOContrat
 from dao.DAOClient import DAOClient
 from dao.DAODevis import DAODevis
@@ -12,6 +14,11 @@ from datetime import datetime
 
 
 class Contrat:
+    """Contrat issu d'un ou plusieurs devis acceptés.
+
+    Regroupe les prestations, factures et devis associés.
+    Périodicités possibles : HEBDOMADAIRE, MENSUELLE, ANNUELLE.
+    """
 
     leDAOContrat = DAOContrat.get_instance()
     leDAODevis = DAODevis.get_instance()

@@ -1,3 +1,5 @@
+"""Onglet de facturation — génération de factures et consultation des montants dus."""
+
 import tkinter as tk
 from tkinter import ttk
 from dao.DAOFacture import DAOFacture

@@ -1,7 +1,11 @@
+"""Classe métier représentant un paiement rattaché à une facture."""
+
 from dao.DAOPaiement import DAOPaiement
 from datetime import datetime
 
+
 class Paiement:
+    """Versement effectué par un client pour régler (partiellement ou totalement) une facture."""
 
     leDAOPaiement = DAOPaiement.get_instance()
 

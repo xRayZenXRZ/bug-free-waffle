@@ -1,10 +1,18 @@
+"""Classe métier représentant un devis émis par Com'Art pour un client."""
+
 from dao.DAOCollaborateur import DAOCollaborateur
 from dao.DAODevis import DAODevis
 from datetime import datetime
 
 from domaine.Collaborateur import Collaborateur
 
+
 class Devis:
+    """Devis commercial associé à un client et éventuellement à un contrat.
+
+    Statuts possibles : EN_ATTENTE, ACCEPTE, REFUSE, EXPIRE.
+    Un devis accepté donne lieu à la création d'un contrat.
+    """
 
     leDAODevis = DAODevis.get_instance()
     leDAOCollaborateur = DAOCollaborateur.get_instance()

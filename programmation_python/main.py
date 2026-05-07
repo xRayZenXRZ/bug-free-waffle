@@ -1,3 +1,12 @@
+"""
+Point d'entrée de l'application Com'Art.
+
+Lance la fenêtre Tkinter, affiche l'écran de connexion, puis redirige vers
+la fenêtre principale après authentification réussie d'un collaborateur.
+
+Lancement : python main.py  (depuis le répertoire programmation_python/)
+"""
+
 from Interface_Tkinter.gestion_client import GestionClient
 from Interface_Tkinter.main_windows import MainWindow
 from Interface_Tkinter.Acceuil import ConnexionUI

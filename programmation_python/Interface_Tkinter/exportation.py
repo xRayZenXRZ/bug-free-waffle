@@ -1,4 +1,5 @@
 import csv
+from pathlib import Path
 import pandas as pd
 
 from domaine.Activite import Activite
@@ -10,12 +11,13 @@ from domaine.Devis import Devis
 from domaine.Facture import Facture
 from domaine.Prestation import Prestation
 
+DATA_DIR = Path(__file__).parent.parent / "data"
 
-# Exportations individuelles 
+# Exportations individuelles
 
 def exportation_clients_csv(client=None):
     clients = Client.leDAOClient.select_client(client)
-    fichier_csv = "programmation_python/Interface_Tkinter/data/client/clients.csv"
+    fichier_csv = DATA_DIR / "client" / "clients.csv"
 
     with open(fichier_csv, "w", newline="", encoding="utf-8") as f:
         writer = csv.writer(f, delimiter=";")
@@ -34,7 +36,7 @@ def exportation_clients_csv(client=None):
 
 def exportation_prestations_csv(prestation=None):
     prestations = Prestation.leDAOPrestation.select_prestation(prestation)
-    fichier_csv = "programmation_python/Interface_Tkinter/data/prestation/prestations.csv"
+    fichier_csv = DATA_DIR / "prestation" / "prestations.csv"
 
     with open(fichier_csv, "w", newline="", encoding="utf-8") as f:
         writer = csv.writer(f, delimiter=";")
@@ -52,7 +54,7 @@ def exportation_prestations_csv(prestation=None):
 
 def exportations_factures_csv(facture=None):
     factures = Facture.leDAOFacture.select_facture(facture)
-    fichier_csv = "programmation_python/Interface_Tkinter/data/facture/factures.csv"
+    fichier_csv = DATA_DIR / "facture" / "factures.csv"
 
     with open(fichier_csv, "w", newline="", encoding="utf-8") as f:
         writer = csv.writer(f, delimiter=";")
@@ -68,7 +70,7 @@ def exportations_factures_csv(facture=None):
 
 def exportation_contrat_csv(contrat=None):
     contrats = Contrat.leDAOContrat.select_contrat(contrat)
-    fichier_csv = "programmation_python/Interface_Tkinter/data/contrat/contrats.csv"
+    fichier_csv = DATA_DIR / "contrat" / "contrats.csv"
 
     with open(fichier_csv, "w", newline="", encoding="utf-8") as f:
         writer = csv.writer(f, delimiter=";")
@@ -85,8 +87,8 @@ def exportation_contrat_csv(contrat=None):
 
 
 def exportation_devis_csv(devis=None):
-    liste_devis = Devis.leDAODevis.select_devis(devis)  # ← nom différent du paramètre
-    fichier_csv = "programmation_python/Interface_Tkinter/data/devis/devis.csv"
+    liste_devis = Devis.leDAODevis.select_devis(devis)
+    fichier_csv = DATA_DIR / "devis" / "devis.csv"
 
     with open(fichier_csv, "w", newline="", encoding="utf-8") as f:
         writer = csv.writer(f, delimiter=";")
@@ -106,7 +108,7 @@ def exportation_devis_csv(devis=None):
 
 def exportation_paiement_csv(paiement=None):
     paiements = Paiement.leDAOPaiement.select_paiement(paiement)
-    fichier_csv = "programmation_python/Interface_Tkinter/data/paiement/paiements.csv"
+    fichier_csv = DATA_DIR / "paiement" / "paiements.csv"
 
     with open(fichier_csv, "w", newline="", encoding="utf-8") as f:
         writer = csv.writer(f, delimiter=";")
@@ -122,7 +124,7 @@ def exportation_paiement_csv(paiement=None):
 
 def exportation_activite_csv(activite=None):
     activites = Activite.leDAOActivite.select_activite(activite)
-    fichier_csv = "programmation_python/Interface_Tkinter/data/activite/activites.csv"
+    fichier_csv = DATA_DIR / "activite" / "activites.csv"
 
     with open(fichier_csv, "w", newline="", encoding="utf-8") as f:
         writer = csv.writer(f, delimiter=";")
@@ -138,9 +140,9 @@ def exportation_activite_csv(activite=None):
     print(f"Le fichier {fichier_csv} a été créé avec succès.")
 
 
-def exportation_collaborateur_csv(collaborateur=None): 
+def exportation_collaborateur_csv(collaborateur=None):
     collaborateurs = Collaborateur.leDAOCollaborateur.select_collaborateur(collaborateur)
-    fichier_csv = "programmation_python/Interface_Tkinter/data/collaborateur/collaborateurs.csv"
+    fichier_csv = DATA_DIR / "collaborateur" / "collaborateurs.csv"
 
     with open(fichier_csv, "w", newline="", encoding="utf-8") as f:
         writer = csv.writer(f, delimiter=";")
@@ -155,7 +157,7 @@ def exportation_collaborateur_csv(collaborateur=None):
     print(f"Le fichier {fichier_csv} a été créé avec succès.")
 
 
-#  Export global  
+# Export global
 
 def exportation_all_csv():
     exportation_collaborateur_csv()
@@ -168,21 +170,18 @@ def exportation_all_csv():
     exportation_prestations_csv()
 
 
-#  Vues combinées
+# Vues combinées
 
 def exportation_combined_csv():
-    dossier = "programmation_python/Interface_Tkinter/data"
+    clients        = pd.read_csv(DATA_DIR / "client"        / "clients.csv",        sep=";", encoding="utf-8")
+    contrats       = pd.read_csv(DATA_DIR / "contrat"       / "contrats.csv",        sep=";", encoding="utf-8")
+    devis          = pd.read_csv(DATA_DIR / "devis"         / "devis.csv",           sep=";", encoding="utf-8")
+    prestations    = pd.read_csv(DATA_DIR / "prestation"    / "prestations.csv",     sep=";", encoding="utf-8")
+    factures       = pd.read_csv(DATA_DIR / "facture"       / "factures.csv",        sep=";", encoding="utf-8")
+    paiements      = pd.read_csv(DATA_DIR / "paiement"      / "paiements.csv",       sep=";", encoding="utf-8")
+    activites      = pd.read_csv(DATA_DIR / "activite"      / "activites.csv",       sep=";", encoding="utf-8")
+    collaborateurs = pd.read_csv(DATA_DIR / "collaborateur" / "collaborateurs.csv",  sep=";", encoding="utf-8")
 
-    clients        = pd.read_csv(f"{dossier}/client/clients.csv",             sep=";", encoding="utf-8")
-    contrats       = pd.read_csv(f"{dossier}/contrat/contrats.csv",           sep=";", encoding="utf-8")
-    devis          = pd.read_csv(f"{dossier}/devis/devis.csv",                sep=";", encoding="utf-8")
-    prestations    = pd.read_csv(f"{dossier}/prestation/prestations.csv",     sep=";", encoding="utf-8")
-    factures       = pd.read_csv(f"{dossier}/facture/factures.csv",           sep=";", encoding="utf-8")
-    paiements      = pd.read_csv(f"{dossier}/paiement/paiements.csv",         sep=";", encoding="utf-8")
-    activites      = pd.read_csv(f"{dossier}/activite/activites.csv",         sep=";", encoding="utf-8")
-    collaborateurs = pd.read_csv(f"{dossier}/collaborateur/collaborateurs.csv", sep=";", encoding="utf-8")
-
-    # Normalisation des types pour les jointures
     for df, col in [
         (activites,      "idCollaborateur"),
         (collaborateurs, "idCollaborateur"),
@@ -198,16 +197,13 @@ def exportation_combined_csv():
     ]:
         df[col] = df[col].astype(str)
 
-    # Vue contrats + client
     contrats_clients = contrats.merge(
         clients[["idClient", "nom", "prenom", "raisonSociale", "email", "telephone"]],
         on="idClient", how="left"
     )
 
-    # Vue prestations complètes
     prestations_full = prestations.merge(contrats_clients, on="numeroContrat", how="left")
 
-    # Vue activités complètes
     activites_full = activites.merge(
         prestations_full[["idPrestation", "lieu", "type", "numeroContrat"]],
         on="idPrestation", how="left"
@@ -217,16 +213,13 @@ def exportation_combined_csv():
         suffixes=("_activite", "_collaborateur")
     )
 
-    # Vue factures complètes
     factures_full = factures.merge(contrats_clients, on="numeroContrat", how="left")
 
-    # Vue paiements complets
     paiements_full = paiements.merge(
         factures_full[["numeroFacture", "montantTotal", "etat", "idClient"]],
         on="numeroFacture", how="left"
     )
 
-    # Vue devis complets
     devis_full = devis.merge(
         clients[["idClient", "nom", "prenom", "raisonSociale"]],
         on="idClient", how="left"
@@ -235,31 +228,30 @@ def exportation_combined_csv():
         on="numeroContrat", how="left"
     )
 
-    # Export
-    dossier_sortie = f"{dossier}/combined"
+    dossier_sortie = DATA_DIR / "combined"
     vues = {
-        "contrats_clients":  contrats_clients,
-        "prestations_full":  prestations_full,
-        "activites_full":    activites_full,
-        "factures_full":     factures_full,
-        "paiements_full":    paiements_full,
-        "devis_full":        devis_full,
+        "contrats_clients": contrats_clients,
+        "prestations_full": prestations_full,
+        "activites_full":   activites_full,
+        "factures_full":    factures_full,
+        "paiements_full":   paiements_full,
+        "devis_full":       devis_full,
     }
 
     for nom, df in vues.items():
-        chemin = f"{dossier_sortie}/{nom}.csv"
+        chemin = dossier_sortie / f"{nom}.csv"
         df.to_csv(chemin, index=False, sep=";", encoding="utf-8")
         print(f"Le fichier {chemin} a été créé avec succès.")
 
 
 def exportation_contrats_clients_combined_csv(id_client: int = None):
-    chemin = "programmation_python/Interface_Tkinter/data/combined/contrats_clients.csv"
+    chemin = DATA_DIR / "combined" / "contrats_clients.csv"
     contrats_clients = pd.read_csv(chemin, sep=";", encoding="utf-8")
 
     if id_client is not None:
         contrats_clients = contrats_clients[contrats_clients["idClient"] == int(id_client)]
 
-    output_path = "programmation_python/Interface_Tkinter/data/combined/byclient/contrats_clients.csv"
+    output_path = DATA_DIR / "combined" / "byclient" / "contrats_clients.csv"
     contrats_clients.to_csv(output_path, index=False, sep=";", encoding="utf-8")
     print(f"Le fichier {output_path} via id_client a été créé avec succès.")
 

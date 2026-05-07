@@ -1,10 +1,17 @@
+"""Classe métier représentant une facture émise dans le cadre d'un contrat."""
+
 from dao.DAOFacture import DAOFacture
 from dao.DAOPaiement import DAOPaiement
 from datetime import datetime
 
 from domaine.Paiement import Paiement
 
+
 class Facture:
+    """Facture associée à un contrat, pouvant être réglée en un ou plusieurs paiements.
+
+    États possibles : EN_ATTENTE, PAYEE, PARTIELLEMENT_PAYEE.
+    """
 
     leDAOFacture = DAOFacture.get_instance()
     leDAOPaiement = DAOPaiement.get_instance()

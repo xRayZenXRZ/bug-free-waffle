@@ -1,8 +1,12 @@
+"""Classe métier représentant un collaborateur de l'agence Com'Art."""
+
 from dao.DAOActivite import DAOActivite
 from domaine.Activite import Activite
 from dao.DAOCollaborateur import DAOCollaborateur
 
+
 class Collaborateur:
+    """Employé de Com'Art pouvant être assigné à des activités et associé à un compte Utilisateur."""
 
     leDAOCollaborateur = DAOCollaborateur.get_instance()
     leDAOActivite = DAOActivite.get_instance()

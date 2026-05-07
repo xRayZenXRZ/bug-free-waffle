@@ -1,7 +1,11 @@
+"""Gestion centralisée de la connexion MySQL — un seul objet connexion partagé par tous les DAOs."""
+
 import mysql.connector
-from mysql.connector import Error 
+from mysql.connector import Error
+
 
 class DAOSession:
+    """Singleton de connexion MySQL. Tous les DAOs passent par DAOSession.get_connexion()."""
     
     # Propriétés statiques
     HOST = "localhost"

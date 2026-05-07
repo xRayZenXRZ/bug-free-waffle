@@ -1,7 +1,15 @@
+"""Classe métier représentant une activité opérationnelle au sein d'une prestation."""
+
 from dao.DAOActivite import DAOActivite
 from datetime import datetime
 
+
 class Activite:
+    """Étape opérationnelle d'une prestation (ex. repérage, prise de vue, retouche).
+
+    Statuts possibles : PREVUE, EN_COURS, TERMINEE.
+    Chaque activité est assignée à un collaborateur et rattachée à une prestation.
+    """
 
     leDAOActivite = DAOActivite()
 
