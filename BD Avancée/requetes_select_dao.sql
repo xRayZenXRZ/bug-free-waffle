@@ -7,7 +7,7 @@ USE test_comart;
 --  DAOClient  (src/dao/DAOClient.py)
 
 
--- find_client : recherche par clé primaire
+-- find_client : 
 SELECT * FROM Client WHERE idClient = 1;
 
 -- select_client (sans critère) : liste complète
@@ -38,13 +38,13 @@ SELECT * FROM Client WHERE nom = 'Martin' AND statut = 'CLIENT';
 --  DAOCollaborateur  (src/dao/DAOCollaborateur.py)
 
 
--- find_collaborateur : recherche par clé primaire
+-- find_collaborateur : 
 SELECT * FROM Collaborateur WHERE idCollaborateur = 1;
 
 -- select_collaborateur (sans critère)
 SELECT * FROM Collaborateur;
 
--- select_collaborateur (critères dynamiques)
+-- select_collaborateur 
 SELECT * FROM Collaborateur WHERE idCollaborateur = 1;
 
 SELECT * FROM Collaborateur WHERE nom = 'Martin';
@@ -67,13 +67,13 @@ SELECT * FROM Collaborateur WHERE nom = 'Dubois' AND poste = 'Responsable Vidéo
 --  DAOContrat  (src/dao/DAOContrat.py)
 
 
--- find_contrat : recherche par clé primaire
+-- find_contrat : 
 SELECT * FROM Contrat WHERE numeroContrat = 'CONT-2026-001';
 
 -- select_contrat (sans critère)
 SELECT * FROM Contrat;
 
--- select_contrat (critères dynamiques)
+-- select_contrat 
 SELECT * FROM Contrat WHERE numeroContrat = 'CONT-2026-001';
 
 SELECT * FROM Contrat WHERE dateDebut = '2026-01-01';
@@ -96,13 +96,13 @@ SELECT * FROM Contrat WHERE periodicite = 'MENSUELLE' AND idClient = 2;
 --  DAODevis  (src/dao/DAODevis.py)
 
 
--- find_devis : recherche par clé primaire
+-- find_devis : 
 SELECT * FROM Devis WHERE numeroDevis = 'DEV-2026-001';
 
 -- select_devis (sans critère)
 SELECT * FROM Devis;
 
--- select_devis (critères dynamiques)
+-- select_devis 
 SELECT * FROM Devis WHERE numeroDevis = 'DEV-2026-001';
 
 SELECT * FROM Devis WHERE dateEmission = '2026-01-01';
@@ -129,13 +129,13 @@ SELECT * FROM Devis WHERE statut = 'ACCEPTE' AND idClient = 2;
 --  DAOPrestation  (src/dao/DAOPrestation.py)
 
 
--- find_prestation : recherche par clé primaire
+-- find_prestation : 
 SELECT * FROM Prestation WHERE idPrestation = 1;
 
 -- select_prestation (sans critère)
 SELECT * FROM Prestation;
 
--- select_prestation (critères dynamiques)
+-- select_prestation 
 SELECT * FROM Prestation WHERE idPrestation = 1;
 
 SELECT * FROM Prestation WHERE datePrevue = '2026-02-15 14:00:00';
@@ -160,13 +160,13 @@ SELECT * FROM Prestation WHERE type = 'MARIAGE' AND numeroContrat = 'CONT-2026-0
 --  DAOActivite  (src/dao/DAOActivite.py)
 
 
--- find_activite : recherche par clé primaire
+-- find_activite : 
 SELECT * FROM Activite WHERE idActivite = 1;
 
 -- select_activite (sans critère)
 SELECT * FROM Activite;
 
--- select_activite (critères dynamiques)
+-- select_activite 
 SELECT * FROM Activite WHERE idActivite = 1;
 
 SELECT * FROM Activite WHERE libelleOperationnel = 'Retouches photos';
@@ -191,13 +191,13 @@ SELECT * FROM Activite WHERE statut = 'EN_COURS' AND idCollaborateur = 8;
 --  DAOFacture  (src/dao/DAOFacture.py)
 
 
--- find_facture : recherche par clé primaire
+-- find_facture : 
 SELECT * FROM Facture WHERE numeroFacture = 'FACT-2026-001';
 
 -- select_facture (sans critère)
 SELECT * FROM Facture;
 
--- select_facture (critères dynamiques)
+-- select_facture 
 SELECT * FROM Facture WHERE numeroFacture = 'FACT-2026-001';
 
 SELECT * FROM Facture WHERE dateEmission = '2026-01-15';
@@ -216,13 +216,13 @@ SELECT * FROM Facture WHERE etat = 'PAYEE' AND numeroContrat = 'CONT-2026-002';
 --  DAOPaiement  (src/dao/DAOPaiement.py)
 
 
--- find_paiement : recherche par clé primaire
+-- find_paiement : 
 SELECT * FROM Paiement WHERE idPaiement = 1;
 
 -- select_paiement (sans critère)
 SELECT * FROM Paiement;
 
--- select_paiement (critères dynamiques)
+-- select_paiement 
 SELECT * FROM Paiement WHERE idPaiement = 1;
 
 SELECT * FROM Paiement WHERE datePaiement = '2026-01-26';
