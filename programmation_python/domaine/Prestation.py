@@ -19,7 +19,6 @@ class Prestation:
 
     def __init__(self, id_prestation: int = None, date_prevue: str = None, date_effective: str = None, lieu: str = None, type_prestation: str = None, nb_photos_prevues: int = None, nb_videos_prevues: int = None, numero_contrat: str = None):
 
-        # Vérification des valeurs numériques positives -> à refaire sur les autres classes...
         if nb_photos_prevues is not None and nb_photos_prevues < 0:
             raise ValueError(
                 "le nombre de photos prévues ne peut pas être négatif")

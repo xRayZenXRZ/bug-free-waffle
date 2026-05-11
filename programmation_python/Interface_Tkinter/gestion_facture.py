@@ -90,7 +90,7 @@ class GestionFacture(tk.Frame):
         self.tree.bind('<Double-1>', self.on_double_click)
         self.afficher_facture()
 
-    # ------------------------------------------------------------------ #
+
 
     def afficher_facture(self):
         for item in self.tree.get_children():
@@ -138,7 +138,7 @@ class GestionFacture(tk.Frame):
             ))
         print(f"{len(facture_liste)} facture(s) affichée(s)")
         
-    # ------------------------------------------------------------------ #
+
     
     def supprimer_facture(self):
         selection = self.tree.selection()
@@ -163,7 +163,7 @@ class GestionFacture(tk.Frame):
                 tk.messagebox.showerror("Erreur", "Impossible de supprimer la facture")
 
 
-    # ------------------------------------------------------------------ #
+
     
     def supprimer_toutes_factures(self):
         reponse = tk.messagebox.askyesno(
@@ -183,7 +183,7 @@ class GestionFacture(tk.Frame):
             else:
                 tk.messagebox.showwarning("Erreur partielle", f"{erreurs} facture(s) n'ont pas pu être supprimée(s).")
 
-    # ------------------------------------------------------------------ #
+
     
     def changer_etat_facture(self):
         selection = self.tree.selection()
@@ -251,7 +251,7 @@ class GestionFacture(tk.Frame):
         ttk.Button(btn_frame, text="Annuler",
                    command=popup.destroy).pack(side='left', padx=5)
 
-    # ------------------------------------------------------------------ #
+
     
     def on_double_click(self, event):
         selection = self.tree.selection()
@@ -266,7 +266,7 @@ class GestionFacture(tk.Frame):
                 f"Montant Restant    : {values[5]}"
             ))
 
-    # ------------------------------------------------------------------ #
+
 
     def generer_factures_manquantes(self):
         from dao.DAOContrat import DAOContrat

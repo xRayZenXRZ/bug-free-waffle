@@ -1,4 +1,3 @@
-# A completer
 from dao.DAOSession import DAOSession
 from mysql.connector import Error
 import hashlib

@@ -93,7 +93,7 @@ class GestionDevis(tk.Frame):
         self.tree.bind('<Double-1>', self.on_double_click)
         self.afficher_devis()
 
-    # ------------------------------------------------------------------ #
+
 
     def afficher_devis(self):
         for item in self.tree.get_children():
@@ -114,7 +114,7 @@ class GestionDevis(tk.Frame):
             ))
         print(f"{len(devis_liste)} devis affiché(s)")
 
-    # ------------------------------------------------------------------ #
+
 
     def ajouter_devis(self):
         if hasattr(self, '_popup_ajout') and self._popup_ajout and self._popup_ajout.winfo_exists():
@@ -303,7 +303,7 @@ class GestionDevis(tk.Frame):
         ttk.Button(btn_frame, text="Annuler",
                    command=popup.destroy).pack(side='left', padx=5)
 
-    # ------------------------------------------------------------------ #
+
 
     def modifier_statut(self):
         selection = self.tree.selection()
@@ -555,7 +555,7 @@ class GestionDevis(tk.Frame):
         ttk.Button(btn_frame, text="Annuler",
                    command=popup.destroy).pack(side='left', padx=5)
 
-    # ------------------------------------------------------------------ #
+
 
     def supprimer_devis(self):
         selection = self.tree.selection()
@@ -581,7 +581,7 @@ class GestionDevis(tk.Frame):
                 tk.messagebox.showerror(
                     "Erreur", "Impossible de supprimer le devis")
 
-    # ------------------------------------------------------------------ #
+
 
     def on_double_click(self, event):
         selection = self.tree.selection()

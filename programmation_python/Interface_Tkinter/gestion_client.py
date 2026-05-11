@@ -86,7 +86,7 @@ class GestionClient(tk.Frame):
         self.tree.bind('<Double-1>', self.on_double_click)
         self.afficher_clients()
 
-    # ------------------------------------------------------------------ #
+
 
     def afficher_clients(self):
         for item in self.tree.get_children():
@@ -216,7 +216,7 @@ class GestionClient(tk.Frame):
         ttk.Button(btn_frame, text="Valider",  command=valider).pack(side='left', padx=5)
         ttk.Button(btn_frame, text="Annuler", command=popup.destroy).pack(side='left', padx=5)
 
-    # ------------------------------------------------------------------ #
+
 
     def modifier_client(self):
         selection = self.tree.selection()
@@ -271,7 +271,7 @@ class GestionClient(tk.Frame):
         ttk.Button(btn_frame, text="Valider",  command=valider).pack(side='left', padx=5)
         ttk.Button(btn_frame, text="Annuler", command=popup.destroy).pack(side='left', padx=5)
 
-    # ------------------------------------------------------------------ #
+
 
     def supprimer_client(self):
         selection = self.tree.selection()
@@ -296,7 +296,7 @@ class GestionClient(tk.Frame):
             else:
                 tk.messagebox.showerror("Erreur", "Impossible de supprimer le client")
 
-    # ------------------------------------------------------------------ #
+
 
 
 
@@ -304,7 +304,7 @@ class GestionClient(tk.Frame):
         exportation_clients_csv()
         tk.messagebox.showinfo("Exportation", "Clients exportés avec succès !")
 
-    # ------------------------------------------------------------------ #
+
 
 
     def on_double_click(self, event):

@@ -91,7 +91,7 @@ class GestionContrat(tk.Frame):
         self.tree.bind('<Double-1>', self.on_double_click)
         self.afficher_contrat()
 
-    # ------------------------------------------------------------------ #
+
 
     def afficher_contrat(self):
         for item in self.tree.get_children():
@@ -112,7 +112,7 @@ class GestionContrat(tk.Frame):
             ))
         print(f"{len(contrat_liste)} contrat(s) affiché(s)")
 
-    # ------------------------------------------------------------------ #
+
 
     def ajouter_contrat(self):
         if hasattr(self, '_popup_ajout') and self._popup_ajout and self._popup_ajout.winfo_exists():
@@ -276,7 +276,7 @@ class GestionContrat(tk.Frame):
         ttk.Button(btn_frame, text="✗ Annuler",
                    command=popup.destroy).pack(side='left', padx=5)
 
-    # ------------------------------------------------------------------ #
+
 
     def _ouvrir_prestations_contrat_selectionne(self):
         """Ouvre la gestion des prestations pour le contrat sélectionné dans le tableau."""
@@ -345,7 +345,7 @@ class GestionContrat(tk.Frame):
         ttk.Button(btn_frame, text="Terminer",
                    command=popup.destroy).pack(side='left', padx=5)
 
-    # ------------------------------------------------------------------ #
+
 
     def _popup_ajouter_prestation(self, numero_contrat, rafraichir, parent):
         """Formulaire d'ajout d'une prestation à un contrat."""
@@ -421,7 +421,7 @@ class GestionContrat(tk.Frame):
         ttk.Button(btn_frame, text="✓ Valider", command=valider).pack(side='left', padx=5)
         ttk.Button(btn_frame, text="✗ Annuler", command=popup.destroy).pack(side='left', padx=5)
 
-    # ------------------------------------------------------------------ #
+
 
     def _popup_gerer_activites(self, id_prestation, parent):
         """Fenêtre de gestion des activités d'une prestation."""
@@ -471,7 +471,7 @@ class GestionContrat(tk.Frame):
         ttk.Button(btn_frame, text="Terminer",
                    command=popup.destroy).pack(side='left', padx=5)
 
-    # ------------------------------------------------------------------ #
+
 
     def _popup_ajouter_activite(self, id_prestation, rafraichir, parent):
         """Formulaire d'ajout d'une activité à une prestation."""
@@ -589,7 +589,7 @@ class GestionContrat(tk.Frame):
         ttk.Button(btn_frame, text="Valider", command=valider).pack(side='left', padx=5)
         ttk.Button(btn_frame, text="Annuler", command=popup.destroy).pack(side='left', padx=5)
 
-    # ------------------------------------------------------------------ #
+
 
     def supprimer_contrat(self):
         selection = self.tree.selection()
@@ -612,7 +612,7 @@ class GestionContrat(tk.Frame):
             else:
                 messagebox.showerror("Erreur", "Impossible de supprimer le contrat")
 
-    # ------------------------------------------------------------------ #
+
 
     def on_double_click(self, _event):
         selection = self.tree.selection()
